@@ -1,0 +1,40 @@
+models
+
+user {
+	admin => t/f
+	current_order
+	past_orders => [orders]
+	email
+	reviews => [review.id]
+}
+
+product {
+	title
+	description
+	price
+	quantity
+	reviews => [review.id]
+}
+
+catergory {
+	name
+	products => [ ref product.ids ]
+}
+
+order {
+	products => [{
+		ref product.ids,
+		product_price
+	}]
+	complete => t/f
+	ref to user
+}
+
+order.static => complete_order = function() { set product_price to current price of product }
+
+review {
+	content: at least X chars
+	rating?
+	ref to user?
+	ref to product?
+}
