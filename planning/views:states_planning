@@ -1,0 +1,41 @@
+views/states
+
+main state/home page
+	-list of product categories and featured products/shop ll
+
+category page
+	-list all products for a selected category
+	-filters sidebar
+
+product page
+	-product info
+	-reviews
+	-low stock warning "BUY NOW!"
+	-add to cart
+	-similar products
+	ADMINS
+		-edit reviews
+		-edit product
+		-edit categories
+		-edit availability
+		-"Currently Unavailable" if out of stock, page does not show on all products, only accessible via direct url or past order
+
+shopping cart
+	-items in cart, with editable amount
+	-checkout button
+	-promo code
+
+order history
+	-past orders with products, price, status
+
+ADMIN
+	order management
+		-view all orders, sortable by status
+		-ability to change order status
+		-view details of specific order (take admin to order page, with extra admin functionality)
+
+	user management
+		-edit user status to admin
+		-delete a user
+		-trigger password reset
+
