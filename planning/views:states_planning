@@ -27,6 +27,10 @@ shopping cart
 	-checkout button
 	-promo code
 
+payment
+	-enter payment info
+	-submit cart to order
+
 order history
 	-past orders with products, price, status
 
