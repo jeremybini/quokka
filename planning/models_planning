@@ -2,12 +2,24 @@ models
 
 user {
 	admin => t/f
-	current_order
+	current_order (or cart)
 	past_orders => [orders]
 	email
 	reviews => [review.id]
 	interests => [category.id]
 }
+
+
+////Maybe not
+		cart {
+			products => [{
+				ref product.id,
+				quantity
+			}]
+			ref to user
+		}
+		cart created with a session
+////////
 
 product {
 	title
@@ -15,23 +27,20 @@ product {
 	price
 	quantity
 	reviews => [review.id]
-}
-
-catergory {
-	name
-	products => [ ref product.ids ]
+	categories => [String]
 }
 
 order {
 	products => [{
-		ref product.ids,
-		product_price
+		ref product.id,
+		product_price,
+		quantity
 	}]
-	complete => t/f
+	status (Cart, Created, Processing, Cancelled, Completed)
 	ref to user
 }
 
-order.static => complete_order = function() { set product_price to current price of product }
+order method => when complete_order = function() { set product_price to current price of product }
 
 review {
 	content: at least X chars
@@ -39,3 +48,15 @@ review {
 	ref to user?
 	ref to product?
 }
+
+Waffle:
+When making pull request
+	'closes #(issue number)'
+
+
+Pairing: Build out models, routes, and tests
+	-User
+	-Product
+
+	-Order
+	-Review

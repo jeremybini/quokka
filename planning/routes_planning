@@ -11,21 +11,30 @@ products
 		-put one
 		-delete one
 
+checkout
+	-validate payment info
+	-transfer cart to order
+	-empty cart
+	-emailing?
 
 auth
 	login
 	signup
 	password reset
 
-
 users
 	OWN ACCOUNT OR ADMIN
-	-put one
-	-get one
-		-get one/reviews
-		-get one/reviews/:id
-		-put one/reviews/:id
-		-delete one/reviews/:id
+	-put one => /users/:id
+	-get one => /users/:id
+		-get /reviews
+		-get /reviews/:id
+		-put /reviews/:id
+		-delete /reviews/:id
+
+		-get /orders
+		-get /orders/:id
 	
 	ADMIN
 		-get all
+		-put users/:id/orders/:id
+		-delete users/:id/orders/:id
