@@ -1,7 +1,7 @@
 views/states
 
 main state/home page
-	-list of product categories and featured products/shop ll
+	-list of product categories and featured products and shop all categories option
 
 category page
 	-list all products for a selected category
@@ -10,6 +10,8 @@ category page
 product page
 	-product info
 	-reviews
+	-add a review
+		-only available to logged in users
 	-low stock warning "BUY NOW!"
 	-add to cart
 	-similar products
@@ -34,8 +36,10 @@ ADMIN
 		-ability to change order status
 		-view details of specific order (take admin to order page, with extra admin functionality)
 
-	user management
+	user managementgit 
 		-edit user status to admin
 		-delete a user
 		-trigger password reset
 
+login/signup
+	-facebook and google, or local
