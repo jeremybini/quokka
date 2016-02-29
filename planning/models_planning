@@ -6,6 +6,7 @@ user {
 	past_orders => [orders]
 	email
 	reviews => [review.id]
+	interests => [category.id]
 }
 
 product {
