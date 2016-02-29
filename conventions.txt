@@ -1,0 +1,11 @@
+Writing conventions:
+- SPACING:
+    - function() { stuff };
+    one space after the () only
+- TABS:
+    tabs are 2 spaces
+- FOLDERS:
+    - all related files to GUEST, USER, ADMIN in each folder
+    - e.g. USER: controller, factory, state, directive, etc.
+- COMMENTS:
+    - write on own line immediately prior to code being addressed
