@@ -1,2 +1,31 @@
-routes
+routing
 
+products
+	-get all, with possible queries
+	-get one
+		-populate reviews, maybe limit to 5 most recent
+		-populate with categories
+
+	ADMIN
+		-post one
+		-put one
+		-delete one
+
+
+auth
+	login
+	signup
+	password reset
+
+
+users
+	OWN ACCOUNT OR ADMIN
+	-put one
+	-get one
+		-get one/reviews
+		-get one/reviews/:id
+		-put one/reviews/:id
+		-delete one/reviews/:id
+	
+	ADMIN
+		-get all
