@@ -1,22 +1,29 @@
 /* USER ROUTES */
-
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var Users = require('../../db/models/user.js');
+var _ = require('lodash');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var OrderRouter = require('./order');
+var ReviewRouter = require('./review');
 
 //get all users
-router.get('/user', function(req, res, next) {
-  Users.find({}).exec()
+router.get('/', function(req, res, next) {
+  User.find({}).exec()
   .then(function(allUsers) {
     res.send(allUsers);
   })
   .then(null, next);
 });
 
+//nested sub-routers
+router.use('/:id/orders/', OrderRouter);
+router.use('/:id/reviews/', ReviewRouter);
+
 //get user by ID
-router.get('/user/:id', function(req, res, next) {
-  Users.findById({_id: req.params.id})
+router.get('/:id', function(req, res, next) {
+  User.findById({_id: req.params.id})
   .then(function(user) {
     res.send(user);
   })
@@ -24,13 +31,13 @@ router.get('/user/:id', function(req, res, next) {
 });
 
 //add user
-router.post('/user', function(req, res, next) {
-  Users.create(req.body).then(null, next);
+router.post('/', function(req, res, next) {
+  User.create(req.body).then(null, next);
 });
 
 //update user
-router.put('/user/:id', function(req, res, next) {
-  Users.findById({_id: req.params.id})
+router.put('/:id', function(req, res, next) {
+  User.findById({_id: req.params.id})
   .then(function(user) {
     user.update(req.body);
     user.save();
@@ -42,8 +49,8 @@ router.put('/user/:id', function(req, res, next) {
 });
 
 //delete user
-router.delete('/user/:id', function(req, res, next) {
-  Users.findOneAndRemove({_id: req.params.id})
+router.delete('/:id', function(req, res, next) {
+  User.findOneAndRemove({_id: req.params.id})
   .then(function() {
     res.sendStatus(204);
   })
