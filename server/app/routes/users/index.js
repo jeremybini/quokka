@@ -3,10 +3,12 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var Users = require('../../db/models/user.js');
+var _ = require('lodash');
+var mongoose = require('mongoose');
+var Users = mongoose.model('User');
 
 //get all users
-router.get('/user', function(req, res, next) {
+router.get('/', function(req, res, next) {
   Users.find({}).exec()
   .then(function(allUsers) {
     res.send(allUsers);
@@ -15,7 +17,7 @@ router.get('/user', function(req, res, next) {
 });
 
 //get user by ID
-router.get('/user/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   Users.findById({_id: req.params.id})
   .then(function(user) {
     res.send(user);
@@ -24,12 +26,12 @@ router.get('/user/:id', function(req, res, next) {
 });
 
 //add user
-router.post('/user', function(req, res, next) {
+router.post('/', function(req, res, next) {
   Users.create(req.body).then(null, next);
 });
 
 //update user
-router.put('/user/:id', function(req, res, next) {
+router.put('/:id', function(req, res, next) {
   Users.findById({_id: req.params.id})
   .then(function(user) {
     user.update(req.body);
@@ -42,7 +44,7 @@ router.put('/user/:id', function(req, res, next) {
 });
 
 //delete user
-router.delete('/user/:id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
   Users.findOneAndRemove({_id: req.params.id})
   .then(function() {
     res.sendStatus(204);
