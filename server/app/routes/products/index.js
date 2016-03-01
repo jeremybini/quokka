@@ -14,7 +14,10 @@ router.param('id', function(req, res, next, id) {
 		req.product = product;
 		next();
 	})
-	.then(null, next);
+	.then(null, function(err) {
+		err.status = 404;
+		next(err);
+	});
 });
 
 router.get('/', function(req, res, next) {
