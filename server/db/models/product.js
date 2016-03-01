@@ -29,9 +29,9 @@ var ProductSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
   }],
-  photo: {
+  photoUrl: {
     required: true,
-    photoUrl: String
+    type: String
   }
 });
 

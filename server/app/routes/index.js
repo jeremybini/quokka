@@ -3,8 +3,8 @@ var router = require('express').Router();
 module.exports = router;
 
 
-//maybe change to admins only?
 router.use('/members', require('./members'));
+router.use('/products', require('./products'));
 router.use('/user', require('./users'));
 // Make sure this is after all of
 // the registered routes!
