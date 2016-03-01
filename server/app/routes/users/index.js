@@ -3,6 +3,7 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
+
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -26,12 +27,12 @@ router.get('/:id', function(req, res, next) {
 
 //add user
 router.post('/', function(req, res, next) {
-  Users.create(req.body).then(null, next);
+  User.create(req.body).then(null, next);
 });
 
 //update user
 router.put('/:id', function(req, res, next) {
-  Users.findById({_id: req.params.id})
+  User.findById({_id: req.params.id})
   .then(function(user) {
     user.update(req.body);
     user.save();
@@ -44,7 +45,7 @@ router.put('/:id', function(req, res, next) {
 
 //delete user
 router.delete('/:id', function(req, res, next) {
-  Users.findOneAndRemove({_id: req.params.id})
+  User.findOneAndRemove({_id: req.params.id})
   .then(function() {
     res.sendStatus(204);
   })

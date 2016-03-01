@@ -7,16 +7,19 @@ var Product = mongoose.model('Product');
 
 //possible nested router => category
 
-router.param('id', function(req, res, next) {
-	Product.findById(req.params.id)
+router.param('id', function(req, res, next, id) {
+	Product.findById(id)
 	.then(product => {
+		console.log("PRODUCT IN ROUTER", product)
 		req.product = product;
+		next();
 	})
 	.then(null, next);
 });
 
 router.get('/', function(req, res, next) {
-	Product.find()
+	//THINK ABOUT HOW TO QUERY FOR CATEGORIES
+	Product.find(req.query)
 	.then(products => {
 		res.json(products)
 	})
