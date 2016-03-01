@@ -1,66 +1,86 @@
+/* USER MODEL */
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
+var Schema = mongoose.Schema;
 
-var schema = new mongoose.Schema({
-    email: {
-        type: String
-    },
-    password: {
-        type: String
-    },
-    salt: {
-        type: String
-    },
-    twitter: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
-    },
-    facebook: {
-        id: String
-    },
-    google: {
-        id: String
-    }
+var UserSchema = new Schema({
+  admin: {
+    required: true,
+    type: Boolean
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  salt: {
+    type: String
+  },
+  facebook: {
+    id: String
+  },
+  google: {
+    id: String
+  },
+  orders: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order'
+  }],
+  reviews: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Review'
+  }],
+  interests: {
+    type: String
+  }
 });
 
 // method to remove sensitive information from user objects before sending them out
-schema.methods.sanitize =  function () {
-    return _.omit(this.toJSON(), ['password', 'salt']);
+UserSchema.methods.sanitize =  function() {
+  return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
-var generateSalt = function () {
-    return crypto.randomBytes(16).toString('base64');
+var generateSalt = function() {
+  return crypto.randomBytes(16).toString('base64');
 };
 
-var encryptPassword = function (plainText, salt) {
-    var hash = crypto.createHash('sha1');
-    hash.update(plainText);
-    hash.update(salt);
-    return hash.digest('hex');
+var encryptPassword = function(plainText, salt) {
+  var hash = crypto.createHash('sha1');
+  hash.update(plainText);
+  hash.update(salt);
+  return hash.digest('hex');
 };
 
-schema.pre('save', function (next) {
+UserSchema.pre('save', function(next) {
+  if (this.isModified('password')) {
+      this.salt = this.constructor.generateSalt();
+      this.password = this.constructor.encryptPassword(this.password, this.salt);
+  }
 
-    if (this.isModified('password')) {
-        this.salt = this.constructor.generateSalt();
-        this.password = this.constructor.encryptPassword(this.password, this.salt);
-    }
-
-    next();
+  next();
 
 });
 
-schema.statics.generateSalt = generateSalt;
-schema.statics.encryptPassword = encryptPassword;
+UserSchema.statics.generateSalt = generateSalt;
+UserSchema.statics.encryptPassword = encryptPassword;
 
-schema.method('correctPassword', function (candidatePassword) {
-    return encryptPassword(candidatePassword, this.salt) === this.password;
+UserSchema.method('correctPassword', function(candidatePassword) {
+  return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', schema);
+//NOT SURE IF WE NEED THIS??
+//if new user, create empty cart.
+//if existing user logs in - if cart exists (order not yet placed), populate cart with the existing items. if cart does not exist (no pending orders), populate empty cart
+UserSchema.method('createCart', function() {
+  return new mongoose.model('Order');
+});
+
+mongoose.model('User', UserSchema);
