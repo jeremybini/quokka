@@ -8,7 +8,7 @@ var User = mongoose.model('User');
 
 //get all users
 router.get('/', function(req, res, next) {
-  Users.find({}).exec()
+  User.find({}).exec()
   .then(function(allUsers) {
     res.send(allUsers);
   })
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 //get user by ID
 router.get('/:id', function(req, res, next) {
-  Users.findById({_id: req.params.id})
+  User.findById({_id: req.params.id})
   .then(function(user) {
     res.send(user);
   })
