@@ -20,11 +20,18 @@ var schema = new mongoose.Schema({
   }],
   status: {
     type: String,
+    enum: ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'],
     default: 'Cart'
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  dateSubmitted: {
+    type: Date
+  },
+  dateFulfilled: {
+    type: Date
   }
 });
 
