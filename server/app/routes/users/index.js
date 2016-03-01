@@ -3,20 +3,21 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var Users = require('../../db/models/user.js');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
-//get all users
+//get all User
 router.get('/user', function(req, res, next) {
-  Users.find({}).exec()
-  .then(function(allUsers) {
-    res.send(allUsers);
+  User.find({}).exec()
+  .then(function(allUser) {
+    res.send(allUser);
   })
   .then(null, next);
 });
 
 //get user by ID
 router.get('/user/:id', function(req, res, next) {
-  Users.findById({_id: req.params.id})
+  User.findById({_id: req.params.id})
   .then(function(user) {
     res.send(user);
   })
@@ -25,12 +26,12 @@ router.get('/user/:id', function(req, res, next) {
 
 //add user
 router.post('/user', function(req, res, next) {
-  Users.create(req.body).then(null, next);
+  User.create(req.body).then(null, next);
 });
 
 //update user
 router.put('/user/:id', function(req, res, next) {
-  Users.findById({_id: req.params.id})
+  User.findById({_id: req.params.id})
   .then(function(user) {
     user.update(req.body);
     user.save();
@@ -43,7 +44,7 @@ router.put('/user/:id', function(req, res, next) {
 
 //delete user
 router.delete('/user/:id', function(req, res, next) {
-  Users.findOneAndRemove({_id: req.params.id})
+  User.findOneAndRemove({_id: req.params.id})
   .then(function() {
     res.sendStatus(204);
   })
