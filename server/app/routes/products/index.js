@@ -10,7 +10,6 @@ var Product = mongoose.model('Product');
 router.param('id', function(req, res, next, id) {
 	Product.findById(id)
 	.then(product => {
-		console.log("PRODUCT IN ROUTER", product)
 		req.product = product;
 		next();
 	})
