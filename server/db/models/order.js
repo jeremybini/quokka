@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var _ = require('lodash');
 
 var schema = new mongoose.Schema({
   products: [{
@@ -14,6 +13,10 @@ var schema = new mongoose.Schema({
     price: {
       type: Number
     }
+  }],
+  categories: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
   }],
   status: {
     type: String,
