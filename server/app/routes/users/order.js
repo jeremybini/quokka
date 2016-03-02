@@ -21,7 +21,7 @@ router.param('orderId', function(req, res, next, id) {
 
 router.get('/', function(req, res, next) {
 	Order.find({
-		user: req.user._id
+		user: req.currentUser._id
 	})
 	.then(orders => {
 		res.json(orders)
@@ -30,8 +30,11 @@ router.get('/', function(req, res, next) {
 	.then(null, next);
 })
 
+//restrict to admin?
 router.post('/', function(req, res, next) {
 	//also need to add order to user's document
+	//need to define on user model:
+	//req.currentUser.createOrder()
 	Order.create(req.body)
 	.then(order => {
 		res.status(201);
@@ -56,6 +59,8 @@ router.put('/:orderId', function(req, res, next) {
 
 router.delete('/:orderId', function(req, res, next) {
 	//also need to remove from user doc
+	//need to define:
+	//req.currentUser.removeOrder()
 	req.order.remove()
 	.then(function() {
 		res.sendStatus(204);
