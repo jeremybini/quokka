@@ -38,3 +38,11 @@ users
 		-get all
 		-put users/:id/orders/:id
 		-delete users/:id/orders/:id
+
+orders
+	ADMIN
+	-get all
+	-post one
+	-get one
+	-put one
+	-delete one

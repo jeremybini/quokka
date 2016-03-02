@@ -9,8 +9,12 @@ router.param('id', function(req, res, next) {
 	Review.findById(req.params.id)
 	.then(review => {
 		req.review = review;
+		next();
 	})
-	.then(null, next);
+	.then(null,  function(err) {
+		err.status = 404;
+		next(err);
+	});
 });
 
 router.get('/', function(req, res, next) {
@@ -35,7 +39,7 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.put('/:id', function(req, res, next) {
-	_.assign(req.review, req.body);
+	_.extend(req.review, req.body);
 
 	req.review.save()
 	.then(function(review){

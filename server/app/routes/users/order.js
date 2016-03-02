@@ -9,14 +9,19 @@ router.param('id', function(req, res, next) {
 	Order.findById(req.params.id)
 	.then(order => {
 		req.order = order;
+		next();
 	})
-	.then(null, next);
+	.then(null, function(err) {
+		err.status = 404;
+		next(err);
+	});
 });
 
 router.get('/', function(req, res, next) {
 	Order.find()
 	.then(orders => {
 		res.json(orders)
+		next();
 	})
 	.then(null, next);
 })
@@ -35,7 +40,7 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.put('/:id', function(req, res, next) {
-	_.assign(req.order, req.body);
+	_.extend(req.order, req.body);
 
 	req.order.save()
 	.then(function(order){

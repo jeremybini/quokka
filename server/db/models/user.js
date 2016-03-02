@@ -42,7 +42,7 @@ var UserSchema = new Schema({
 });
 
 // method to remove sensitive information from user objects before sending them out
-UserSchema.methods.sanitize =  function() {
+UserSchema.methods.sanitize = function() {
   return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
