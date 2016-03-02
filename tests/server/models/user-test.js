@@ -157,6 +157,33 @@ describe('User model', function () {
                     expect(sanitizedUser.salt).to.be.undefined;
                 });
             });
+
+        });
+
+        describe('creates admin status, reviews, and orders', function () {
+
+          var createUser = function () {
+            return User.create({ email: 'flotus@gmail.com', password: 'flotus' });
+          };
+
+          it('should have false admin status on new user creation', function() {
+            createUser().then(function (user) {
+            expect(user.admin).to.be.false;
+            });
+          });
+
+          it('should have a proper reviews field', function() {
+            createUser().then(function (user) {
+            expect(user.reviews).to.be.a('array');
+            });
+          });
+
+          it('should have a proper orders field', function() {
+            createUser().then(function (user) {
+            expect(user.orders).to.be.a('array');
+            });
+          });
+
         });
 
     });
