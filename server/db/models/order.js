@@ -10,7 +10,7 @@ var OrderSchema = new mongoose.Schema({
     },
     quantity: {
       type: Number,
-      require: true,
+      required: true,
       default: 1
     },
     price: {
@@ -25,12 +25,14 @@ var OrderSchema = new mongoose.Schema({
     type: String,
     enum: ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'],
     default: 'Cart',
-    require: true
+    required: true
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: 'User'
+  },
+  session: {
+    type: String
   },
   dateSubmitted: {
     type: Date
@@ -41,7 +43,7 @@ var OrderSchema = new mongoose.Schema({
 });
 
 OrderSchema.methods.submitOrder = function() {
-  return Order.findById(this._id).populate('products.product')
+  return this.findById(this._id).populate('products.product')
       .then(function(order) {
         order.products.forEach(function(item) {
           item.price = item.product.price;
@@ -49,7 +51,7 @@ OrderSchema.methods.submitOrder = function() {
         order.status = 'Created';
         order.dateSubmitted = Date.now();
         return order.save();
-      })
+      });
 };
 
 OrderSchema.methods.updateStatus = function(status) {
@@ -64,6 +66,32 @@ OrderSchema.virtual('totalPrice').get(function() {
     total += item.price || item.product.price;
   });
   return total;
+});
+
+OrderSchema.statics.findOrCreate = function(params) {
+  var order = this;
+  order.find(params)
+  .then(function(result) {
+    if (result.length) {
+      return result[0];
+    } else {
+      return order.create(params);
+    }
+  });
+};
+
+OrderSchema.pre('validate', function(next) {
+  if (this.user || this.session) {
+    next();
+  } else {
+    next(Error('Either User or Session must be specified.'));
+  }
+});
+
+OrderSchema.pre('save', function(next) {
+  this.products = this.products.filter(function(product) {
+    return product.quantity > 0;
+  });
 });
 
 mongoose.model('Order', OrderSchema);

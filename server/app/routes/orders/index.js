@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 //get all orders of one user
-router.get('/:userId', function(req, res, next) {
+router.get('/user/:userId', function(req, res, next) {
   User.findById({_id: req.params.userId}).populate('orders')
   .then(function(ordersOfThisUser) {
     res.send(ordersOfThisUser);
