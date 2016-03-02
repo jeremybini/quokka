@@ -22,6 +22,9 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
+var Product = Promise.promisifyAll(mongoose.model('Product'));
+var Review = Promise.promisifyAll(mongoose.model('Review'));
+var Category = Promise.promisifyAll(mongoose.model('Category'));
 
 var seedUsers = function () {
 
@@ -40,18 +43,89 @@ var seedUsers = function () {
 
 };
 
-connectToDb.then(function () {
-    User.findAsync({}).then(function (users) {
-        if (users.length === 0) {
-            return seedUsers();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
-        console.log(chalk.green('Seed successful!'));
-        process.kill(0);
-    }).catch(function (err) {
+var seedProducts = function (categories) {
+
+    var products = [
+        {
+            title: 'Matching Sweaters',
+            description: 'Your dog and you can wear matching sweaters.',
+            price: 3499,
+            photoUrl: '/images/UJ1982_2.jpg',
+            categories: [categories[0], categories[2]]
+        },
+        {
+            title: 'Matching Mittens',
+            description: 'Your cat and you can wear matching mittens.',
+            price: 5499,
+            photoUrl: '/images/catsocks.jpg',
+            categories: [categories[1], categories[2]]
+        },
+        {
+            title: 'Matching Mittens',
+            description: 'Your cat and you can wear matching mittens.',
+            price: 5499,
+            photoUrl: '/images/718471.jpg',
+            categories: [categories[0], categories[1]]
+        },
+    ];
+
+    return Product.createAsync(products);
+
+};
+
+var seedReviews = function (user, product) {
+  
+    var reviews = [
+        {
+            rating: 4,
+            content: 'I love matching my pets.',
+            user: user[0]._id,
+            product: product[0]._id
+        },
+        {
+            rating: 2,
+            content: 'I don\'t know why I have a pet.',
+            user: user[1]._id,
+            product: product[1]._id
+        },
+
+    ];
+
+    return Review.createAsync(reviews);
+
+};
+
+var seedCategories = function () {
+  
+    var categories = [
+        {
+            name: "Dogs"
+        },
+        {
+            name: "Cats"
+        },
+        {
+            name: "Other Critters"
+        },
+    ];
+
+    return Category.createAsync(categories);
+
+};
+
+connectToDb.then(function (db) {
+    return db.db.dropDatabase();
+}).then(function() {
+    return seedCategories();
+}).then(function(categories) {
+    Promise.all([seedUsers(), seedProducts(categories)])
+    .spread(function (users, products) {
+        return seedReviews(users, products);
+    })
+    .then(function() {
+        console.log(chalk.green('Seed successful!'));   
+        process.kill(0);})
+        .catch(function (err) {
         console.error(err);
         process.kill(1);
     });

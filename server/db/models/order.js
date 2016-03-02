@@ -5,12 +5,11 @@ var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true
+      ref: 'Product'
+      // required: true
     },
     quantity: {
       type: Number,
-      required: true,
       default: 1
     },
     price: {
@@ -24,8 +23,7 @@ var OrderSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'],
-    default: 'Cart',
-    required: true
+    default: 'Cart'
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -70,14 +68,20 @@ OrderSchema.virtual('totalPrice').get(function() {
 
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
-  order.find(params)
+  console.log('in findorcreate', order);
+  return order.find(params)
   .then(function(result) {
+    console.log('in find or create, result: ', result);
     if (result.length) {
       return result[0];
     } else {
+      console.log('in order create else: ', params)
       return order.create(params);
     }
-  });
+  })
+  .catch(function(err) {
+    console.error(err);
+  })
 };
 
 OrderSchema.pre('validate', function(next) {
@@ -92,6 +96,7 @@ OrderSchema.pre('save', function(next) {
   this.products = this.products.filter(function(product) {
     return product.quantity > 0;
   });
+  next();
 });
 
 mongoose.model('Order', OrderSchema);
