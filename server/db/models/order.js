@@ -70,7 +70,7 @@ OrderSchema.virtual('totalPrice').get(function() {
 
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
-  order.find(params)
+  return order.find(params)
   .then(function(result) {
     if (result.length) {
       return result[0];
@@ -92,6 +92,7 @@ OrderSchema.pre('save', function(next) {
   this.products = this.products.filter(function(product) {
     return product.quantity > 0;
   });
+  next();
 });
 
 mongoose.model('Order', OrderSchema);

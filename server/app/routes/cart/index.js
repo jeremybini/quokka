@@ -8,17 +8,16 @@ var _ = require('lodash');
 
 //this gets run whenever user adds or updates a cart, or is a new user and needs a new cart
 router.use(function(req, res, next) {
-  var params = {
-    status: 'Cart'
-  };
+  var params = {};
   if (req.user) {
-    (params.user = req.user._id);
+    params.user = req.user._id;
   } else {
-    (params.session = req.sessionID);
+    params.session = req.sessionID;
   }
   Order.findOrCreate(params)
   .then(function(order) {
     req.cart = order;
+    next();
   })
   .then(null, next);
 });
@@ -27,7 +26,7 @@ router.use(function(req, res, next) {
 //have lots of carts in the database that should be removed
 
 //req.body should have a product ID
-router.get('/remove', function(req, res, next) {
+router.post('/remove', function(req, res, next) {
   req.cart.products = req.cart.products.filter(function(item) {
     return item.product !== req.body.productId;
   });
@@ -37,8 +36,9 @@ router.get('/remove', function(req, res, next) {
   })
   .then(null, next);
 });
+
 //req.body should have a product ID
-router.get('/add', function(req, res, next) {
+router.post('/add', function(req, res, next) {
   req.cart.products.push(req.body.productId);
   req.cart.save()
   .then(function(result) {
@@ -46,8 +46,9 @@ router.get('/add', function(req, res, next) {
   })
   .then(null, next);
 });
+
 //req.body should have a product ID, updated quantity
-router.get('/update', function(req, res, next) {
+router.post('/update', function(req, res, next) {
   var changingProduct = _.find(req.cart.products, {product: req.body.productId});
   changingProduct.quantity = req.body.quantity;
   req.cart.save()
@@ -56,10 +57,11 @@ router.get('/update', function(req, res, next) {
   })
   .then(null, next);
 });
+
 //req.body should have a product ID, updated status--this is where orders
 //are actually submitted
 //at this time, confirmation email should be sent and other actions probably triggered
-router.get('/submit', function(req, res, next) {
+router.post('/submit', function(req, res, next) {
   req.cart.status = "Submitted";
   req.cart.save()
   .then(function(result) {
