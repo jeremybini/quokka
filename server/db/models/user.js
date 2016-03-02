@@ -4,6 +4,8 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var Schema = mongoose.Schema;
+var Review = mongoose.model('Review');
+var Order = mongoose.model('Order');
 
 var UserSchema = new Schema({
   admin: {
@@ -83,4 +85,52 @@ UserSchema.method('createCart', function() {
   return new mongoose.model('Order');
 });
 
+UserSchema.methods.addReview = function (reviewObj) {
+  var user = this;
+  var review;
+
+  return Review.create(reviewObj)
+  .then(function (createdReview) {
+    review = createdReview;
+    user.reviews.addToSet(review._id);
+    return user.save();
+  })
+  .then(function () {
+    return Product.addReview(review)
+  })
+  .then(function() {
+    return review;
+  });
+};
+
+UserSchema.methods.removeReview = function (review) {
+  var user = this;
+
+  return review.remove()
+  .then(function () {
+    user.reviews.pull(review);
+    return user.save();
+  })
+  .then(function() {
+    return Product.removeReview(review);
+  });
+};
+
 mongoose.model('User', UserSchema);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

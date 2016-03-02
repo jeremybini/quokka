@@ -1,10 +1,11 @@
 /* USER ROUTES */
-
 'use strict';
 var router = require('express').Router();
 module.exports = router;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var OrderRouter = require('./order');
+var ReviewRouter = require('./review');
 
 //get all users
 router.get('/', function(req, res, next) {
@@ -14,6 +15,10 @@ router.get('/', function(req, res, next) {
   })
   .then(null, next);
 });
+
+//nested sub-routers
+router.use('/:id/orders/', OrderRouter);
+router.use('/:id/reviews/', ReviewRouter);
 
 //get user by ID
 router.get('/:id', function(req, res, next) {

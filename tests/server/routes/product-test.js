@@ -4,6 +4,7 @@ require('../../../server/db/models');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
 var Review = mongoose.model('Review');
+var User = mongoose.model('User');
 
 var expect = require('chai').expect;
 
@@ -32,7 +33,18 @@ describe('Products', function () {
 
 			describe('products', function () {
 
-				var category, product, review;
+				var category, product, review, user;
+
+					beforeEach(function (done) {
+						User.create({
+							email: 'me@email.com',
+							password: 'me'
+						}, function (err, u) {
+								if (err) return done(err);
+								user = u;
+								done();
+						})
+					});
 
 					beforeEach(function (done) {
 						Category.create({
@@ -45,28 +57,34 @@ describe('Products', function () {
 					});
 
 					beforeEach(function (done) {
-						Review.create({
-							rating: 5,
-							content: 'Great'
-						}, function (err, r) {
-							if (err) return done(err);
-							review = r;
-							done();
-						});
-					});
-
-					beforeEach(function (done) {
 						Product.create({
 								title: "Dog Pants",
 						  	description: 'Pants for you and your dog',
 						  	price: 32.99,
 							  categories: [category._id],
-							  reviews: [review._id],
 							  photoUrl: 'http://dogpants.com'
 						}, function (err, p) {
 							if (err) return done(err);
 							product = p;
 							done();
+						});
+					});
+
+					beforeEach(function (done) {
+						Review.create({
+							rating: 5,
+							content: 'Great',
+							product: product._id,
+							user: user._id
+						}, function (err, r) {
+							if (err) return done(err);
+							review = r;
+
+							product.reviews = [review._id]
+							product.save()
+							.then(function() {
+								done();
+							})
 						});
 					});
 				
