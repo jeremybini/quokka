@@ -1,11 +1,24 @@
 /* USER ROUTES */
 'use strict';
 var router = require('express').Router();
+var _ = require('lodash');
 module.exports = router;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var OrderRouter = require('./order');
 var ReviewRouter = require('./review');
+
+router.param('id', function(req, res, next, id) {
+  User.findById(id)
+  .then(user => {
+    req.currentUser = user;
+    next();
+  })
+  .then(null, function(err) {
+    err.status = 404;
+    next(err);
+  });
+});
 
 //get all users
 router.get('/', function(req, res, next) {
@@ -22,11 +35,7 @@ router.use('/:id/reviews/', ReviewRouter);
 
 //get user by ID
 router.get('/:id', function(req, res, next) {
-  User.findById({_id: req.params.id})
-  .then(function(user) {
-    res.send(user);
-  })
-  .then(null, next);
+  res.json(req.currentUser);
 });
 
 //add user
@@ -36,20 +45,28 @@ router.post('/', function(req, res, next) {
 
 //update user
 router.put('/:id', function(req, res, next) {
-  User.findById({_id: req.params.id})
-  .then(function(user) {
-    user.update(req.body);
-    user.save();
-  })
-  .then(function(updatedUser) {
-    res.send(updatedUser);
+  _.extend(req.currentUser, req.body);
+
+  req.currentUser.save()
+  .then(function(product){
+    res.json(product);
   })
   .then(null, next);
+  
+  // User.findById({_id: req.params.id})
+  // .then(function(user) {
+  //   user.update(req.body);
+  //   user.save();
+  // })
+  // .then(function(updatedUser) {
+  //   res.send(updatedUser);
+  // })
+  // .then(null, next);
 });
 
 //delete user
 router.delete('/:id', function(req, res, next) {
-  User.findOneAndRemove({_id: req.params.id})
+  req.currentUser.remove()
   .then(function() {
     res.sendStatus(204);
   })
