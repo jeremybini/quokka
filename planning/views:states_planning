@@ -47,3 +47,31 @@ ADMIN
 
 login/signup
 	-facebook and google, or local
+
+
+ANGULAR!!?
+Factories:
+	-Products
+	-Users
+	-Reviews
+	-Categories
+	-Orders
+
+Controllers:
+	-
+
+States:
+	For user:
+	-Products
+		/products
+		/products/:id
+
+	-Categories
+		/categories/:type
+
+	-Orders
+		/orders
+
+	-Cart
+		/cart
+
