@@ -7,8 +7,8 @@ var _ = require('lodash'),
 
 module.exports = router;
 
-router.param('id', function(req, res, next) {
-	Order.findById(req.params.id)
+router.param('orderId', function(req, res, next, id) {
+	Order.findById(id)
 	.then(order => {
 		req.order = order;
 		next();
@@ -40,11 +40,11 @@ router.post('/', function(req, res, next) {
 	.then(null, next);
 })
 
-router.get('/:id', function(req, res, next) {
+router.get('/:orderId', function(req, res, next) {
 	res.json(req.order);
 })
 
-router.put('/:id', function(req, res, next) {
+router.put('/:orderId', function(req, res, next) {
 	_.extend(req.order, req.body);
 
 	req.order.save()
@@ -54,7 +54,7 @@ router.put('/:id', function(req, res, next) {
 	.then(null, next);
 })
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:orderId', function(req, res, next) {
 	//also need to remove from user doc
 	req.order.remove()
 	.then(function() {

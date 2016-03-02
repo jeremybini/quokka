@@ -7,8 +7,8 @@ var _ = require('lodash'),
 
 module.exports = router;
 
-router.param('id', function(req, res, next) {
-	Review.findById(req.params.id)
+router.param('reviewId', function(req, res, next, id) {
+	Review.findById(id)
 	.then(review => {
 		req.review = review;
 		next();
@@ -41,12 +41,12 @@ router.post('/', function(req, res, next) {
 })
 
 //
-router.get('/:id', function(req, res, next) {
+router.get('/:reviewId', function(req, res, next) {
 	res.json(req.review);
 })
 
 //
-router.put('/:id', function(req, res, next) {
+router.put('/:reviewId', function(req, res, next) {
 	_.extend(req.review, req.body);
 
 	req.review.save()
@@ -57,7 +57,7 @@ router.put('/:id', function(req, res, next) {
 })
 
 //
-router.delete('/:id', function(req, res, next) {
+router.delete('/:reviewId', function(req, res, next) {
 	req.user.removeReview(req.review)
 	.then(function() {
 		res.sendStatus(204);

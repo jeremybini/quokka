@@ -5,6 +5,7 @@ module.exports = router;
 
 router.use('/members', require('./members'));
 router.use('/products', require('./products'));
+
 //should we add authentication check here for /users?
 ////req.user._id === req.requestedUser || req.user.isAdmin
 router.use('/users', require('./users'));
