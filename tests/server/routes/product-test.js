@@ -168,7 +168,7 @@ describe('Products', function () {
 				it('GET with query string filter', function (done) {
 					agent
 					// remember that in query strings %20 means a single whitespace character
-					.get('/api/products?category=Dog')
+					.get('/api/products?categories='+category._id)
 					.expect(200)
 					.end(function (err, res) {
 						if (err) return done(err);
@@ -181,7 +181,7 @@ describe('Products', function () {
 				it('GET with query string filter that has no results', function (done) {
 					agent
 					// remember that in query strings %20 means a single whitespace character
-					.get('/api/products?category=Cat')
+					.get('/api/products?categoryies=invalidProductId')
 					.expect(200)
 					.end(function (err, res) {
 						if (err) return done(err);
