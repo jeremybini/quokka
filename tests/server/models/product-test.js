@@ -83,6 +83,18 @@ describe('Product model', function() {
           .then(null, function(err) {
             done(err);
           });
+    });
+    it('can remove a review', function(done) {
+      Product.addReview(review).then(function() {
+        Product.removeReview(review)
+            .then(function(productWithRemovedReview) {
+              expect(productWithRemovedReview.reviews).to.have.length(0);
+              done();
+            })
+            .then(null, function(err) {
+              done(err);
+            })
+      })
     })
   });
 });

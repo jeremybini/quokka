@@ -40,7 +40,7 @@ ProductSchema.statics.addReview = function(review) {
 };
 
 ProductSchema.statics.removeReview = function(review) {
-  return this.find({ reviews: review._id })
+  return this.findOne({ reviews: review._id })
   .then(function(product) {
     product.reviews.pull(review);
     return product.save()
