@@ -39,7 +39,7 @@ ProductSchema.statics.addReview = function(review) {
   });
 }
 
-Product.statics.removeReview = function(review) {
+ProductSchema.statics.removeReview = function(review) {
   return Product.find({ reviews: review._id })
   .then(function(product) {
     product.reviews.pull(review);

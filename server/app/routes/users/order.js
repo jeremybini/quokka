@@ -21,7 +21,7 @@ router.param('orderId', function(req, res, next, id) {
 
 router.get('/', function(req, res, next) {
 	Order.find({
-		user: req.user._id;
+		user: req.user._id
 	})
 	.then(orders => {
 		res.json(orders)
