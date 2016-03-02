@@ -10,15 +10,18 @@ var Product = mongoose.model('Product');
 router.param('id', function(req, res, next, id) {
 	Product.findById(id)
 	.then(product => {
-		console.log("PRODUCT IN ROUTER", product)
 		req.product = product;
 		next();
 	})
-	.then(null, next);
+	.then(null, function(err) {
+		err.status = 404;
+		next(err);
+	});
 });
 
 router.get('/', function(req, res, next) {
-	//THINK ABOUT HOW TO QUERY FOR CATEGORIES
+	//might be a better way to query for categories
+	//must pass in categories as query, not category.
 	Product.find(req.query)
 	.then(products => {
 		res.json(products)
