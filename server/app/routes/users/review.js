@@ -1,9 +1,9 @@
 var _ = require('lodash'),
-		app = require('../../app'),
 		mongoose = require('mongoose'),
 		router = require('express').Router({ mergeParams: true }),
-		module.exports = router,
 		Review = mongoose.model('Review');
+
+module.exports = router;
 
 router.param('id', function(req, res, next) {
 	Review.findById(req.params.id)
