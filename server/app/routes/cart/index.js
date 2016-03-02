@@ -39,7 +39,12 @@ router.get('/remove', function(req, res, next) {
 });
 //req.body should have a product ID
 router.get('/add', function(req, res, next) {
-  req.cart.products.push(req.body.productId);
+  var existingProduct = _.find(req.cart.products, {product: req.body.productId});
+  if (existingProduct) {
+    existingProduct.quantity++;
+  } else {
+    req.cart.products.push({product: req.body.productId});
+  }
   req.cart.save()
   .then(function(result) {
     res.status(204).json(result);

@@ -22,6 +22,8 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
+var User = Promise.promisifyAll(mongoose.model('Product'));
+
 
 var seedUsers = function () {
 
@@ -37,6 +39,21 @@ var seedUsers = function () {
     ];
 
     return User.createAsync(users);
+
+};
+
+var seedProducts = function () {
+
+    var products = [
+        {
+            title: 'Matching Sweaters',
+            description: 'Your dog and you can wear matching sweaters.',
+            price: 34.99,
+            photoUrl: '/images/UJ1982_2.jpg'
+        },
+    ];
+
+    return Product.createAsync(products);
 
 };
 
