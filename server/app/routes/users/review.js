@@ -1,3 +1,5 @@
+//FOR ALL ROUTES HERE, require req.user._id === req.requestedUser || req.user.isAdmin
+
 var _ = require('lodash'),
 		mongoose = require('mongoose'),
 		router = require('express').Router({ mergeParams: true }),
@@ -17,16 +19,20 @@ router.param('id', function(req, res, next) {
 	});
 });
 
+//get all reviews for current user
 router.get('/', function(req, res, next) {
-	Review.find()
+	Review.find({
+		user: req.user._id
+	})
 	.then(reviews => {
 		res.json(reviews)
 	})
 	.then(null, next);
 })
 
+//create review for current user
 router.post('/', function(req, res, next) {
-	Review.create(req.body)
+	req.user.addReview(req.body)
 	.then(review => {
 		res.status(201);
 		res.json(review);
@@ -34,10 +40,12 @@ router.post('/', function(req, res, next) {
 	.then(null, next);
 })
 
+//
 router.get('/:id', function(req, res, next) {
 	res.json(req.review);
 })
 
+//
 router.put('/:id', function(req, res, next) {
 	_.extend(req.review, req.body);
 
@@ -48,8 +56,9 @@ router.put('/:id', function(req, res, next) {
 	.then(null, next);
 })
 
+//
 router.delete('/:id', function(req, res, next) {
-	req.review.remove()
+	req.user.removeReview(req.review)
 	.then(function() {
 		res.sendStatus(204);
 	})

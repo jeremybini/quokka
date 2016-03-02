@@ -31,4 +31,20 @@ var ProductSchema = new Schema({
   }
 });
 
+ProductSchema.statics.addReview = function(review) {
+  return Product.findById(review.product)
+  .then(function(product) {
+    product.reviews.addToSet(review._id);
+    return product.save();
+  });
+}
+
+Product.statics.removeReview = function(review) {
+  return Product.find({ reviews: review._id })
+  .then(function(product) {
+    product.reviews.pull(review);
+    return product.save()
+  });
+}
+
 mongoose.model('Product', ProductSchema);

@@ -53,6 +53,7 @@ router.put('/:id', function(req, res, next) {
 })
 
 router.delete('/:id', function(req, res, next) {
+	//should also delete all reviews associated with this product
 	req.product.remove()
 	.then(function() {
 		res.sendStatus(204);
