@@ -1,14 +1,17 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Product',
+      required: true
     },
     quantity: {
-      type: Number
+      type: Number,
+      require: true,
+      default: 1
     },
     price: {
       type: Number
@@ -21,11 +24,13 @@ var schema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'],
-    default: 'Cart'
+    default: 'Cart',
+    require: true
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   dateSubmitted: {
     type: Date
@@ -35,24 +40,25 @@ var schema = new mongoose.Schema({
   }
 });
 
-schema.methods.createOrder = function() {
+OrderSchema.methods.createOrder = function() {
   return Order.findById(this._id).populate('products.product')
       .then(function(order) {
         order.products.forEach(function(item) {
           item.price = item.product.price;
         });
         order.status = 'Created';
+        order.dateSubmitted = Date.now();
         return order.save();
       })
 };
 
-schema.methods.updateStatus = function(status) {
+OrderSchema.methods.updateStatus = function(status) {
   this.status = status;
   return this.save();
 };
 
 //will break if order.products.product has not been populated and order status is 'Cart'
-schema.virtual('totalPrice').get(function() {
+OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
   this.products.forEach(function(item) {
     total += item.price || item.product.price;
@@ -60,4 +66,4 @@ schema.virtual('totalPrice').get(function() {
   return total;
 });
 
-mongoose.model('Order', schema);
+mongoose.model('Order', OrderSchema);
