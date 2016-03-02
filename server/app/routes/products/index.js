@@ -20,7 +20,8 @@ router.param('id', function(req, res, next, id) {
 });
 
 router.get('/', function(req, res, next) {
-	//THINK ABOUT HOW TO QUERY FOR CATEGORIES
+	//might be a better way to query for categories
+	//must pass in categories as query, not category.
 	Product.find(req.query)
 	.then(products => {
 		res.json(products)
