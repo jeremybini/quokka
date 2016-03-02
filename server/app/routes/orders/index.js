@@ -41,7 +41,7 @@ router.put('/:id', function(req, res, next) {
   Order.findById({_id: req.params.id})
   .then(function(order) {
     if (order.status === 'Cart') {
-      order.createOrder();
+      order.submitOrder();
     } else {
       order.updateStatus(req.body);
     }

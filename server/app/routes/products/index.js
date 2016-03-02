@@ -43,7 +43,7 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.put('/:id', function(req, res, next) {
-	_.assign(req.product, req.body);
+	_.extend(req.product, req.body);
 
 	req.product.save()
 	.then(function(product){
@@ -53,6 +53,7 @@ router.put('/:id', function(req, res, next) {
 })
 
 router.delete('/:id', function(req, res, next) {
+	//should also delete all reviews associated with this product
 	req.product.remove()
 	.then(function() {
 		res.sendStatus(204);

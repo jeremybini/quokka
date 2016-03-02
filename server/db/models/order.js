@@ -40,7 +40,7 @@ var OrderSchema = new mongoose.Schema({
   }
 });
 
-OrderSchema.methods.createOrder = function() {
+OrderSchema.methods.submitOrder = function() {
   return Order.findById(this._id).populate('products.product')
       .then(function(order) {
         order.products.forEach(function(item) {
