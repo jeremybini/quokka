@@ -16,11 +16,23 @@ router.use(function(req, res, next) {
   } else {
     (params.session = req.sessionID);
   }
-  Order.findOrCreate(params)
+  // Order.findOrCreate(params)
+  // .then(function(order) {
+  //   req.cart = order;
+  //   console.log('into then of cart route, cart: ', req.cart)
+  //   next();
+  // })
+  // .then(null, function(err) {
+  //   console.log(err);
+  //   next(err);
+  // });
+  var order = new Order(params);
+  // Order.create(params)
+  order.save()
   .then(function(order) {
     req.cart = order;
-  })
-  .then(null, next);
+    next()
+  }).catch(next);
 });
 
 //what happens when unauth users add to carts then leave? we will
@@ -40,14 +52,19 @@ router.post('/remove', function(req, res, next) {
 //req.body should have a product ID
 router.post('/add', function(req, res, next) {
   var existingProduct = _.find(req.cart.products, {product: req.body.productId});
+  console.log("Made it to post add route, cart: ", req.body);
+
   if (existingProduct) {
     existingProduct.quantity++;
   } else {
     req.cart.products.push({product: req.body.productId});
+    console.log('!!!!!!!', req.cart.products);
   }
   req.cart.save()
   .then(function(result) {
-    res.status(204).json(result);
+    console.log('!?!?!?!', result);
+    //res.status(204);
+    res.json(result);
   })
   .then(null, next);
 });
