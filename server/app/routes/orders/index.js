@@ -9,10 +9,9 @@ var User = mongoose.model('User');
 
 //get all orders of all users
 router.get('/', function(req, res, next) {
-  //if there is no req.query after '/', then get all orders of all users, else get orders filtered by the query
-  Order.find(req.query)
-  .then(function(ordersByQuery) {
-    res.send(ordersByQuery);
+  Order.find({}).exec()
+  .then(function(orders) {
+    res.send(orders);
   })
   .then(null, next);
 });
@@ -43,7 +42,7 @@ router.put('/:id', function(req, res, next) {
     if (order.status === 'Cart') {
       order.submitOrder();
     } else {
-      order.updateStatus(req.body);
+      order.updateStatus(req.body.status);
     }
   })
   .then(function(updatedOrder) {

@@ -9,7 +9,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
 
   CartFactory.addProduct = function(product) {
     return $http.post('/api/products/add', {productId: product._id})
-    .then(function(res => res.data)
+    .then(res => res.data)
     .then(function(cart) {
       currentCart = cart;
     })
@@ -18,7 +18,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
 
   CartFactory.removeProduct = function(product) {
     return $http.post('/api/products/remove', {productId: product._id})
-    .then(function(res => res.data))
+    .then(res => res.data)
     .then(function(cart) {
       currentCart = cart;
     })
@@ -27,7 +27,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
 
   CartFactory.update = function(product, quantity) {
     return $http.post('/api/products/update', {productId: product._id, quantity: quantity})
-    .then(function(res => res.data))
+    .then(res => res.data)
     .then(function(cart) {
       currentCart = cart;
     })
@@ -36,7 +36,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
 
   CartFactory.clearCart = function() {
     return $http.delete('/api/products/clearCart')
-    .then(function(res => res.data))
+    .then(res => res.data)
     .then(function(cart) {
       currentCart = cart;
     })

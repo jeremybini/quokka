@@ -30,7 +30,7 @@ app.factory('OrderFactory', function ($http, $log) {
     },
 
     update : function (id, newStatus) {
-      return $http.put('/api/orders' + id, newStatus)
+      return $http.put('/api/orders/' + id, newStatus)
       .then(response => response.data)
       .catch($log.error);
     }
