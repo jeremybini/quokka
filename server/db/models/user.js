@@ -6,6 +6,7 @@ var _ = require('lodash');
 var Schema = mongoose.Schema;
 var Review = mongoose.model('Review');
 var Order = mongoose.model('Order');
+var Product = mongoose.model('Product');
 
 var UserSchema = new Schema({
   admin: {

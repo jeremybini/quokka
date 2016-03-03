@@ -1,5 +1,15 @@
+/*colors:
+orange: #FA6900
+light orange: #F38630
+gray: #E0E4CC
+light blue: #A7DBDB
+blue: #69D2E7
+*/
+
 * {
   box-sizing: border-box;
+  font-family: 'Sintony', sans-serif;
+	font-family: 'Coming Soon', cursive;
 }
 
 body {
@@ -19,8 +29,140 @@ body {
   margin: 0 auto;
 }
 
+#heading {
+	padding: none;
+	height: 500px;
+	width: 100%;
+	background-image: url('/scss/directives/gplaypattern.png');
+	/*========================================================
+	 This pattern is downloaded from www.subtlepatterns.com 
+	 If you need more, that's where to get'em.
+	 ========================================================
+	*/
+	position: relative;
+	border-bottom: 2px solid black;
+	img {
+		display: none;
+		display: block;
+		margin: auto;
+		width: 300px;
+		height: 300px;
+	}
+}
+
+#filler {
+	height: 1000px;
+}
+
+.navbar-hidden {
+	opacity: 0;
+}
+
+.navbar-stuck {
+	top: 0;
+	position: fixed;
+	width: 100%;
+	transition: .7s;
+	opacity: 1;
+	background-color: #69D2E7;
+  border-bottom: 1px solid black;
+  box-shadow: 1px 1px 14px -3px black;
+  li > a {
+    cursor: pointer;
+    transition: color 0.2s;
+    color: white !important;
+    &.active {
+      color: lighten(#F38630, 20%) !important;
+    }
+    &:hover {
+      background: none;
+      color: #F38630 !important;
+    }
+    &:focus {
+      background: none;
+    }
+  }
+}
+
+.product-box {
+	padding: 20px;
+	height: 300px;
+}
+
+.product-box:hover {
+	.product-card {
+		border: 3px solid #F38630;
+		transition: .7s;
+	}
+	.product-tag {
+		display:block;
+		width: 100%;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		height: 60px;
+		background-color: rgba(250, 105, 0, .7);
+		color: white;
+		transition: all .4s ease;
+	}
+}
+
+.product-card {
+	position: relative;
+	height: 100%;
+	border: 3px solid #E0E4CC;
+}
+
+.product-tag {
+	height: 0;
+	overflow: hidden;
+}
+
+.category-card {
+	position: relative;
+	height: 100%;
+	border: 3px solid #E0E4CC;
+}
+
+.category-tag {
+	height: 100%;
+	width: 100%;
+	h1 {
+		color: white;
+		display: inline-block;
+		vertical-align: center;
+		opacity: 0;
+	}
+}
+
+.category-box {
+	padding: 20px;
+	height: 300px;
+}
+
+.category-box:hover {
+	.category-card {
+		border: 3px solid #F38630;
+		transition: .7s;
+	}
+	.category-tag {
+		background-color: #FA6900;
+		color: white;
+		opacity: .5;
+		transition: all .4s ease;
+		h1 {
+			opacity: 1;
+			transition: .4s ease
+		}
+	}
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
+
+
+
+

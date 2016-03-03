@@ -1,9 +1,9 @@
 navbar {
-
+  z-index: 999999;
+  width: 100%;
   display: block;
-  background: white;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
+  position: absolute;
+  background: transparent;
 
   .container {
     width: 91%;
@@ -19,18 +19,18 @@ navbar {
 
   a {
     color: black;
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .nav > li > a {
     cursor: pointer;
     transition: color 0.2s;
     &.active {
-      color: darken(#f31214, 10%);
+      color: darken(#FA6900, 5%);
     }
     &:hover {
       background: none;
-      color: #f31214;
+      color: #F38630;
     }
     &:focus {
       background: none;

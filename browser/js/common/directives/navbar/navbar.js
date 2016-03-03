@@ -1,16 +1,16 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, $window) {
 
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
-        link: function (scope) {
+        link: function (scope, element, attr) {
 
             scope.items = [
-                { label: 'Home', state: 'home' },
-                { label: 'About', state: 'about' },
-                { label: 'Documentation', state: 'docs' },
-                { label: 'Members Only', state: 'membersOnly', auth: true }
+                { label: 'Dogs', state: 'home' },
+                { label: 'Cats', state: 'about' },
+                { label: 'Other Critters', state: 'docs' },
+                { label: 'Profile', state: 'profile', auth: true }
             ];
 
             scope.user = null;
@@ -41,6 +41,18 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
+            var $win = angular.element($window);
+            $win.on('scroll', function (e) {
+                if ($window.pageYOffset >= 400) {
+                    element.removeClass('navbar-hidden');
+                    element.addClass('navbar-stuck');
+                } else if ($window.pageYOffset > 93) {
+                    element.addClass('navbar-hidden');
+                } else {
+                    element.removeClass('navbar-stuck');
+                    element.removeClass('navbar-hidden');
+                }
+            });
         }
 
     };

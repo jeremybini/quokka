@@ -14,15 +14,14 @@ app.factory('Product', function($http, $log) {
 			.then(res => res.data)
 			.catch($log.error);
 		},
-
-		fetchByCategory: function(category) {
+		
+		fetchByCategory: function(categoryId) {
 			return $http.get(homePath, {
-				params: { category: category._id }
+				params: { categories: categoryId }
 			})
 			.then(res => res.data)
 			.catch($log.error);
-		},
-
+		}
 
 	}
 })
