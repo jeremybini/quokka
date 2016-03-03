@@ -6,22 +6,31 @@ app.config(function ($stateProvider) {
     url: '/products',
     templateUrl: '/js/products/products-list.template.html',
     resolve: {
-    	products: function(Product) {
-    		return Product.fetchAll()
+    	products: function(ProductFactory) {
+    		return ProductFactory.fetchAll()
     	}
     },
     controller: 'ProductsCtrl'
   });
-});
 
-app.config(function ($stateProvider) {
   $stateProvider.state('product', {
     url: '/products/:id',
     templateUrl: '/js/products/product-view.template.html',
     resolve: {
-    	product: function(Product, $stateParams) {
-    		return Product.fetchById($stateParams.id)
+    	product: function(ProductFactory, $stateParams) {
+    		return ProductFactory.fetchById($stateParams.id)
     	}
+    },
+    controller: 'ProductCtrl'
+  });
+
+  $stateProvider.state('category', {
+    url: '/categories/:id',
+    templateUrl: '/js/products/products-list.template.html',
+    resolve: {
+      product: function(ProductFactory, $stateParams) {
+        return ProductFactory.fetchByCategory($stateParams.id)
+      }
     },
     controller: 'ProductCtrl'
   });
