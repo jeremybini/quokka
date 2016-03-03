@@ -90,3 +90,13 @@ router.post('/submit', function(req, res, next) {
   .then(null, next);
 });
 
+router.delete('/clearCart', function(req, res, next) {
+  req.cart.products = [];
+  req.cart.save()
+  .then(function(result) {
+    res.status = 204;
+    res.json(result);
+  })
+  .then(null, next);
+});
+
