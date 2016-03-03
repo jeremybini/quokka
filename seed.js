@@ -25,6 +25,7 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
 var Category = Promise.promisifyAll(mongoose.model('Category'));
+var Order = Promise.promisifyAll(mongoose.model('Order'));
 
 var seedUsers = function () {
 
@@ -92,6 +93,31 @@ var seedReviews = function (user, product) {
     ];
 
     return Review.createAsync(reviews);
+
+};
+
+var seedOrders = function (user, product) {
+  
+    var orders = [
+        {
+            user: user[0]._id,
+            products: [ { product: product[0]._id, quantity: 2, price: 56 } ],
+            status: 'Submitted'
+        },
+        {
+            user: user[1]._id,
+            products: [ { product: product[1]._id, quantity: 1, price: 33 } ],
+            status: 'Processing'
+        },
+        {
+            user: user[0]._id,
+            products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
+            status: 'Completed'
+        }
+
+    ];
+
+    return Order.createAsync(orders);
 
 };
 
