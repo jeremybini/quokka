@@ -1,11 +1,11 @@
 <section>
 	<div class="container">
+		<h1 class="text-center">{{ category || "All" }} Products</h1>
 		<div class="row">
-			<div ng-repeat="product in products" class="col-md-3 col-sm-4 product-box">
+			<div ng-repeat="product in products" class="col-md-3 col-sm-4 products-box">
 				<a ui-sref="product({ id: product._id })">
-					<div class="product-card" style="background-image: url('{{ product.photoUrl }}')">
-						<!-- <img src="{{ product.photoUrl }}" /> -->
-						<div class="product-tag">
+					<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
+						<div class="products-tag">
 							<span>{{ product.title }}</span>
 							<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
 						</div>

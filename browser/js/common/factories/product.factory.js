@@ -1,5 +1,5 @@
 app.factory('ProductFactory', function($http, $log) {
-	var homePath = '/api/products'
+	var homePath = '/api/products/'
 
 	return {
 
@@ -9,8 +9,8 @@ app.factory('ProductFactory', function($http, $log) {
 			.catch($log.error);
 		},
 
-		fetchById: function(id) {
-			return $http.get(homePath+'/'+id)
+		fetchById: function(reviewId) {
+			return $http.get(homePath+reviewId)
 			.then(res => res.data)
 			.catch($log.error);
 		},
@@ -21,7 +21,18 @@ app.factory('ProductFactory', function($http, $log) {
 			})
 			.then(res => res.data)
 			.catch($log.error);
-		}
+		},
 
+		fetchReviews: function(productId) {
+			return $http.get(homePath+productId+'/reviews')
+			.then(res => res.data)
+			.catch($log.error);
+		},
+
+		fetchReviewById: function(productId, reviewId) {
+			return $http.get(homePath+productId+'/reviews/'+reviewId)
+			.then(res => res.data)
+			.catch($log.error);
+		}
 	}
 })

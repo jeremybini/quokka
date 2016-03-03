@@ -1,3 +1,27 @@
 <div class="container">
-	<pre>{{ product | json }}</pre>
+	<div class="row">
+		<h1>{{ product.title }}</h1>
+		<div class="col-md-6">
+			<div class="product-image" style="background-image: url('{{ product.photoUrl }}')">
+			</div>
+		</div>
+		<div class="col-md-6">
+			<ul>
+				<li>{{ product.price/100 | currency: $ }}</li>
+				<li>{{ product.description }}</li>
+				<form class="form-horizontal">
+				  <div class="form-group">
+				    <label class="col-sm-2 control-label">Quantity</label>
+				    <div class="col-sm-4">
+				      <input ng-model="cartQuantity" type="number" class="form-control input-orange" min="1">
+				    </div>
+				    <div class="col-sm-6">
+				      <button ng-click="addToCart()" class="btn btn-blue">Add To Cart</button>
+				    </div>
+				  </div>
+				</form>
+			</ul>
+		</div>
+	</div>
+	<pre>{{ cart | json }}</pre>
 </div>
