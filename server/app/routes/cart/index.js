@@ -17,6 +17,7 @@ router.use(function(req, res, next) {
     (params.session = req.sessionID);
   }
   Order.findOrCreate(params)
+  .populate('products')
   .then(function(order) {
     req.cart = order;
     console.log('into then of cart route, cart: ', req.cart)
@@ -28,15 +29,9 @@ router.use(function(req, res, next) {
   });
 });
 
-//what happens when unauth users add to carts then leave? we will
-//have lots of carts in the database that should be removed
-
 //req.body should have a product ID
 router.post('/remove', function(req, res, next) {
-  req.cart.products = req.cart.products.filter(function(item) {
-    return item.product !== req.body.productId;
-  });
-  req.cart.save()
+  req.cart.removeProduct(req.body.productId)
   .then(function(result) {
     res.status = 204;
     res.json(result);
@@ -46,18 +41,8 @@ router.post('/remove', function(req, res, next) {
 
 //req.body should have a product ID
 router.post('/add', function(req, res, next) {
-  var existingProduct = _.find(req.cart.products, {product: req.body.productId});
-  console.log("Made it to post add route, cart: ", req.body);
-
-  if (existingProduct) {
-    existingProduct.quantity++;
-  } else {
-    req.cart.products.push({product: req.body.productId});
-    console.log('!!!!!!!', req.cart.products);
-  }
-  req.cart.save()
+  req.cart.addProduct(req.body.productId, req.body.quantity)
   .then(function(result) {
-    console.log('!?!?!?!', result);
     //res.status(204);
     res.json(result);
   })
@@ -66,10 +51,7 @@ router.post('/add', function(req, res, next) {
 
 //req.body should have a product ID, updated quantity
 router.post('/update', function(req, res, next) {
-  var changingProduct = _.find(req.cart.products, {product: req.body.productId});
-  changingProduct.quantity = req.body.quantity;
-
-  req.cart.save()
+  req.cart.updateQuantity(req.body.productId, req.body.quantity)
   .then(function(result) {
     res.status = 204;
     res.json(result);
@@ -77,12 +59,9 @@ router.post('/update', function(req, res, next) {
   .then(null, next);
 });
 
-//req.body should have a product ID, updated status--this is where orders
-//are actually submitted
 //at this time, confirmation email should be sent and other actions probably triggered
 router.post('/submit', function(req, res, next) {
-  req.cart.status = "Submitted";
-  req.cart.save()
+  req.cart.submitOrder()
   .then(function(result) {
     res.status = 204;
     res.json(result);
@@ -90,7 +69,7 @@ router.post('/submit', function(req, res, next) {
   .then(null, next);
 });
 
-router.delete('/clearCart', function(req, res, next) {
+router.get('/empty', function(req, res, next) {
   req.cart.products = [];
   req.cart.save()
   .then(function(result) {
