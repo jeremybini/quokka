@@ -4,11 +4,16 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
+var ReviewRouter = require('./review');
 
 //possible nested router => category
 
 router.param('id', function(req, res, next, id) {
-	Product.findById(id)
+	var params = { _id: id }
+	//if (notAdmin) {
+	//	params.stock = { $gt: 0 }	
+	//}
+	Product.findOne(params)
 	.populate('reviews categories')
 	.then(product => {
 		req.product = product;
@@ -20,9 +25,12 @@ router.param('id', function(req, res, next, id) {
 	});
 });
 
+router.use('/:id/reviews', ReviewRouter);
+
 router.get('/', function(req, res, next) {
-	//might be a better way to query for categories
-	//must pass in categories as query, not category.
+	//if (notAdmin) {
+	//	req.query.stock = { $gt: 0 }	
+	//}
 	Product.find(req.query)
 	.then(products => {
 		res.json(products)
@@ -30,6 +38,7 @@ router.get('/', function(req, res, next) {
 	.then(null, next);
 })
 
+//admin only
 router.post('/', function(req, res, next) {
 	Product.create(req.body)
 	.then(product => {
@@ -43,6 +52,7 @@ router.get('/:id', function(req, res, next) {
 	res.json(req.product);
 })
 
+//admin only
 router.put('/:id', function(req, res, next) {
 	_.extend(req.product, req.body);
 
@@ -53,6 +63,7 @@ router.put('/:id', function(req, res, next) {
 	.then(null, next);
 })
 
+//admin only
 router.delete('/:id', function(req, res, next) {
 	//should also delete all reviews associated with this product
 	req.product.remove()

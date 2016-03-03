@@ -28,6 +28,10 @@ var ProductSchema = new Schema({
   photoUrl: {
     required: true,
     type: String
+  },
+  stock: {
+    type: Number,
+    min: 0
   }
 });
 
@@ -40,10 +44,22 @@ ProductSchema.statics.addReview = function(review) {
 };
 
 ProductSchema.statics.removeReview = function(review) {
-  return this.findOne({ reviews: review._id })
+  return this.findById(review.product)
   .then(function(product) {
     product.reviews.pull(review);
-    return product.save()
+    return product.save();
+  });
+};
+
+ProductSchema.statics.updateStock = function(productId, quantity) {
+  return this.findById(productId)
+  .then(function(product) {
+    if(product.stock < quantity) {
+      return Error('Not enough product in stock to fulfill order!');
+    } else {
+      product.stock -= quantity;
+      return product.save();
+    }
   });
 };
 

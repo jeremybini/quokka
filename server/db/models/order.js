@@ -1,5 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
+var _ = require('lodash');
+var Product = mongoose.model('Product');
 
 var OrderSchema = new mongoose.Schema({
   products: [{
@@ -41,14 +43,27 @@ var OrderSchema = new mongoose.Schema({
 });
 
 OrderSchema.methods.submitOrder = function() {
-  return this.findById(this._id).populate('products.product')
+  var submittedOrder;
+  var updatedProducts = [];
+
+  return this.populate('products.product')
       .then(function(order) {
         order.products.forEach(function(item) {
           item.price = item.product.price;
+          var p = Product.updateStock(item.product._id, item.quantity);
+          updatedProducts.push(p);
         });
-        order.status = 'Created';
+
+        order.status = 'Submitted';
         order.dateSubmitted = Date.now();
         return order.save();
+      })
+      .then(function(order) {
+        submittedOrder = order;
+        return Promise.all(updatedProducts);
+      })
+      .then(function(){
+        return submittedOrder;
       });
 };
 
@@ -57,7 +72,48 @@ OrderSchema.methods.updateStatus = function(status) {
   return this.save();
 };
 
-//will break if order.products.product has not been populated and order status is 'Cart'
+OrderSchema.methods.addProduct = function(productId, quantity) {
+  var order = this;
+  var existingProduct = _.find(order.products, {product: productId});
+
+  if (existingProduct) {
+    existingProduct.quantity += order.quantity;
+  } else {
+    order.products.push({
+      product: productId,
+      quantity: quantity
+    });
+  }
+  return order.save();
+
+};
+
+OrderSchema.methods.removeProduct = function(productId) {
+  var order = this;
+  
+  order.products = order.products.filter(function(item) {
+    if (item.product === order.productId) {
+      quantity = item.quantity;
+      return false;
+    }
+    return true;
+  });
+
+  return order.save();
+};
+
+OrderSchema.methods.updateQuantity = function(productId, quantity) {
+  var order = this;
+
+  order.products.forEach(function(item) {
+    if (item.product === order.productId) {
+      item.quantity = quantity;
+    }
+  });
+
+  return order.save();
+};
+
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
   this.products.forEach(function(item) {

@@ -25,6 +25,7 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
 var Category = Promise.promisifyAll(mongoose.model('Category'));
+var Order = Promise.promisifyAll(mongoose.model('Order'));
 
 var seedUsers = function () {
 
@@ -137,6 +138,20 @@ var seedProducts = function (categories) {
           categories: [categories[0], categories[2]],
           photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/48/61/43/486143609a711a9720ffddbb6b84d3ed.jpg'
         },
+        {
+          title: 'Back in Plaid',
+          description: 'Whoever said plaid was out of fashion was wrong. These matching plaid suits for you and your cat make a statement of style and function.',
+          price: 15781,
+          categories: [categories[1], categories[2]],
+          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo-cat-clothing.jpg'
+        },
+        {
+          title: 'High Fashion Shift',
+          description: 'For the fearless fashionista, this exciting take on the LBD will elevate the style of you and your cat. Strut your stuff right MEOW!',
+          price: 15781,
+          categories: [categories[1], categories[2]],
+          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo.jpg'
+        }
 
     ];
 
@@ -166,6 +181,31 @@ var seedReviews = function (user, product) {
 
 };
 
+var seedOrders = function (user, product) {
+  
+    var orders = [
+        {
+            user: user[0]._id,
+            products: [ { product: product[0]._id, quantity: 2, price: 56 } ],
+            status: 'Submitted'
+        },
+        {
+            user: user[1]._id,
+            products: [ { product: product[1]._id, quantity: 1, price: 33 } ],
+            status: 'Processing'
+        },
+        {
+            user: user[0]._id,
+            products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
+            status: 'Completed'
+        }
+
+    ];
+
+    return Order.createAsync(orders);
+
+};
+
 var seedCategories = function () {
   
     var categories = [
@@ -191,7 +231,7 @@ connectToDb.then(function (db) {
 }).then(function(categories) {
     Promise.all([seedUsers(), seedProducts(categories)])
     .spread(function (users, products) {
-        return seedReviews(users, products);
+        return Promise.all([seedReviews(users, products), seedOrders(users, products)]);
     })
     .then(function() {
         console.log(chalk.green('Seed successful!'));   
