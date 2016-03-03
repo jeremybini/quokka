@@ -146,7 +146,7 @@ connectToDb.then(function (db) {
 }).then(function(categories) {
     Promise.all([seedUsers(), seedProducts(categories)])
     .spread(function (users, products) {
-        return seedReviews(users, products);
+        return Promise.all([seedReviews(users, products), seedOrders(users, products)]);
     })
     .then(function() {
         console.log(chalk.green('Seed successful!'));   
