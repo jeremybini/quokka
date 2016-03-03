@@ -4,6 +4,7 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
+var ReviewRouter = require('./review');
 
 //possible nested router => category
 
@@ -19,6 +20,8 @@ router.param('id', function(req, res, next, id) {
 		next(err);
 	});
 });
+
+router.use('/:id/reviews', ReviewRouter);
 
 router.get('/', function(req, res, next) {
 	//might be a better way to query for categories
