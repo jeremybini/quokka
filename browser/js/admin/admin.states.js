@@ -21,7 +21,7 @@ app.config(function($stateProvider) {
 app.config(function($stateProvider) {
   $stateProvider.state('adminAllUsers', {
     url: '/admin/users',
-    templateUrl: '/js/admin/admin.template.html',
+    templateUrl: '/js/admin/admin.users.template.html',
     resolve: {
       users: function(UserFactory) {
         return UserFactory.fetchAll();
