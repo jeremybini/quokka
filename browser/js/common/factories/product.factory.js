@@ -10,7 +10,7 @@ app.factory('ProductFactory', function($http, $log) {
 		},
 
 		fetchById: function(id) {
-			return $http.get(homePath+'/id')
+			return $http.get(homePath+'/'+id)
 			.then(res => res.data)
 			.catch($log.error);
 		},
