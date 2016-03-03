@@ -138,6 +138,20 @@ var seedProducts = function (categories) {
           categories: [categories[0], categories[2]],
           photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/48/61/43/486143609a711a9720ffddbb6b84d3ed.jpg'
         },
+        {
+          title: 'Back in Plaid',
+          description: 'Whoever said plaid was out of fashion was wrong. These matching plaid suits for you and your cat make a statement of style and function.',
+          price: 15781,
+          categories: [categories[1], categories[2]],
+          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo-cat-clothing.jpg'
+        },
+        {
+          title: 'High Fashion Shift',
+          description: 'For the fearless fashionista, this exciting take on the LBD will elevate the style of you and your cat. Strut your stuff right MEOW!',
+          price: 15781,
+          categories: [categories[1], categories[2]],
+          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo.jpg'
+        }
 
     ];
 
