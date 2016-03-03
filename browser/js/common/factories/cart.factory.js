@@ -7,18 +7,22 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
 
   var CartFactory = {};
 
-  CartFactory.addProduct = function(product) {
-    return $http.post('/api/products/add', {productId: product._id})
-    .then(res => res.data)
+  CartFactory.add = function(product, quantity) {
+    return $http.post('/api/cart/add', {productId: product._id, quantity: quantity})
+    .then(function(res) {
+      return res.data;
+    })
     .then(function(cart) {
       currentCart = cart;
     })
     .catch($log.error);
   };
 
-  CartFactory.removeProduct = function(product) {
-    return $http.post('/api/products/remove', {productId: product._id})
-    .then(res => res.data)
+  CartFactory.remove = function(product) {
+    return $http.post('/api/cart/remove', {productId: product._id})
+    .then(function(res) {
+      return res.data;
+    })
     .then(function(cart) {
       currentCart = cart;
     })
@@ -26,17 +30,25 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   };
 
   CartFactory.update = function(product, quantity) {
-    return $http.post('/api/products/update', {productId: product._id, quantity: quantity})
-    .then(res => res.data)
+    return $http.post('/api/cart/update', {productId: product._id, quantity: quantity})
+    .then(function(res) {
+      return res.data;
+    })
     .then(function(cart) {
       currentCart = cart;
     })
     .catch($log.error);
   };
 
-  CartFactory.clearCart = function() {
-    return $http.delete('/api/products/clearCart')
-    .then(res => res.data)
+  CartFactory.getCart = function() {
+    return currentCart;
+  };
+
+  CartFactory.empty = function() {
+    return $http.get('/api/cart/empty')
+    .then(function(res) {
+      return res.data;
+    })
     .then(function(cart) {
       currentCart = cart;
     })
@@ -47,4 +59,3 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   return CartFactory;
 
 });
-
