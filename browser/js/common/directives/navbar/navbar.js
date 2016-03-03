@@ -43,7 +43,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
 
             var $win = angular.element($window);
             $win.on('scroll', function (e) {
-                if ($window.pageYOffset >= 400) {
+                if ($window.pageYOffset >= 300) {
                     element.removeClass('navbar-hidden');
                     element.addClass('navbar-stuck');
                 } else if ($window.pageYOffset > 93) {
