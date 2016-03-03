@@ -14,7 +14,7 @@ app.factory('Product', function($http, $log) {
 			.then(res => res.data)
 			.catch($log.error);
 		},
-
+		
 		fetchByCategory: function(categoryId) {
 			return $http.get(homePath, {
 				params: { categories: categoryId }

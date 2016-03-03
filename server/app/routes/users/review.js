@@ -22,7 +22,7 @@ router.param('reviewId', function(req, res, next, id) {
 //get all reviews for current user
 router.get('/', function(req, res, next) {
 	Review.find({
-		user: req.user._id
+		user: req.currentUser._id
 	})
 	.then(reviews => {
 		res.json(reviews)

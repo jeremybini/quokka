@@ -9,6 +9,7 @@ var Product = mongoose.model('Product');
 
 router.param('id', function(req, res, next, id) {
 	Product.findById(id)
+	.populate('reviews categories')
 	.then(product => {
 		req.product = product;
 		next();
