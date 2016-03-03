@@ -28,7 +28,7 @@ app.config(function ($stateProvider) {
     url: '/categories/:id',
     templateUrl: '/js/products/products-list.template.html',
     resolve: {
-      product: function(ProductFactory, $stateParams) {
+      products: function(ProductFactory, $stateParams) {
         return ProductFactory.fetchByCategory($stateParams.id)
       }
     },
