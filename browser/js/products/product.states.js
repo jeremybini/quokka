@@ -12,9 +12,7 @@ app.config(function ($stateProvider) {
     },
     controller: 'ProductsCtrl'
   });
-});
 
-app.config(function ($stateProvider) {
   $stateProvider.state('product', {
     url: '/products/:id',
     templateUrl: '/js/products/product-view.template.html',
@@ -22,6 +20,17 @@ app.config(function ($stateProvider) {
     	product: function(ProductFactory, $stateParams) {
     		return ProductFactory.fetchById($stateParams.id)
     	}
+    },
+    controller: 'ProductCtrl'
+  });
+
+  $stateProvider.state('category', {
+    url: '/categories/:id',
+    templateUrl: '/js/products/products-list.template.html',
+    resolve: {
+      product: function(ProductFactory, $stateParams) {
+        return ProductFactory.fetchByCategory($stateParams.id)
+      }
     },
     controller: 'ProductCtrl'
   });
