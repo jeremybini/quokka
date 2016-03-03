@@ -52,105 +52,120 @@ var seedProducts = function (categories) {
             description: 'Your dog and you can wear matching sweaters.',
             price: 3499,
             photoUrl: '/images/UJ1982_2.jpg',
-            categories: [categories[0], categories[2]]
+            categories: [categories[0], categories[2]],
+            stock: 24
         },
         {
             title: 'Matching Mittens',
             description: 'Your cat and you can wear matching mittens.',
             price: 5499,
             photoUrl: '/images/catsocks.jpg',
-            categories: [categories[1], categories[2]]
+            categories: [categories[1], categories[2]],
+            stock: 11
         },
         {
             title: 'Matching Mittens',
             description: 'Your cat and you can wear matching mittens.',
             price: 5499,
             photoUrl: '/images/718471.jpg',
-            categories: [categories[0], categories[1]]
+            categories: [categories[0], categories[1]],
+            stock: 18
         },
                 {
             title: 'Cute Holiday Pajamas',
             description: 'Jingle all the way! Pajamas in a fun holiday print for you and your dog',
-            price: 85,
+            price: 23485,
             categories: [categories[0], categories[2]],
-            photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/e8/ce/d6/e8ced6909d5c7985fd4406526fd84a4d.jpg'
+            photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/e8/ce/d6/e8ced6909d5c7985fd4406526fd84a4d.jpg',
+            stock: 21
         },
         {
           title: 'Cozy Cat Sweater',
           description: 'This cozy sweater will make you want to stay indoors with your cat all day!',
-          price: 750,
+          price: 1750,
           categories: [categories[1], categories[2]],
-          photoUrl: 'http://i.imgur.com/tqYiAHnl.jpg'
+          photoUrl: 'http://i.imgur.com/tqYiAHnl.jpg',
+          stock: 12
         },
         {
           title: 'Fun Holiday Onesie',
           description: 'Your holidays will always be happy with these fun matching pajamas for you and your dog',
-          price: 933,
+          price: 23933,
           categories: [categories[0], categories[2]],
-          photoUrl: 'http://lovelace-media.imgix.net/uploads/519/398324f0-7cd2-0133-9f07-0af7184f89fb.jpg?w=670&fit=max&auto=format&q=70'
+          photoUrl: 'http://lovelace-media.imgix.net/uploads/519/398324f0-7cd2-0133-9f07-0af7184f89fb.jpg?w=670&fit=max&auto=format&q=70',
+          stock: 33
         },
         {
           title: 'Cool Tech Hoodie',
           description: 'This cool tech hoodie exudes geek. Hip and low-key, you will love wearing this hoodie with your dog sipping a cortado at your local coffee shop',
-          price: 65,
+          price: 12465,
           categories: [categories[0], categories[2]],
-          photoUrl: 'https://www.rover.com/blog/wp-content/uploads/2014/12/hoodies-900x540.jpg'
+          photoUrl: 'https://www.rover.com/blog/wp-content/uploads/2014/12/hoodies-900x540.jpg',
+          stock: 34
         },
         {
           title: 'Bling Bling',
           description: 'When you need a little bit of bling, these gold sequined outfits will amp up the star factor for you and your dog!',
-          price: 895,
+          price: 9234895,
           categories: [categories[0], categories[2]],
-          photoUrl: 'https://www.rover.com/blog/wp-content/uploads/2014/12/ny-extravagently-dressed-dogs.jpg'
+          photoUrl: 'https://www.rover.com/blog/wp-content/uploads/2014/12/ny-extravagently-dressed-dogs.jpg',
+          stock: 15
         },
         {
           title: 'Tuxedos for Man and Dog',
           description: 'On any special occasion, these classy tuxedos will make you and your dog ready to celebrate.',
-          price: 4575,
+          price: 1124575,
           categories: [categories[0], categories[2]],
-          photoUrl: 'https://s-media-cache-ak0.pinimg.com/236x/fe/21/d3/fe21d3d2d093bc81da97463a0505c625.jpg'
+          photoUrl: 'https://s-media-cache-ak0.pinimg.com/236x/fe/21/d3/fe21d3d2d093bc81da97463a0505c625.jpg',
+          stock: 8
         },
         {
           title: 'Bourgeois Argyle Sweaters',
           description: 'Country club style is no longer limited to the country club. You and your dog can look classic and fresh on and off the green with these matching sweaters.',
-          price: 650,
+          price: 61350,
           categories: [categories[0], categories[2]],
-          photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/a6/f5/8d/a6f58d41609aa6bd0bc54809ad05b2ad.jpg'
+          photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/a6/f5/8d/a6f58d41609aa6bd0bc54809ad05b2ad.jpg',
+          stock: 11
         },
         {
           title: 'Party Time Tutu',
           description: 'Did somebody say "Party!"?? That is all you will hear when you and your dog wear these fun matching tutus. Feathers and pouf have never looked better.',
           price: 1990,
           categories: [categories[0], categories[2]],
-          photoUrl: 'http://swns.com/wp-content/themes/wp-clear/scripts/timthumb.php?src=http://swns.com/wp-content/uploads/21-682x1024.jpg&w=300&h=460&zc=1'
+          photoUrl: 'http://swns.com/wp-content/themes/wp-clear/scripts/timthumb.php?src=http://swns.com/wp-content/uploads/21-682x1024.jpg&w=300&h=460&zc=1',
+          stock: 22
         },
         {
           title: 'Arrr Pirates T-Shirts',
           description: 'Pirates usually mean trouble, but these cute matching shirts for dog and child mean double trouble!',
-          price: 570,
+          price: 2570,
           categories: [categories[0], categories[2]],
-          photoUrl: 'http://dogmilk.designmilk.netdna-cdn.com/images/2011/10/babawowo3.jpg'
+          photoUrl: 'http://dogmilk.designmilk.netdna-cdn.com/images/2011/10/babawowo3.jpg',
+          stock: 26
         },
         {
           title: 'Chic Chevron Sweaters',
           description: 'This handmade crochet sweater with a striking blue and gold pattern radiate elegance and luxury.',
           price: 19575,
           categories: [categories[0], categories[2]],
-          photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/48/61/43/486143609a711a9720ffddbb6b84d3ed.jpg'
+          photoUrl: 'https://s-media-cache-ak0.pinimg.com/564x/48/61/43/486143609a711a9720ffddbb6b84d3ed.jpg',
+          stock: 29
         },
         {
           title: 'Back in Plaid',
           description: 'Whoever said plaid was out of fashion was wrong. These matching plaid suits for you and your cat make a statement of style and function.',
           price: 15781,
           categories: [categories[1], categories[2]],
-          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo-cat-clothing.jpg'
+          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo-cat-clothing.jpg',
+          stock: 21
         },
         {
           title: 'High Fashion Shift',
           description: 'For the fearless fashionista, this exciting take on the LBD will elevate the style of you and your cat. Strut your stuff right MEOW!',
           price: 15781,
           categories: [categories[1], categories[2]],
-          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo.jpg'
+          photoUrl: 'http://mousebreath.com/wp-content/uploads/2013/01/united-bamboo.jpg',
+          stock: 28
         }
 
     ];
