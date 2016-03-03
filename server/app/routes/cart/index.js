@@ -16,23 +16,16 @@ router.use(function(req, res, next) {
   } else {
     (params.session = req.sessionID);
   }
-  // Order.findOrCreate(params)
-  // .then(function(order) {
-  //   req.cart = order;
-  //   console.log('into then of cart route, cart: ', req.cart)
-  //   next();
-  // })
-  // .then(null, function(err) {
-  //   console.log(err);
-  //   next(err);
-  // });
-  var order = new Order(params);
-  // Order.create(params)
-  order.save()
+  Order.findOrCreate(params)
   .then(function(order) {
     req.cart = order;
-    next()
-  }).catch(next);
+    console.log('into then of cart route, cart: ', req.cart)
+    next();
+  })
+  .then(null, function(err) {
+    console.log(err);
+    next(err);
+  });
 });
 
 //what happens when unauth users add to carts then leave? we will
@@ -45,10 +38,12 @@ router.post('/remove', function(req, res, next) {
   });
   req.cart.save()
   .then(function(result) {
-    res.status(204).json(result);
+    res.status = 204;
+    res.json(result);
   })
   .then(null, next);
 });
+
 //req.body should have a product ID
 router.post('/add', function(req, res, next) {
   var existingProduct = _.find(req.cart.products, {product: req.body.productId});
@@ -68,16 +63,20 @@ router.post('/add', function(req, res, next) {
   })
   .then(null, next);
 });
+
 //req.body should have a product ID, updated quantity
 router.post('/update', function(req, res, next) {
   var changingProduct = _.find(req.cart.products, {product: req.body.productId});
   changingProduct.quantity = req.body.quantity;
+
   req.cart.save()
   .then(function(result) {
-    res.status(204).json(result);
+    res.status = 204;
+    res.json(result);
   })
   .then(null, next);
 });
+
 //req.body should have a product ID, updated status--this is where orders
 //are actually submitted
 //at this time, confirmation email should be sent and other actions probably triggered
@@ -85,7 +84,8 @@ router.post('/submit', function(req, res, next) {
   req.cart.status = "Submitted";
   req.cart.save()
   .then(function(result) {
-    res.status(204).json(result);
+    res.status = 204;
+    res.json(result);
   })
   .then(null, next);
 });

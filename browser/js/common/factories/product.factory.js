@@ -1,4 +1,4 @@
-app.factory('Product', function($http, $log) {
+app.factory('ProductFactory', function($http, $log) {
 	var homePath = '/api/products'
 
 	return {

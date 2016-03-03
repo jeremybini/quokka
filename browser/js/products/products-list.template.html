@@ -1,0 +1,15 @@
+<section>
+	<div class="container">
+		<div class="row">
+			<div ng-repeat="product in products" class="col-md-3 col-sm-4 product-box">
+				<div class="product-card" style="background-image: url('{{ product.photoUrl }}')">
+					<!-- <img src="{{ product.photoUrl }}" /> -->
+					<div class="product-tag">
+						<span>{{ product.title }}</span>
+						<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
