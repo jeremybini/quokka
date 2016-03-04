@@ -9,8 +9,7 @@ module.exports = {
 	},
 	
 	ensureAdmin: function(req, res, next) {
-		console.log('ensuring admin');
-		if(req.user.admin) {
+		if(req.user && req.user.admin) {
 			next()
 		} else {
 			next(Error('You shall not pass.'));
@@ -18,7 +17,7 @@ module.exports = {
 	},
 
 	ensureCurrentUserOrAdmin: function(req, res, next) {
-		if(req.user._id.equals(req.currentUser._id) || req.user.admin) {
+		if(req.user && (req.user._id.equals(req.currentUser._id) || req.user.admin)) {
 			next()
 		} else {
 			next(Error('You shall not pass.'));

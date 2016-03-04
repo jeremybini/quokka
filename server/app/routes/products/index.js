@@ -11,7 +11,7 @@ var ReviewRouter = require('./review');
 
 router.param('id', function(req, res, next, id) {
 	var params = { _id: id }
-	if (!req.user.admin) {
+	if (!req.user || !req.user.admin) {
 		params.stock = { $gt: 0 }	
 	}
 	Product.findOne(params)
@@ -29,7 +29,7 @@ router.param('id', function(req, res, next, id) {
 router.use('/:id/reviews', ReviewRouter);
 
 router.get('/', function(req, res, next) {
-	if (!req.user.admin) {
+	if (!req.user || !req.user.admin) {
 		req.query.stock = { $gt: 0 }	
 	}
 	Product.find(req.query)
