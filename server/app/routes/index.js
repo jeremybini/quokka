@@ -9,8 +9,8 @@ router.use('/cart', require('./cart'));
 router.use('/orders', require('./orders'));
 
 
-router.use('/orders', auth.ensureAdmin, require('./orders'));
-router.use('/users', auth.ensureUser, require('./users'));
+router.use('/orders', require('./orders'));
+router.use('/users', require('./users'));
 
 // Make sure this is after all of
 // the registered routes!

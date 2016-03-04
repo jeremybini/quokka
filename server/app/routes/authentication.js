@@ -9,6 +9,7 @@ module.exports = {
 	},
 	
 	ensureAdmin: function(req, res, next) {
+		console.log('ensuring admin');
 		if(req.user.admin) {
 			next()
 		} else {

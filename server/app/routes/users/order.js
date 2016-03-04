@@ -8,6 +8,8 @@ var _ = require('lodash'),
 
 module.exports = router;
 
+router.use(auth.ensureCurrentUserOrAdmin);
+
 router.param('orderId', function(req, res, next, id) {
 	Order.findById(id)
 	.then(order => {

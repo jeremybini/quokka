@@ -3,19 +3,23 @@
 var router = require('express').Router();
 module.exports = router;
 
-var _ = require('lodash');
-var auth = require('../authentication');
+var _ = require('lodash'),
+    auth = require('../authentication'),
 
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var OrderRouter = require('./order');
-var ReviewRouter = require('./review');
+    mongoose = require('mongoose'),
+    User = mongoose.model('User'),
+    OrderRouter = require('./order'),
+    ReviewRouter = require('./review');
 
 router.param('id', function(req, res, next, id) {
   User.findById(id)
   .then(user => {
-    req.currentUser = user.sanitize();
-    next();
+    if (user) {
+      req.currentUser = user.sanitize();
+      next();
+    } else {
+      throw Error('Uh oh, something went wrong');
+    }
   })
   .then(null, function(err) {
     err.status = 404;
@@ -33,8 +37,8 @@ router.get('/', auth.ensureAdmin, function(req, res, next) {
 });
 
 //nested sub-routers
-router.use('/:id/orders/', auth.ensureCurrentUserOrAdmin, OrderRouter);
-router.use('/:id/reviews/', auth.ensureCurrentUserOrAdmin, ReviewRouter);
+router.use('/:id/orders/', OrderRouter);
+router.use('/:id/reviews/', ReviewRouter);
 
 //get user by ID
 router.get('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {

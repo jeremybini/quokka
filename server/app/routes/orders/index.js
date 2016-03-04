@@ -2,9 +2,14 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
+
+var auth = require('../authentication');
+
 var mongoose = require('mongoose');
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
+
+router.use(auth.ensureAdmin);
 
 //get all orders of all users
 router.get('/', function(req, res, next) {
