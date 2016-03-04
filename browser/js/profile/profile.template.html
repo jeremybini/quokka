@@ -1,0 +1,33 @@
+<div class="container">
+	<div class="row">
+		<div class="panel panel-default">
+		  <div class="panel-heading">Orders</div>
+		  <table class="table">
+			  <thead>
+		      <tr>
+		        <th>Date Submitted</th>
+		        <th>Order #</th>
+		        <th>Status</th>
+		        <th>Total Cost</th>
+		        <th></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="order in orders">
+		        <td>{{ order.dateSubmitted }}</td>
+		        <td>{{ order._id }}</td>
+		        <td>{{ order.status }}</td>
+		        <td>{{ order.totalPrice }}</td>
+		        <td><button ng-click="viewOrder(order._id)"></button></td>
+		      </tr>
+		    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="col-sm-6">
+	<form name="userInfo">
+		<pre>{{orders|json}}</pre>
+	</form>
+</div>

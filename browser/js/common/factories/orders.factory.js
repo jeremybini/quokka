@@ -10,7 +10,7 @@ app.factory('OrderFactory', function ($http, $log) {
     },
 
     fetchAllforUser : function (userId) {
-      return $http.get('/api/orders/user/' + userId)
+      return $http.get('/api/users/' + userId +'/orders')
       .then(response => response.data) 
       .catch($log.error);
     },

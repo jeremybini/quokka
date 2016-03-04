@@ -3,29 +3,12 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 var Product = mongoose.model('Product');
 
-// var ItemSchema = new mongoose.Schema({
-//   product: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Product'
-//     // required: true
-//   },
-//   quantity: {
-//     type: Number,
-//     default: 1
-//   },
-//   price: {
-//     type: Number
-//   }
-// })
-
-// mongoose.model('Item', ItemSchema);
-
 var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
-      // required: true
+      ref: 'Product',
+      required: true
     },
     quantity: {
       type: Number,
@@ -35,10 +18,6 @@ var OrderSchema = new mongoose.Schema({
       type: Number
     }
   }],
-  // products: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Item'
-  // }],
   categories: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
@@ -150,8 +129,8 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
 
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
-  this.products.forEach(function(item) {
-    total += item.price || item.product.price;
+  this.products.reduce(function(total, item) {
+    total + item.price || item.product.price;
   });
   return total;
 });

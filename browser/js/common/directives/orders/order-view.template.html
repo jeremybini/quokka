@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="row">
+		<div class="panel panel-default">
+		  <div class="panel-heading">Orders</div>
+		  <table class="table">
+			  <thead>
+		      <tr>
+		        <th>Date Submitted</th>
+		        <th>Order #</th>
+		        <th>Status</th>
+		        <th>Total Cost</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="order in orders">
+		        <td>{{ order.dateSubmitted }}</td>
+		        <td>{{ order._id }}</td>
+		        <td>{{ order.status }}</td>
+		        <td>{{ order.totalPrice }}</td>
+		      </tr>
+		    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<pre>{{ order | json}}</pre>

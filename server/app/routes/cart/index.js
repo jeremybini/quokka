@@ -72,8 +72,7 @@ router.post('/empty', function(req, res, next) {
   req.cart.products = [];
   req.cart.save()
   .then(function(result) {
-    //res.status = 204;
-    console.log('shiiiit', result);
+    res.status = 204;
     res.json(result);
   })
   .then(null, next);
