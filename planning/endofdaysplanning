@@ -3,7 +3,7 @@ THINGS LEFT TO DO
 Admin Pages:
 --add more functionality to orders page (right now only alters status and deletes, need to be able to alter quantity/products)
 --add more functionality to users page? (right now can alter email and admin status and delete)
---add more functionality to products page (be able to persist edits and deletes and edit categories)
+--perhaps be able to edit categories in the future
 
 Authentication:
 --front-end
