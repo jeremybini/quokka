@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
 		req.query.stock = { $gt: 0 }
 	}
 	Product.find(req.query)
-      .populate('categories')
+	.populate('categories')
 	.then(products => {
 		res.json(products)
 	})
