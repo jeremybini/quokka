@@ -23,4 +23,15 @@ var ReviewSchema = new mongoose.Schema({
   }
 });
 
+ReviewSchema.statics.removeReviewsForProduct = function(productId) {
+  this.find({ product: productId })
+  .then(function(reviews) {
+    var removedReviews = [];
+    reviews.forEach(function(review) {
+      removedReviews.push(review.remove());
+    })
+    return Promise.all(removedReviews);
+  });
+}
+
 mongoose.model('Review', ReviewSchema);

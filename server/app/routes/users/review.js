@@ -31,6 +31,7 @@ router.get('/', function(req, res, next) {
 })
 
 //create review for current user
+//do we need this?
 router.post('/', function(req, res, next) {
 	req.user.addReview(req.body)
 	.then(review => {

@@ -1,5 +1,4 @@
 /* ADMIN ONLY - ORDERS ROUTES */
-
 'use strict';
 var router = require('express').Router();
 module.exports = router;
@@ -9,7 +8,6 @@ var User = mongoose.model('User');
 
 //get all orders of all users
 router.get('/', function(req, res, next) {
-  //if there is no req.query after '/', then get all orders of all users, else get orders filtered by the query
   Order.find(req.query)
   .then(function(ordersByQuery) {
     res.send(ordersByQuery);
@@ -17,18 +15,10 @@ router.get('/', function(req, res, next) {
   .then(null, next);
 });
 
-//get all orders of one user
-router.get('/user/:userId', function(req, res, next) {
-  User.findById({_id: req.params.userId}).populate('orders')
-  .then(function(ordersOfThisUser) {
-    res.send(ordersOfThisUser);
-  })
-  .then(null, next);
-});
-
 //get order by ID
 router.get('/:id', function(req, res, next) {
   Order.findById({_id: req.params.id})
+  .populate('products.product')
   .then(function(order) {
     res.send(order);
   })
