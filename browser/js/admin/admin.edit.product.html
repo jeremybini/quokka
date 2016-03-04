@@ -16,6 +16,11 @@
     <input name="price"
            ng-model="product.price">
     <br>
+    Category:
+    <select ng-model="product.categories" ng-options="category as category.name for category in product.categories"></select>
+    <input name="category"
+           ng-model="product.categories[0].name">
+    <br>
   </form>
   <button ng-click="save()">Save</button>
 </div>

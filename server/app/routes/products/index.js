@@ -12,7 +12,7 @@ var ReviewRouter = require('./review');
 router.param('id', function(req, res, next, id) {
 	var params = { _id: id }
 	if (!req.user || !req.user.admin) {
-		params.stock = { $gt: 0 }	
+		params.stock = { $gt: 0 }
 	}
 	Product.findOne(params)
 	.populate('reviews categories')
@@ -30,9 +30,10 @@ router.use('/:id/reviews', ReviewRouter);
 
 router.get('/', function(req, res, next) {
 	if (!req.user || !req.user.admin) {
-		req.query.stock = { $gt: 0 }	
+		req.query.stock = { $gt: 0 }
 	}
 	Product.find(req.query)
+      .populate('categories')
 	.then(products => {
 		res.json(products)
 	})
