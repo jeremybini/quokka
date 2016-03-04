@@ -1,0 +1,22 @@
+<div ng-controller="AdminEditProductCtrl">
+  <form name="editProductForm">
+    Photo Url:
+    <input name="photoUrl"
+           ng-model="product.photoUrl">
+    <br>
+    Title:
+    <input name="title"
+           ng-model="product.title">
+    <br>
+    Description:
+    <input name="description"
+           ng-model="product.description">
+    <br>
+    Price:
+    <input name="price"
+           ng-model="product.price">
+    <br>
+  </form>
+  <button ng-click="save()">Save</button>
+</div>
+
