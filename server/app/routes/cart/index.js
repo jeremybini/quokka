@@ -17,10 +17,8 @@ router.use(function(req, res, next) {
     (params.session = req.sessionID);
   }
   Order.findOrCreate(params)
-  .populate('products')
   .then(function(order) {
     req.cart = order;
-    console.log('into then of cart route, cart: ', req.cart)
     next();
   })
   .then(null, function(err) {
@@ -43,6 +41,7 @@ router.post('/remove', function(req, res, next) {
 router.post('/add', function(req, res, next) {
   req.cart.addProduct(req.body.productId, req.body.quantity)
   .then(function(result) {
+    console.log(result, '1!!!!!');
     //res.status(204);
     res.json(result);
   })
@@ -61,7 +60,7 @@ router.post('/update', function(req, res, next) {
 
 //at this time, confirmation email should be sent and other actions probably triggered
 router.post('/submit', function(req, res, next) {
-  req.cart.submitOrder()
+  Order.submitOrder(req.cart._id)
   .then(function(result) {
     res.status = 204;
     res.json(result);
@@ -69,11 +68,12 @@ router.post('/submit', function(req, res, next) {
   .then(null, next);
 });
 
-router.get('/empty', function(req, res, next) {
+router.post('/empty', function(req, res, next) {
   req.cart.products = [];
   req.cart.save()
   .then(function(result) {
-    res.status = 204;
+    //res.status = 204;
+    console.log('shiiiit', result);
     res.json(result);
   })
   .then(null, next);

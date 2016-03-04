@@ -3,6 +3,23 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 var Product = mongoose.model('Product');
 
+// var ItemSchema = new mongoose.Schema({
+//   product: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: 'Product'
+//     // required: true
+//   },
+//   quantity: {
+//     type: Number,
+//     default: 1
+//   },
+//   price: {
+//     type: Number
+//   }
+// })
+
+// mongoose.model('Item', ItemSchema);
+
 var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
@@ -18,6 +35,10 @@ var OrderSchema = new mongoose.Schema({
       type: Number
     }
   }],
+  // products: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Item'
+  // }],
   categories: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
@@ -42,12 +63,14 @@ var OrderSchema = new mongoose.Schema({
   }
 });
 
-OrderSchema.methods.submitOrder = function() {
+OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
   var updatedProducts = [];
 
-  return this.populate('products.product')
+  return this.findById(orderId)
+      .populate('products.product')
       .then(function(order) {
+        console.log(order);
         order.products.forEach(function(item) {
           item.price = item.product.price;
           var p = Product.updateStock(item.product._id, item.quantity);
@@ -74,26 +97,30 @@ OrderSchema.methods.updateStatus = function(status) {
 
 OrderSchema.methods.addProduct = function(productId, quantity) {
   var order = this;
-  var existingProduct = _.find(order.products, {product: productId});
-
-  if (existingProduct) {
-    existingProduct.quantity += order.quantity;
-  } else {
-    order.products.push({
-      product: productId,
-      quantity: quantity
+  if (productId) {
+    var existingProduct;
+    order.products.forEach(function(item) {
+      if (item.product.equals(productId)) { existingProduct = item }
     });
-  }
-  return order.save();
 
+    if (existingProduct) {
+      existingProduct.quantity += +quantity;
+    } else {
+      order.products.push({
+        product: productId,
+        quantity: +quantity
+      });
+    }
+    return order.save();
+  }
 };
 
 OrderSchema.methods.removeProduct = function(productId) {
   var order = this;
   
   order.products = order.products.filter(function(item) {
-    if (item.product === order.productId) {
-      quantity = item.quantity;
+    if (item.product.equals(productId)) {
+      item.quantity = 0;
       return false;
     }
     return true;
@@ -105,11 +132,18 @@ OrderSchema.methods.removeProduct = function(productId) {
 OrderSchema.methods.updateQuantity = function(productId, quantity) {
   var order = this;
 
-  order.products.forEach(function(item) {
-    if (item.product === order.productId) {
-      item.quantity = quantity;
-    }
-  });
+  if (order.products.length) {
+    order.products.forEach(function(item) {
+      if (item.product.equals(productId)) {
+        item.quantity = quantity;
+      }
+    });
+  } else {
+    order.products.push({
+      product: productId,
+      quantity: quantity
+    });
+  }
 
   return order.save();
 };
@@ -124,14 +158,12 @@ OrderSchema.virtual('totalPrice').get(function() {
 
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
-  console.log('in findorcreate', order);
   return order.find(params)
+  .populate('products')
   .then(function(result) {
-    console.log('in find or create, result: ', result);
     if (result.length) {
       return result[0];
     } else {
-      console.log('in order create else: ', params)
       return order.create(params);
     }
   })

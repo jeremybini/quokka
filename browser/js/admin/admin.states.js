@@ -21,7 +21,7 @@ app.config(function($stateProvider) {
 app.config(function($stateProvider) {
   $stateProvider.state('adminAllUsers', {
     url: '/admin/users',
-    templateUrl: '/js/admin/admin.template.html',
+    templateUrl: '/js/admin/admin.users.template.html',
     resolve: {
       users: function(UserFactory) {
         return UserFactory.fetchAll();
@@ -34,7 +34,7 @@ app.config(function($stateProvider) {
 app.config(function($stateProvider) {
   $stateProvider.state('adminAllOrders', {
     url: '/admin/orders',
-    templateUrl: '/js/admin/admin.template.html',
+    templateUrl: '/js/admin/admin.orders.template.html',
     resolve: {
       orders: function(OrderFactory) {
         return OrderFactory.fetchAll();
@@ -43,3 +43,5 @@ app.config(function($stateProvider) {
     controller: 'AdminOrdersCtrl'
   });
 });
+
+
