@@ -34,7 +34,9 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
   $scope.deleteUser = function(user) {
     UserFactory.delete(user._id)
     .then(function() {
-      $scope.$digest();
+    $scope.users = $scope.users.filter(function(item) {
+        return item._id !== user._id;
+      });
     });
   };
 
@@ -51,7 +53,9 @@ app.controller('AdminOrdersCtrl', function(orders, OrderFactory, $state, $scope)
   $scope.deleteOrder = function(order) {
     OrderFactory.delete(order._id)
     .then(function() {
-      $scope.$digest();
+      $scope.orders = $scope.orders.filter(function(item) {
+        return item._id !== order._id;
+      });
     });
   };
 
