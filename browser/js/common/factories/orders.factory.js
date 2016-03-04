@@ -22,7 +22,7 @@ app.factory('OrderFactory', function ($http, $log) {
     },
 
     delete : function (id) {
-      return $http.delete('/api/orders' + id)
+      return $http.delete('/api/orders/' + id)
       .then(function(response) {
         return response.status;
       })

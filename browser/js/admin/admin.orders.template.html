@@ -3,7 +3,6 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Products</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -11,9 +10,9 @@
     <form>
     <tr ng-repeat="order in orders">
       <td>{{order._id}}</td>
-      <td><input ng-model="order.products"></td>
       <td><select ng-model="order.status" ng-options="status as status for status in statuses"></select></td>
-      <td><button type="button" class="btn btn-warning" ng-click="editOrder(order)">Edit Order</button></td>
+      <td><button type="button" class="btn btn-warning" ng-click="editOrder(order)">Update Order</button></td>
+      <td><button type="button" class="btn btn-danger" ng-click="deleteOrder(order)">Delete Order</button></td>
     </tr>
   </tbody>
 </table>

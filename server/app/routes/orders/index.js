@@ -9,7 +9,8 @@ var User = mongoose.model('User');
 
 //get all orders of all users
 router.get('/', function(req, res, next) {
-  Order.find({}).exec()
+  Order.find({})
+  .populate('products.product')
   .then(function(orders) {
     res.send(orders);
   })
