@@ -22,7 +22,7 @@ app.factory('UserFactory', function ($http, $log) {
     },
 
     delete : function (id) {
-      return $http.delete('/api/users' + id)
+      return $http.delete('/api/users/' + id)
       .then(function(response) {
         return response.status;
       })
@@ -30,7 +30,7 @@ app.factory('UserFactory', function ($http, $log) {
     },
 
     update : function (id, newUserInfo) {
-      return $http.put('/api/users' + id, newUserInfo)
+      return $http.put('/api/users/' + id, newUserInfo)
       .then(response => response.data)
       .catch($log.error);
     }

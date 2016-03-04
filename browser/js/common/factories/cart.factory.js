@@ -59,4 +59,3 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   return CartFactory;
 
 });
-

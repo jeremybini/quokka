@@ -22,7 +22,7 @@ app.factory('OrderFactory', function ($http, $log) {
     },
 
     delete : function (id) {
-      return $http.delete('/api/orders' + id)
+      return $http.delete('/api/orders/' + id)
       .then(function(response) {
         return response.status;
       })
@@ -30,7 +30,7 @@ app.factory('OrderFactory', function ($http, $log) {
     },
 
     update : function (id, newStatus) {
-      return $http.put('/api/orders' + id, newStatus)
+      return $http.put('/api/orders/' + id, newStatus)
       .then(response => response.data)
       .catch($log.error);
     }
