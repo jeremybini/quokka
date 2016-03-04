@@ -1,4 +1,4 @@
-app.controller('ProductCtrl', function(product, $state, $scope) { //CartFactory
+app.controller('ProductCtrl', function(product, $state, $scope, CartFactory) {
 	$scope.product = product;
 	$scope.cartQuantity = 1;
 
