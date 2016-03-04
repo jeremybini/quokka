@@ -8,7 +8,7 @@ app.config(function($stateProvider) {
 app.config(function($stateProvider) {
   $stateProvider.state('adminAllProducts', {
     url: '/admin/products',
-    templateUrl: '/js/admin/admin.template.html',
+    templateUrl: '/js/admin/admin.products.template.html',
     resolve: {
       products: function(ProductFactory) {
         return ProductFactory.fetchAll();
@@ -42,6 +42,29 @@ app.config(function($stateProvider) {
     },
     controller: 'AdminOrdersCtrl'
   });
+});
+
+app.config(function($stateProvider) {
+  $stateProvider
+      .state('editProduct', {
+        url: '/admin/products/:_id/edit',
+        templateUrl: '/js/admin/admin.edit.product.html',
+        params: {
+          product: null
+        }
+      })
+      //.state('manageProduct.delete', {
+      //  url: '/delete',
+      //  templateUrl: 'admin.edit.product.html',
+      //  controller: function($stateParams, $http) {
+      //    if (confirm('Are you sure you want to delete?')) {
+      //      $http.delete('/cards/' + $stateParams._id)
+      //          .then(function(res) {
+      //            console.log(res);
+      //          });
+      //    }
+      //  }
+      //})
 });
 
 
