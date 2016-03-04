@@ -1,11 +1,14 @@
 //FOR ALL ROUTES HERE, require req.user._id === req.requestedUser || req.user.isAdmin
 
 var _ = require('lodash'),
+		auth = require('../authentication'),
 		mongoose = require('mongoose'),
 		router = require('express').Router({ mergeParams: true }),
 		Order = mongoose.model('Order');
 
 module.exports = router;
+
+router.use(auth.ensureCurrentUserOrAdmin);
 
 router.param('orderId', function(req, res, next, id) {
 	Order.findById(id)
@@ -30,8 +33,7 @@ router.get('/', function(req, res, next) {
 	.then(null, next);
 })
 
-//restrict to admin?
-router.post('/', function(req, res, next) {
+router.post('/', auth.ensureAdmin, function(req, res, next) {
 	//also need to add order to user's document
 	//need to define on user model:
 	//req.currentUser.createOrder()
@@ -47,7 +49,7 @@ router.get('/:orderId', function(req, res, next) {
 	res.json(req.order);
 })
 
-router.put('/:orderId', function(req, res, next) {
+router.put('/:orderId', auth.ensureAdmin, function(req, res, next) {
 	_.extend(req.order, req.body);
 
 	req.order.save()
@@ -57,7 +59,7 @@ router.put('/:orderId', function(req, res, next) {
 	.then(null, next);
 })
 
-router.delete('/:orderId', function(req, res, next) {
+router.delete('/:orderId', auth.ensureAdmin, function(req, res, next) {
 	//also need to remove from user doc
 	//need to define:
 	//req.currentUser.removeOrder()

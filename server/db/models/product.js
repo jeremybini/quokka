@@ -2,6 +2,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+//var Review = mongoose.model('Review');
 
 
 var ProductSchema = new Schema({
@@ -62,5 +63,10 @@ ProductSchema.statics.updateStock = function(productId, quantity) {
     }
   });
 };
+
+//THIS THROWS AN ERROR SAYING MONGOOSE MODEL 'REVIEW' HASNT BEEN REGISTERED, CANT FIGURE OUT WHY
+// ProductSchema.post('remove', function(productId){
+//   return Review.removeReviewsForProduct(productId);
+// })
 
 mongoose.model('Product', ProductSchema);

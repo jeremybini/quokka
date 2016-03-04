@@ -1,18 +1,25 @@
 /* USER ROUTES */
 'use strict';
 var router = require('express').Router();
-var _ = require('lodash');
 module.exports = router;
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var OrderRouter = require('./order');
-var ReviewRouter = require('./review');
+
+var _ = require('lodash'),
+    auth = require('../authentication'),
+
+    mongoose = require('mongoose'),
+    User = mongoose.model('User'),
+    OrderRouter = require('./order'),
+    ReviewRouter = require('./review');
 
 router.param('id', function(req, res, next, id) {
   User.findById(id)
   .then(user => {
-    req.currentUser = user;
-    next();
+    if (user) {
+      req.currentUser = user.sanitize();
+      next();
+    } else {
+      throw Error('Uh oh, something went wrong');
+    }
   })
   .then(null, function(err) {
     err.status = 404;
@@ -21,7 +28,7 @@ router.param('id', function(req, res, next, id) {
 });
 
 //get all users
-router.get('/', function(req, res, next) {
+router.get('/', auth.ensureAdmin, function(req, res, next) {
   User.find({}).exec()
   .then(function(allUsers) {
     res.send(allUsers);
@@ -34,18 +41,22 @@ router.use('/:id/orders/', OrderRouter);
 router.use('/:id/reviews/', ReviewRouter);
 
 //get user by ID
-router.get('/:id', function(req, res, next) {
+router.get('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {
   res.json(req.currentUser);
 });
 
 //add user
-router.post('/', function(req, res, next) {
+router.post('/', auth.ensureAdmin, function(req, res, next) {
   User.create(req.body).then(null, next);
 });
 
 //update user
-router.put('/:id', function(req, res, next) {
+router.put('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {
   _.extend(req.currentUser, req.body);
+  
+  if(!req.user.admin) {
+    req.currentUser.admin = false;
+  }
 
   req.currentUser.save()
   .then(function(product){
@@ -53,19 +64,10 @@ router.put('/:id', function(req, res, next) {
   })
   .then(null, next);
   
-  // User.findById({_id: req.params.id})
-  // .then(function(user) {
-  //   user.update(req.body);
-  //   user.save();
-  // })
-  // .then(function(updatedUser) {
-  //   res.send(updatedUser);
-  // })
-  // .then(null, next);
 });
 
 //delete user
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', auth.ensureAdmin, function(req, res, next) {
   req.currentUser.remove()
   .then(function() {
     res.sendStatus(204);

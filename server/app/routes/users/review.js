@@ -1,11 +1,14 @@
 //FOR ALL ROUTES HERE, require req.user._id === req.requestedUser || req.user.isAdmin
 
 var _ = require('lodash'),
+		auth = require('../authentication'),
 		mongoose = require('mongoose'),
 		router = require('express').Router({ mergeParams: true }),
 		Review = mongoose.model('Review');
 
 module.exports = router;
+
+router.use(auth.ensureCurrentUserOrAdmin);
 
 router.param('reviewId', function(req, res, next, id) {
 	Review.findById(id)
@@ -31,6 +34,7 @@ router.get('/', function(req, res, next) {
 })
 
 //create review for current user
+//do we need this?
 router.post('/', function(req, res, next) {
 	req.user.addReview(req.body)
 	.then(review => {
