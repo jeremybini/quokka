@@ -1,5 +1,13 @@
 app.controller('AdminProductsCtrl', function(products, $state, $scope) {
   $scope.products = products;
+  $scope.goToEditState = function(product) {
+    $state.go('editProduct', {_id: product._id, product: product });
+  }
+});
+
+app.controller('AdminEditProductCtrl', function($stateParams, $scope) {
+  $scope.product = $stateParams.product;
+
 });
 
 app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
