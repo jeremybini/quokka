@@ -49,25 +49,25 @@ var seedProducts = function (categories) {
 
     var products = [
         {
-            title: 'Matching Sweaters',
-            description: 'Your dog and you can wear matching sweaters.',
+            title: 'Howling Houndstooth',
+            description: 'This classic houndstooth print will never go out of style. With these matching sweaters, you and your dog will be fashion icons!',
             price: 3499,
             photoUrl: '/images/UJ1982_2.jpg',
             categories: [categories[0], categories[2]],
             stock: 24
         },
         {
-            title: 'Matching Mittens',
-            description: 'Your cat and you can wear matching mittens.',
-            price: 5499,
+            title: 'Kitten Mittons',
+            description: 'Is your cat making TOO MUCH NOISE all the time? Is your cat constantly stomping around driving you crazy? Is your cat clawing at your furnitures? Kitten Mittons are great for cats (and humans!) that are one legged, fat, skinny, or an in-between.',
+            price: 54929,
             photoUrl: '/images/catsocks.jpg',
             categories: [categories[1], categories[2]],
             stock: 11
         },
         {
-            title: 'Matching Mittens',
-            description: 'Your cat and you can wear matching mittens.',
-            price: 5499,
+            title: 'LuluDog',
+            description: 'Get fit in style with your dog. Breaking a sweat in matching spandex makes any exercise fun!',
+            price: 23099,
             photoUrl: '/images/718471.jpg',
             categories: [categories[0], categories[1]],
             stock: 18

@@ -8,9 +8,10 @@ var User = mongoose.model('User');
 
 //get all orders of all users
 router.get('/', function(req, res, next) {
-  Order.find(req.query)
-  .then(function(ordersByQuery) {
-    res.send(ordersByQuery);
+  Order.find({})
+  .populate('products.product')
+  .then(function(orders) {
+    res.send(orders);
   })
   .then(null, next);
 });
@@ -33,7 +34,7 @@ router.put('/:id', function(req, res, next) {
     if (order.status === 'Cart') {
       order.submitOrder();
     } else {
-      order.updateStatus(req.body);
+      order.updateStatus(req.body.status);
     }
   })
   .then(function(updatedOrder) {

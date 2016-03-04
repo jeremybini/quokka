@@ -1,0 +1,21 @@
+
+<div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Admin Status</th>
+      <th>ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td><input ng-model="user.email"></td>
+      <td><input ng-model="user.admin"></td>
+      <td>{{user._id}}</td>
+      <td><button type="button" class="btn btn-warning" ng-click="editUser(user)">Update User</button></td>
+      <td><button type="button" class="btn btn-danger" ng-click="deleteUser(user)">Delete User</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>

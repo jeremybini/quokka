@@ -6,6 +6,8 @@ module.exports = router;
 router.use('/members', require('./members'));
 router.use('/products', require('./products'));
 router.use('/cart', require('./cart'));
+router.use('/orders', require('./orders'));
+
 
 router.use('/orders', auth.ensureAdmin, require('./orders'));
 router.use('/users', auth.ensureUser, require('./users'));
