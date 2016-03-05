@@ -83,4 +83,18 @@ app.config(function($stateProvider) {
       //})
 });
 
+app.config(function($stateProvider) {
+  $stateProvider.state('adminCreatePromotion', {
+    url: '/admin/promotions',
+    templateUrl: '/js/admin/admin.promotions.template.html',
+    resolve: {
+      promotions: function(PromotionFactory) {
+        return PromotionFactory.fetchAll();
+      }
+    },
+    controller: 'AdminPromotionsCtrl'
+  });
+});
+
+
 
