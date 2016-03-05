@@ -26,6 +26,7 @@ var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
 var Category = Promise.promisifyAll(mongoose.model('Category'));
 var Order = Promise.promisifyAll(mongoose.model('Order'));
+var Promotion = Promise.promisifyAll(mongoose.model('Promotion'));
 
 var seedUsers = function () {
 
@@ -246,14 +247,43 @@ var seedCategories = function () {
 
 };
 
+var seedPromotions = function (products, categories) {
+  var promos = [{
+    title: 'Kitten Mittons Promotion',
+    discount: 50,
+    parameters: {
+      product: products[0]._id
+    },
+    expirationDate: new Date(2020, 11, 17)
+  },
+  {
+    title: 'Category Promotion',
+    discount: 90,
+    parameters: {
+      category: categories[0]
+    },
+    expirationDate: new Date(2020, 11, 17)
+  },
+  {
+    title: 'Everything is Promoted!',
+    discount: 15,
+    expirationDate: new Date(2020, 11, 17)
+  }];
+
+  return Promotion.createAsync(promos);
+}
+
+var cats;
+
 connectToDb.then(function (db) {
     return db.db.dropDatabase();
 }).then(function() {
     return seedCategories();
 }).then(function(categories) {
+    cats = categories;
     Promise.all([seedUsers(), seedProducts(categories)])
     .spread(function (users, products) {
-        return Promise.all([seedReviews(users, products), seedOrders(users, products)]);
+        return Promise.all([seedReviews(users, products), seedOrders(users, products), seedPromotions(products, cats)]);
     })
     .then(function() {
         console.log(chalk.green('Seed successful!'));   

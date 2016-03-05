@@ -48,6 +48,19 @@ app.config(function($stateProvider) {
 });
 
 app.config(function($stateProvider) {
+  $stateProvider.state('adminOneOrder', {
+    url: '/admin/orders/:orderId',
+    templateUrl: '/js/admin/admin.orderview.template.html',
+    resolve: {
+      order: function(OrderFactory, $stateParams) {
+        return OrderFactory.fetchById($stateParams.orderId);
+      }
+    },
+    controller: 'AdminOneOrderCtrl'
+  });
+});
+
+app.config(function($stateProvider) {
   $stateProvider
       .state('editProduct', {
         url: '/admin/products/:_id/edit',
