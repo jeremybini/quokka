@@ -9,19 +9,6 @@ app.config(function($stateProvider) {
 });
 
 app.config(function($stateProvider) {
-  $stateProvider.state('adminAllProducts', {
-    url: '/admin/products',
-    templateUrl: '/js/admin/admin.products.template.html',
-    resolve: {
-      products: function(ProductFactory) {
-        return ProductFactory.fetchAll();
-      }
-    },
-    controller: 'AdminProductsCtrl'
-  });
-});
-
-app.config(function($stateProvider) {
   $stateProvider.state('adminAllUsers', {
     url: '/admin/users',
     templateUrl: '/js/admin/admin.users.template.html',
@@ -48,8 +35,27 @@ app.config(function($stateProvider) {
 });
 
 app.config(function($stateProvider) {
-  $stateProvider
-      .state('editProduct', {
+  $stateProvider.state('adminAllProducts', {
+    url: '/admin/products',
+    templateUrl: '/js/admin/admin.products.template.html',
+    resolve: {
+      products: function(ProductFactory) {
+        return ProductFactory.fetchAll();
+      }
+    },
+    controller: 'AdminProductsCtrl'
+  });
+});
+
+app.config(function($stateProvider) {
+  $stateProvider.state('addProduct', {
+    url: '/admin/products/addproduct',
+    templateUrl: '/js/admin/admin.edit.product.html'
+  })
+});
+
+app.config(function($stateProvider) {
+  $stateProvider.state('editProduct', {
         url: '/admin/products/:_id/edit',
         templateUrl: '/js/admin/admin.edit.product.html',
         params: {

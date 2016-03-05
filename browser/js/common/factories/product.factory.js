@@ -45,7 +45,14 @@ app.factory('ProductFactory', function($http, $log) {
       return $http.put(homePath+productId, productInfo)
               .then(res => res.data)
       .catch($log.error);
+
+    },
+
+    create: function(productInfo) {
+      return $http.post(homePath, productInfo)
+          .then(res => res.data)
+      .catch($log.error);
     }
 
 	}
-})
+});

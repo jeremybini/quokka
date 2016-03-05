@@ -64,6 +64,8 @@ ProductSchema.statics.updateStock = function(productId, quantity) {
   });
 };
 
+
+
 //THIS THROWS AN ERROR SAYING MONGOOSE MODEL 'REVIEW' HASNT BEEN REGISTERED, CANT FIGURE OUT WHY
 // ProductSchema.post('remove', function(productId){
 //   return Review.removeReviewsForProduct(productId);
