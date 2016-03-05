@@ -14,7 +14,7 @@ app.factory('ProductFactory', function($http, $log) {
 			.then(res => res.data)
 			.catch($log.error);
 		},
-		
+
 		fetchByCategory: function(categoryId) {
 			return $http.get(homePath, {
 				params: { categories: categoryId }
@@ -33,6 +33,19 @@ app.factory('ProductFactory', function($http, $log) {
 			return $http.get(homePath+productId+'/reviews/'+reviewId)
 			.then(res => res.data)
 			.catch($log.error);
-		}
+		},
+
+    delete: function(productId) {
+      return $http.delete(homePath+productId)
+              .then(res => res.data)
+      .catch($log.error);
+    },
+
+    update: function(productId, productInfo) {
+      return $http.put(homePath+productId, productInfo)
+              .then(res => res.data)
+      .catch($log.error);
+    }
+
 	}
 })
