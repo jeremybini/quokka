@@ -18,7 +18,10 @@ var PromotionSchema = new mongoose.Schema({
       ref: 'Product'
     }
   },
-  creationDate: Date,
+  creationDate: {
+    type: Date,
+    default: Date.now
+  },
   expirationDate: Date
 });
 
@@ -28,8 +31,9 @@ PromotionSchema.pre('create', function(next){
 
   for(var i=0; i < 8; i++) {
     code+= charSet.charAt(Math.floor(Math.random()*charSet.length));
-    return code;
   };
+  this.code = code;
+  next();
 });
 
 mongoose.model('Promotion', PromotionSchema);

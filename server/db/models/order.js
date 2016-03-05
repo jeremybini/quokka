@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var Product = mongoose.model('Product');
+var Promotion = mongoose.model('Promotion');
 
 var OrderSchema = new mongoose.Schema({
   products: [{
@@ -45,15 +46,30 @@ var OrderSchema = new mongoose.Schema({
   }
 });
 
+OrderSchema.statics.findOrCreate = function(params) {
+  var order = this;
+  return order.find(params)
+  .populate('products')
+  .then(function(result) {
+    if (result.length) {
+      return result[0];
+    } else {
+      return order.create(params);
+    }
+  })
+  .catch(function(err) {
+    return err;
+  })
+};
+
 OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
   var updatedProducts = [];
 
-  //need to also calculate promotion discount
+  //having issues populating on instance, so made this a static instead
   return this.findById(orderId)
-      .populate('products.product')
+      .populate('products.product promotion')
       .then(function(order) {
-        console.log(order);
         order.products.forEach(function(item) {
           item.price = item.product.price;
           var p = Product.updateStock(item.product._id, item.quantity);
@@ -131,6 +147,27 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
   return order.save();
 };
 
+OrderSchema.methods.applyPromotion = function(promotionCode) {
+  var order = this;
+
+  Promotion.findOne({ code: promotionCode })
+  .then(function(code) {
+    var promoProduct = code.params.product;
+    var promoCategory = code.params.category;
+
+    //if that is a valid promo code and it has not expired
+    if (code && code.expirationDate > Date.now()) {
+      //set current order's promotion to the returned promotion
+      order.promotion = code._id;
+      order.products.forEach(function(item) {
+        if(!promoProduct && !promoCategory) {
+          item.price = item.product.price - item.product.price*discount/100;
+        }
+      })
+    }
+  })
+}
+
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
   this.products.forEach(function(item) {
@@ -139,27 +176,11 @@ OrderSchema.virtual('totalPrice').get(function() {
   return total;
 });
 
-OrderSchema.statics.findOrCreate = function(params) {
-  var order = this;
-  return order.find(params)
-  .populate('products')
-  .then(function(result) {
-    if (result.length) {
-      return result[0];
-    } else {
-      return order.create(params);
-    }
-  })
-  .catch(function(err) {
-    console.error(err);
-  })
-};
-
 OrderSchema.pre('validate', function(next) {
   if (this.user || this.session) {
     next();
   } else {
-    next(Error('Either User or Session must be specified.'));
+    next(new Error('Either User or Session must be specified.'));
   }
 });
 
