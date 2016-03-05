@@ -51,7 +51,7 @@ router.get('/:reviewId', function(req, res, next) {
 
 //
 router.put('/:reviewId', function(req, res, next) {
-	_.extend(req.review, req.body);
+	_.merge(req.review, req.body);
 
 	req.review.save()
 	.then(function(review){
