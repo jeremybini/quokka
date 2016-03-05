@@ -65,40 +65,6 @@ body {
 	}
 }
 
-#filler {
-	height: 1000px;
-}
-
-.navbar-hidden {
-	opacity: 0;
-}
-
-.navbar-stuck {
-	top: 0;
-	position: fixed;
-	width: 100%;
-	transition: .7s;
-	opacity: 1;
-	background-color: #69D2E7;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
-  li > a {
-    cursor: pointer;
-    transition: color 0.2s;
-    color: white !important;
-    &.active {
-      color: lighten(#F38630, 20%) !important;
-    }
-    &:hover {
-      background: none;
-      color: #F38630 !important;
-    }
-    &:focus {
-      background: none;
-    }
-  }
-}
-
 .products-box {
 	padding: 20px;
 	height: 300px;
