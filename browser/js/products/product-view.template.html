@@ -7,22 +7,52 @@
 		</div>
 		<div class="col-md-6">
 			<ul>
-				<li>{{ product.price/100 | currency: $ }}</li>
 				<li>{{ product.description }}</li>
+				<li>Item Price: {{ product.price/100 | currency: $ }}</li>
 				<li>{{ product.stock }} in stock</li>
 				<form class="form-horizontal">
 				  <div class="form-group">
 				    <label class="col-sm-2 control-label">Quantity</label>
-				    <div class="col-sm-4">
-				      <input ng-model="cartQuantity" type="number" class="form-control input-orange" min="1" max="{{ product.stock }}">
-				    </div>
 				    <div class="col-sm-6">
-				      <button ng-click="addToCart()" class="btn btn-blue">Add To Cart</button>
+				      <input ng-model="cartQuantity" type="number" class="form-control input-orange" min="1" max="{{ product.stock }}">
+				    	<label class="col-sm-6 control-label">Total: {{ cartQuantity*product.price/100 | currency : $ }}</label>
+				    </div>
+				    <div class="col-sm-4">
+				      <button ng-click="addToCart()" class="btn btn-blue pull-right">Add To Cart</button>
 				    </div>
 				  </div>
 				</form>
+				<div ng-show="message" class="alert alert-success fade in">
+				  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				  <strong>Success!</strong>  {{ message }}
+				</div>
 			</ul>
 		</div>
+		<div class="col-md-6">
+			<h1>Reviews</h1>
+			<div ng-repeat="review in reviews" class="panel panel-default">
+				<div class="panel-heading">
+					{{ review.title }}
+				</div>		
+			  <div class="panel-body">
+			    {{ review.content }}<br>
+			    Rating: {{ review.rating }}
+			  </div>
+			</div>
+			<div ng-show="addingReview" class="form-group">
+			  <div class="form-group">
+				  <label>Title:</label>
+				  <input type="text" class="form-control" ng-model="newReview.title">
+				</div>
+				<label>Review for {{ product.title }}:</label><br>
+			  <textarea class="form-control" rows="5" ng-model="newReview.content"></textarea>
+			</div>
+			<!-- need to exclude if not logged in -->
+			<button ng-hide="addingReview" class="btn btn-orange" ng-click="addReview()">Add a Review</button>
+			<button ng-show="addingReview" class="btn btn-blue pull-right" ng-click="submitReview()">
+				<span ng-hide="submittingReview">Submit Review</span>
+				<i ng-show="submittinReview" class="fa fa-spinner"></i>
+			</button>
+		</div>
 	</div>
-	<pre>{{ cart | json }}</pre>
 </div>

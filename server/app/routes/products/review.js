@@ -40,8 +40,12 @@ router.post('/', auth.ensureUser, function(req, res, next) {
     return Product.addReview(review)
   })
   .then(product => {
-    res.status(201);
-    res.json(product);
+    return Review.find({
+      product: req.product._id
+    })
+  })
+  .then(reviews => {
+    res.status(201).json(reviews);
   })
   .then(null, next);
 })
