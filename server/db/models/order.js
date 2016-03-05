@@ -54,7 +54,6 @@ OrderSchema.statics.submitOrder = function(orderId) {
   return this.findById(orderId)
       .populate('products.product')
       .then(function(order) {
-        console.log(order);
         order.products.forEach(function(item) {
           item.price = item.product.price;
           var p = Product.updateStock(item.product._id, item.quantity);
@@ -142,7 +141,7 @@ OrderSchema.virtual('totalPrice').get(function() {
 
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
-  return order.find(params)
+  return order.findOne(params)
   .populate('products.product')
   .then(function(result) {
     if (result.length) {
