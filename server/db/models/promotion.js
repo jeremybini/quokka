@@ -19,7 +19,7 @@ var PromotionSchema = new mongoose.Schema({
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Category'
     }
   },
   creationDate: {
@@ -29,11 +29,11 @@ var PromotionSchema = new mongoose.Schema({
   expirationDate: Date
 });
 
-PromotionSchema.pre('create', function(next){
+PromotionSchema.pre('validate', function(next){
   var code = "";
   var charSet = "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz123456789";
 
-  for(var i=0; i < 8; i++) {
+  for(var i=0; i < 5; i++) {
     code+= charSet.charAt(Math.floor(Math.random()*charSet.length));
   };
   this.code = code;
