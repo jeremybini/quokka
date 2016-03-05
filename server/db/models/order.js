@@ -16,8 +16,12 @@ var OrderSchema = new mongoose.Schema({
     },
     price: {
       type: Number
-    }
+    },
   }],
+  promotion: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Promotion'
+  },
   categories: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
@@ -46,6 +50,7 @@ OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
   var updatedProducts = [];
 
+  //need to also calculate promotion discount
   return this.findById(orderId)
       .populate('products.product')
       .then(function(order) {

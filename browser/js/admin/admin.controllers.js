@@ -10,12 +10,10 @@ app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFac
   $scope.categories = ['Dogs', 'Cats', 'Other Critters'];
   $scope.categoryName = $scope.product.categories[0].name;
   $scope.save = function(product) {
-    console.log(product);
     ProductFactory.update(product._id, product);
     $state.go('adminAllProducts');
   };
   $scope.delete = function(product) {
-    console.log(product);
     ProductFactory.delete(product._id);
     $state.go('adminAllProducts');
   };
