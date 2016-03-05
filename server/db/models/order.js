@@ -7,7 +7,8 @@ var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Product',
+      required: true
     },
     quantity: {
       type: Number,
@@ -133,8 +134,8 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
 
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
-  this.products.forEach(function(item) {
-    total += item.price || item.product.price;
+  this.products.reduce(function(total, item) {
+    total + item.price || item.product.price;
   });
   return total;
 });

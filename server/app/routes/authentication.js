@@ -1,4 +1,4 @@
-module.exports = {
+var auth = {
 
 	ensureUser: function(req, res, next) {
 		if(req.user) {
@@ -16,8 +16,12 @@ module.exports = {
 		}
 	},
 
+	isCurrentUserOrAdmin: function(user, currentUserId) {
+		return user && (user._id.equals(currentUserId)) || user.admin;
+	},
+
 	ensureCurrentUserOrAdmin: function(req, res, next) {
-		if(req.user && (req.user._id.equals(req.currentUser._id) || req.user.admin)) {
+		if(auth.isCurrentUserOrAdmin(req.user, req.currentUser._id)) {
 			next()
 		} else {
 			next(Error('You shall not pass.'));
@@ -25,3 +29,5 @@ module.exports = {
 	}
 
 }
+
+module.exports = auth;

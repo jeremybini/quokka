@@ -1,7 +1,10 @@
 app.config(function($stateProvider) {
   $stateProvider.state('adminHomePage', {
     url: '/admin',
-    templateUrl: '/js/admin/index.html'
+    templateUrl: '/js/admin/index.html',
+    data: {
+      authenticate: true
+    }
   });
 });
 

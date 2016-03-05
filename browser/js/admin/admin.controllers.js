@@ -1,4 +1,4 @@
-app.controller('AdminProductsCtrl', function(products, $state, $scope) {
+app.controller('AdminProductsCtrl', function(products, $state, $scope, AuthService) {
   $scope.products = products;
   $scope.goToEditState = function(product) {
     $state.go('editProduct', {_id: product._id, product: product });
