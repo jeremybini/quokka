@@ -14,4 +14,6 @@ app.controller('CartController', function($scope, CartFactory) {
     return CartFactory.empty();
   };
 
+  //submit button functionality
+
 });

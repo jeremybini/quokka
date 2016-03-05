@@ -214,7 +214,13 @@ var seedOrders = function (user, product) {
             user: user[0]._id,
             products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
             status: 'Completed'
+        },
+        {
+            user: user[0]._id,
+            products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
+            status: 'Cart'
         }
+
 
     ];
 
