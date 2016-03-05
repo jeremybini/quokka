@@ -47,7 +47,6 @@ router.delete('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   req.cart.addProduct(req.body.productId, req.body.quantity)
   .then(function(result) {
-    //res.status(204);
     res.json(result);
   })
   .then(null, next);

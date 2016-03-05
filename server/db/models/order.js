@@ -55,7 +55,6 @@ OrderSchema.statics.submitOrder = function(orderId) {
   return this.findById(orderId)
       .populate('products.product')
       .then(function(order) {
-        console.log(order);
         order.products.forEach(function(item) {
           item.price = item.product.price;
           var p = Product.updateStock(item.product._id, item.quantity);
@@ -67,7 +66,6 @@ OrderSchema.statics.submitOrder = function(orderId) {
         return order.save();
       })
       .then(function(order) {
-        console.log("Submitted Order:", order);
         if (order.promotion) {
           return order.applyPromotion(order.promotion);
         }
@@ -76,11 +74,9 @@ OrderSchema.statics.submitOrder = function(orderId) {
       })
       .then(function(order) {
         submittedOrder = order;
-        console.log("Submitted Order:", submittedOrder);
         return Promise.all(updatedProducts);
       })
       .then(function(){
-        console.log("Submitted Order:", submittedOrder);
         return submittedOrder;
       });
 };
