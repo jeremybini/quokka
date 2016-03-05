@@ -3,7 +3,7 @@ THINGS LEFT TO DO
 Admin Pages:
 
 --add more functionality to orders page: view order details, filter by status
---add more functionality to users page: reset password
+--add more functionality to users page: reset password, admin status true/false
 --add more functionality to products page: be able to add categories, edit categories, product can have multiple categories
 
 Authentication/accounts:
@@ -32,4 +32,7 @@ Other
 --Spiffy up the UI
 --Respond to code review suggestions
 
-Twist????
+Twist
+--Make admins able to offer promotion codes that will give users percentages/$ amounts off their orders
+
+
