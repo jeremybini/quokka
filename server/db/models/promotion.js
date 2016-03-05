@@ -8,6 +8,10 @@ var PromotionSchema = new mongoose.Schema({
   code: {
     type: String
   },
+  discount: {
+    type: Number,
+    required: true
+  },
   parameters: {
     product: {
       type: mongoose.Schema.Types.ObjectId,

@@ -49,7 +49,13 @@ var OrderSchema = new mongoose.Schema({
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
   return order.find(params)
-  .populate('products')
+  .populate({
+    path: 'products',
+    populate: {
+      path: 'products',
+      model: 'Product'
+    }
+  })
   .then(function(result) {
     if (result.length) {
       return result[0];
@@ -66,10 +72,11 @@ OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
   var updatedProducts = [];
 
-  //having issues populating on instance, so made this a static instead
+  //having issues populating an instance, so made this a static instead
   return this.findById(orderId)
-      .populate('products.product promotion')
+      .populate('products.product')
       .then(function(order) {
+        console.log(order);
         order.products.forEach(function(item) {
           item.price = item.product.price;
           var p = Product.updateStock(item.product._id, item.quantity);
@@ -81,10 +88,20 @@ OrderSchema.statics.submitOrder = function(orderId) {
         return order.save();
       })
       .then(function(order) {
+        console.log("Submitted Order:", order);
+        if (order.promotion) {
+          return order.applyPromotion(order.promotion);
+        }
+
+        return order;
+      })
+      .then(function(order) {
         submittedOrder = order;
+        console.log("Submitted Order:", submittedOrder);
         return Promise.all(updatedProducts);
       })
       .then(function(){
+        console.log("Submitted Order:", submittedOrder);
         return submittedOrder;
       });
 };
@@ -107,7 +124,7 @@ OrderSchema.methods.addProduct = function(productId, quantity) {
     } else {
       order.products.push({
         product: productId,
-        quantity: +quantity
+        quantity: quantity
       });
     }
     return order.save();
@@ -147,10 +164,14 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
   return order.save();
 };
 
+function applyDiscount(item, discount) {
+  item.price = item.product.price - item.product.price*discount/100;
+};
+
 OrderSchema.methods.applyPromotion = function(promotionCode) {
   var order = this;
 
-  Promotion.findOne({ code: promotionCode })
+  return Promotion.findOne({ code: promotionCode })
   .then(function(code) {
     var promoProduct = code.params.product;
     var promoCategory = code.params.category;
@@ -159,13 +180,24 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
     if (code && code.expirationDate > Date.now()) {
       //set current order's promotion to the returned promotion
       order.promotion = code._id;
+
+      //check each product for promo code params and apply discount, apply to all if no params
       order.products.forEach(function(item) {
         if(!promoProduct && !promoCategory) {
-          item.price = item.product.price - item.product.price*discount/100;
+          applyDiscount(item, code.discount);
+        } else {
+          if (item.product.equals(promoProduct)) {
+            applyDiscount(item, code.discount);
+          } else if (item.product.categories.indexOf(promoCategory) !== -1) {
+            applyDiscount(item, code.discount);
+          }
         }
       })
+      return order.save();
+    } else {
+      return new Error("That's not a valid promotion code");
     }
-  })
+  });
 }
 
 OrderSchema.virtual('totalPrice').get(function() {
