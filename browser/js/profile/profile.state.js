@@ -14,27 +14,27 @@ app.config(function($stateProvider) {
 			controller: 'ProfileController'
 		})
 
-		.state('viewOrder', {
-			url: '/profile/:id/orders/:orderId',
-			templateUrl: '/js/profile/view-order.template.html',
-			resolve: {
-				order: function(OrderFactory, $stateParams) {
-					return OrderFactory.fetchById($stateParams.orderId);
-				}
-			},
-			controller: 'UserOrderController'
-		})
+		// .state('viewOrder', {
+		// 	url: '/profile/:id/orders/:orderId',
+		// 	templateUrl: '/js/profile/view-order.template.html',
+		// 	resolve: {
+		// 		order: function(OrderFactory, $stateParams) {
+		// 			return OrderFactory.fetchById($stateParams.orderId);
+		// 		}
+		// 	},
+		// 	controller: 'UserOrderController'
+		// })
 
-		.state('editProfile', {
-			url: 'profile/:id/edit',
-			templateUrl: '/js/profile/profile-edit.template.html',
-			resolve: {
-				user: function(UserFactory, $stateParams) {
-					return UserFactory.fetchById($stateParams.id);
-				}
-			},
-			controller: 'ProfileController'
-		})
+		// .state('editProfile', {
+		// 	url: 'profile/:id/edit',
+		// 	templateUrl: '/js/profile/profile-edit.template.html',
+		// 	resolve: {
+		// 		user: function(UserFactory, $stateParams) {
+		// 			return UserFactory.fetchById($stateParams.id);
+		// 		}
+		// 	},
+		// 	controller: 'ProfileController'
+		// })
 
 
 });
