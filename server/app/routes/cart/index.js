@@ -27,8 +27,14 @@ router.use(function(req, res, next) {
   });
 });
 
+//get the order that is cart status
+router.get('/:id', function(req, res, next) {
+  res.json(req.cart);
+});
+
+
 //req.body should have a product ID
-router.post('/remove', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
   req.cart.removeProduct(req.body.productId)
   .then(function(result) {
     res.status = 204;
@@ -49,7 +55,7 @@ router.post('/add', function(req, res, next) {
 });
 
 //req.body should have a product ID, updated quantity
-router.post('/update', function(req, res, next) {
+router.put('/update', function(req, res, next) {
   req.cart.updateQuantity(req.body.productId, req.body.quantity)
   .then(function(result) {
     res.status = 204;
@@ -68,12 +74,10 @@ router.post('/submit', function(req, res, next) {
   .then(null, next);
 });
 
-router.post('/empty', function(req, res, next) {
+router.delete('/', function(req, res, next) {
   req.cart.products = [];
   req.cart.save()
   .then(function(result) {
-    //res.status = 204;
-    console.log('shiiiit', result);
     res.json(result);
   })
   .then(null, next);
