@@ -9,6 +9,21 @@ var mongoose = require('mongoose');
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
 
+//get order by ID
+router.get('/:id', function(req, res, next) {
+  Order.findById({_id: req.params.id})
+  .populate('products.product')
+  .then(function(order) {
+    if (auth.isCurrentUserOrAdmin(req.user, order.user)) {
+      res.send(order);
+    } else {
+      next(new Error('You Shall Not Pass.'))
+    }
+  })
+  .then(null, next);
+});
+
+//ADMIN ONLY ROUTES
 router.use(auth.ensureAdmin);
 
 //get all orders of all users
@@ -21,12 +36,11 @@ router.get('/', function(req, res, next) {
   .then(null, next);
 });
 
-//get order by ID
-router.get('/:id', function(req, res, next) {
-  Order.findById({_id: req.params.id})
-  .populate('products.product')
-  .then(function(order) {
-    res.send(order);
+//delete order
+router.delete('/:id', function(req, res, next) {
+  Order.findOneAndRemove({_id: req.params.id})
+  .then(function() {
+    res.sendStatus(204);
   })
   .then(null, next);
 });
@@ -44,15 +58,6 @@ router.put('/:id', function(req, res, next) {
   })
   .then(function(updatedOrder) {
     res.send(updatedOrder);
-  })
-  .then(null, next);
-});
-
-//delete order
-router.delete('/:id', function(req, res, next) {
-  Order.findOneAndRemove({_id: req.params.id})
-  .then(function() {
-    res.sendStatus(204);
   })
   .then(null, next);
 });

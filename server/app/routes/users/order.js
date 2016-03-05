@@ -4,7 +4,8 @@ var _ = require('lodash'),
 		auth = require('../authentication'),
 		mongoose = require('mongoose'),
 		router = require('express').Router({ mergeParams: true }),
-		Order = mongoose.model('Order');
+		Order = mongoose.model('Order'),
+		User = mongoose.model('User');
 
 module.exports = router;
 
@@ -34,9 +35,6 @@ router.get('/', function(req, res, next) {
 })
 
 router.post('/', auth.ensureAdmin, function(req, res, next) {
-	//also need to add order to user's document
-	//need to define on user model:
-	//req.currentUser.createOrder()
 	Order.create(req.body)
 	.then(order => {
 		res.status(201);
@@ -50,7 +48,7 @@ router.get('/:orderId', function(req, res, next) {
 })
 
 router.put('/:orderId', auth.ensureAdmin, function(req, res, next) {
-	_.extend(req.order, req.body);
+	_.merge(req.order, req.body);
 
 	req.order.save()
 	.then(function(order){
@@ -60,9 +58,6 @@ router.put('/:orderId', auth.ensureAdmin, function(req, res, next) {
 })
 
 router.delete('/:orderId', auth.ensureAdmin, function(req, res, next) {
-	//also need to remove from user doc
-	//need to define:
-	//req.currentUser.removeOrder()
 	req.order.remove()
 	.then(function() {
 		res.sendStatus(204);
