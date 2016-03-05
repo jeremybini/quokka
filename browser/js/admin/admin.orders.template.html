@@ -5,6 +5,17 @@ View Orders By Status:
 <button type="button" class="btn btn-info" ng-click="filter()">See All</button>
 </div>
 <br>
+<div class="text-center">
+<h4 ng-show="updated">
+<font color="green">Order successfully updated!</font>
+</h4>
+</div>
+<div class="text-center">
+<h4 ng-show="deleted">
+<font color="red">Order successfully deleted!</font>
+</h4>
+</div>
+<br>
 <div>
 <table class="table">
   <thead>

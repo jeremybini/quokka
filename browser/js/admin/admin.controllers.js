@@ -24,15 +24,22 @@ app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFac
 
 app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
   $scope.users = users;
+  $scope.statuses = [true, false];
+  $scope.updated = false;
+  $scope.deleted = false;
 
   $scope.editUser = function(user) {
-    UserFactory.update(user._id, {status: user.admin, email: user.email});
+    UserFactory.update(user._id, {admin: user.admin, email: user.email});
+    $scope.updated = true;
+    $scope.deleted = false;
   };
 
   $scope.deleteUser = function(user) {
     UserFactory.delete(user._id)
     .then(function() {
-    $scope.users = $scope.users.filter(function(item) {
+      $scope.deleted = true;
+      $scope.updated = false;
+      $scope.users = $scope.users.filter(function(item) {
         return item._id !== user._id;
       });
     });
@@ -40,18 +47,35 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
 
 });
 
+app.controller('AdminOneOrderCtrl', function(order, $scope, $state) {
+  $scope.order = order;
+  $scope.back = function() {
+    $state.go('adminAllOrders');
+  };
+});
+
 app.controller('AdminOrdersCtrl', function(orders, OrderFactory, $state, $scope) {
   $scope.orders = orders;
   var allOrders = $scope.orders;
   $scope.statuses = ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'];
+  $scope.updated = false;
+  $scope.deleted = false;
 
   $scope.editOrder = function(order) {
     OrderFactory.update(order._id, {status: order.status});
+    $scope.updated = true;
+    $scope.deleted = false;
+  };
+
+  $scope.viewOrder = function(orderId) {
+    $state.go('adminOneOrder', {orderId: orderId});
   };
 
   $scope.deleteOrder = function(order) {
     OrderFactory.delete(order._id)
     .then(function() {
+      $scope.updated = false;
+      $scope.deleted = true;
       $scope.orders = $scope.orders.filter(function(item) {
         return item._id !== order._id;
       });

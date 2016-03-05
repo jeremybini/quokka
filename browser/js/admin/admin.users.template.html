@@ -1,4 +1,13 @@
-
+<div class="text-center">
+<h4 ng-show="updated">
+<font color="green">User successfully updated!</font>
+</h4>
+</div>
+<div class="text-center">
+<h4 ng-show="deleted">
+<font color="red">User successfully deleted!</font>
+</h4>
+</div>
 <div>
 <table class="table">
   <thead>
@@ -11,7 +20,7 @@
   <tbody>
     <tr ng-repeat="user in users">
       <td><input ng-model="user.email"></td>
-      <td><input ng-model="user.admin"></td>
+      <td><select ng-model="user.admin" ng-options="status as status for status in statuses"></select></td>
       <td>{{user._id}}</td>
       <td><button type="button" class="btn btn-warning" ng-click="editUser(user)">Update User</button></td>
       <td><button type="button" class="btn btn-warning" ng-click="resetPassword(user)">Reset User Password</button></td>
