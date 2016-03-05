@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>My Info</h1>
+			<div class="panel panel-default">
+		  	<div class="panel-heading">Profile</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>{{ user.email }}</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<h1>My Orders</h1>
+			<div class="panel panel-default">
+			  <div class="panel-heading">Orders</div>
+			  <table class="table">
+				  <thead>
+			      <tr>
+			        <th>Date Submitted</th>
+			        <th>Order #</th>
+			        <th>Status</th>
+			        <th>Total Cost</th>
+			        <th></th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat="order in orders">
+			        <td>{{ order.dateSubmitted }}</td>
+			        <td>{{ order._id }}</td>
+			        <td>{{ order.status }}</td>
+			        <td>{{ order.totalPrice }}</td>
+			        <td><button ng-click="viewOrder(order._id)">View Order</button></td>
+			      </tr>
+			    </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

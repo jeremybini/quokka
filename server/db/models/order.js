@@ -8,7 +8,8 @@ var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Product',
+      required: true
     },
     quantity: {
       type: Number,
@@ -45,28 +46,6 @@ var OrderSchema = new mongoose.Schema({
     type: Date
   }
 });
-
-OrderSchema.statics.findOrCreate = function(params) {
-  var order = this;
-  return order.find(params)
-  .populate({
-    path: 'products',
-    populate: {
-      path: 'products',
-      model: 'Product'
-    }
-  })
-  .then(function(result) {
-    if (result.length) {
-      return result[0];
-    } else {
-      return order.create(params);
-    }
-  })
-  .catch(function(err) {
-    return err;
-  })
-};
 
 OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
@@ -202,11 +181,27 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
 
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
-  this.products.forEach(function(item) {
-    total += item.price || item.product.price;
+  this.products.reduce(function(total, item) {
+    total + item.price || item.product.price;
   });
   return total;
 });
+
+OrderSchema.statics.findOrCreate = function(params) {
+  var order = this;
+  return order.find(params)
+  .populate('products.product')
+  .then(function(result) {
+    if (result.length) {
+      return result[0];
+    } else {
+      return order.create(params);
+    }
+  })
+  .catch(function(err) {
+    console.error(err);
+  });
+};
 
 OrderSchema.pre('validate', function(next) {
   if (this.user || this.session) {

@@ -13,18 +13,18 @@ var _ = require('lodash'),
 
 router.param('id', function(req, res, next, id) {
   User.findById(id)
+  .populate('orders.products reviews')
   .then(user => {
     if (user) {
       req.currentUser = user.sanitize();
       next();
     } else {
-      throw Error('Uh oh, something went wrong');
+      var err = new Error('Something went wrong.');
+      err.status = 404;
+      next(err);
     }
   })
-  .then(null, function(err) {
-    err.status = 404;
-    next(err);
-  });
+  .then(null, next);
 });
 
 //get all users

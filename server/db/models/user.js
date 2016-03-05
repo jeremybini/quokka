@@ -67,7 +67,6 @@ UserSchema.pre('save', function(next) {
       this.salt = this.constructor.generateSalt();
       this.password = this.constructor.encryptPassword(this.password, this.salt);
   }
-
   next();
 
 });
@@ -77,13 +76,6 @@ UserSchema.statics.encryptPassword = encryptPassword;
 
 UserSchema.method('correctPassword', function(candidatePassword) {
   return encryptPassword(candidatePassword, this.salt) === this.password;
-});
-
-//NOT SURE IF WE NEED THIS??
-//if new user, create empty cart.
-//if existing user logs in - if cart exists (order not yet placed), populate cart with the existing items. if cart does not exist (no pending orders), populate empty cart
-UserSchema.method('createCart', function() {
-  return new mongoose.model('Order');
 });
 
 UserSchema.methods.addReview = function (reviewObj) {
