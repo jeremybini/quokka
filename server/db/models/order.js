@@ -159,7 +159,7 @@ OrderSchema.virtual('totalPrice').get(function() {
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
   return order.find(params)
-  .populate('products')
+  .populate('products.product')
   .then(function(result) {
     if (result.length) {
       return result[0];
@@ -169,7 +169,7 @@ OrderSchema.statics.findOrCreate = function(params) {
   })
   .catch(function(err) {
     console.error(err);
-  })
+  });
 };
 
 OrderSchema.pre('validate', function(next) {

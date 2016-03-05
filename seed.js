@@ -216,8 +216,8 @@ var seedOrders = function (user, product) {
             status: 'Completed'
         },
         {
-            user: user[0]._id,
-            products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
+            user: user[1]._id,
+            products: [ { product: product[6]._id, quantity: 4, price: 77 } ],
             status: 'Cart'
         }
 

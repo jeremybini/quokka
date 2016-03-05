@@ -1,6 +1,6 @@
 //CART CONTROLLER
-app.controller('CartController', function($scope, CartFactory) {
-  $scope.cart = CartFactory.getCart();
+app.controller('CartController', function($scope, CartFactory, cart) {
+  $scope.cart = cart;
 
   $scope.remove = function(productId) {
     return CartFactory.remove(productId);
@@ -15,5 +15,8 @@ app.controller('CartController', function($scope, CartFactory) {
   };
 
   //submit button functionality
+  $scope.checkout = function(orderId) {
+    return CartFactory.submitOrder(orderId);
+  };
 
 });
