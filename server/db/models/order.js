@@ -3,29 +3,11 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 var Product = mongoose.model('Product');
 
-// var ItemSchema = new mongoose.Schema({
-//   product: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Product'
-//     // required: true
-//   },
-//   quantity: {
-//     type: Number,
-//     default: 1
-//   },
-//   price: {
-//     type: Number
-//   }
-// })
-
-// mongoose.model('Item', ItemSchema);
-
 var OrderSchema = new mongoose.Schema({
   products: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product'
-      // required: true
     },
     quantity: {
       type: Number,
@@ -33,12 +15,12 @@ var OrderSchema = new mongoose.Schema({
     },
     price: {
       type: Number
-    }
+    },
   }],
-  // products: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Item'
-  // }],
+  promotion: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Promotion'
+  },
   categories: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
@@ -67,6 +49,7 @@ OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
   var updatedProducts = [];
 
+  //need to also calculate promotion discount
   return this.findById(orderId)
       .populate('products.product')
       .then(function(order) {
