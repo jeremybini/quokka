@@ -9,11 +9,12 @@
 			<ul>
 				<li>{{ product.price/100 | currency: $ }}</li>
 				<li>{{ product.description }}</li>
+				<li>{{ product.stock }} in stock</li>
 				<form class="form-horizontal">
 				  <div class="form-group">
 				    <label class="col-sm-2 control-label">Quantity</label>
 				    <div class="col-sm-4">
-				      <input ng-model="cartQuantity" type="number" class="form-control input-orange" min="1">
+				      <input ng-model="cartQuantity" type="number" class="form-control input-orange" min="1" max="{{ product.stock }}">
 				    </div>
 				    <div class="col-sm-6">
 				      <button ng-click="addToCart()" class="btn btn-blue">Add To Cart</button>
