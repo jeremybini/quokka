@@ -12,6 +12,7 @@ var Promotion = mongoose.model('Promotion');
 //get all promotions
 router.get('/', function(req, res, next) {
   Promotion.find({})
+  .populate('parameters.product parameters.category')
   .then(function(promotions) {
     res.send(promotions);
   })
@@ -21,6 +22,7 @@ router.get('/', function(req, res, next) {
 //get one promotion
 router.get('/:id', function(req, res, next) {
   Promotion.findById({id: req.params.id})
+  .populate('parameters')
   .then(function(promotion) {
     res.send(promotion);
   })

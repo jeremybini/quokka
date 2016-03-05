@@ -13,15 +13,19 @@
 <font color="red">Promotion successfully deleted!</font>
 </h4>
 </div>
+<div class="text-center">
+<button type="button" class="btn btn-info" ng-click="createPromotion(promotion)">Create Promotion</button>
+</div>
+<br>
 <div>
 <table class="table">
   <thead>
     <tr>
       <th>Promotion Title</th>
-      <th>Promotion Code</th>
-      <th>Discount</th>
+      <th>Code</th>
+      <th>Discount (%)</th>
       <th>Expiration Date</th>
-      <th>Product or Category</th>
+      <th>Type</th>
       <th>Applies To</th>
     </tr>
   </thead>
@@ -29,17 +33,15 @@
     <tr ng-repeat="promotion in promotions">
       <td><input ng-model="promotion.title"></td>
       <td>{{promotion.code}}</td>
-      <td><input ng-model="promotion.discount">%</td>
-      <td><input ng-model="promotion.expirationDate">%</td>
-      <td class="radio"><input ng-model="promotion.expirationDate">%</td>
-      <td><select ng-model="promotion.parameters" ng-options="parameter as parameter for parameter in parameters"></select></td>
-      <td><select ng-show="parameters===product" ng-model="promotion.parameters.product" ng-options="product as product for product in products"></select></td>
-      <td><select ng-show="parameters===category" ng-model="promotion.parameters.category" ng-options="category as category for category in categories"></select></td>
-
-      <td><button type="button" class="btn btn-info" ng-click="createPromotion(promotion)">Create Promotion</button></td>
+      <td><input ng-model="promotion.discount"></td>
+      <td><input ng-model="promotion.expirationDate"></td>
+      <td><select ng-model="promotion.promotype" ng-options="parameter as parameter for parameter in parameters"></select></td>
+      <td><select ng-show="promotion.promotype==='Product'" ng-model="promotion.parameters.product.title" ng-options="product.title as product.title for product in products"></select>
+      <select ng-show="promotion.promotype==='Category'" ng-model="promotion.parameters.category.name" ng-options="category.name as category.name for category in categories"></select></td>
       <td><button type="button" class="btn btn-warning" ng-click="editPromotion(promotion)">Update Promotion</button></td>
       <td><button type="button" class="btn btn-danger" ng-click="deletePromotion(promotion)">Delete Promotion</button></td>
     </tr>
   </tbody>
 </table>
 </div>
+<br>

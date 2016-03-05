@@ -48,13 +48,21 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
 });
 
 app.controller('AdminPromotionsCtrl', function(promotions, ProductFactory, CategoryFactory, $scope) {
+
   $scope.promotions = promotions;
-  $scope.parameters = ['Category', 'Product'];
-  $scope.products = ProductFactory.fetchAll();
-  $scope.categories = CategoryFactory.fetchAll();
+  $scope.parameters = ['Category', 'Product', 'All'];
+  ProductFactory.fetchAll()
+  .then(function(products) {
+    $scope.products = products;
+  })
+  CategoryFactory.fetchAll()
+  .then(function(categories) {
+    $scope.categories = categories;
+  })
   $scope.updated = false;
   $scope.deleted = false;
   $scope.created = false;
+
 });
 
 app.controller('AdminOneOrderCtrl', function(order, $scope, $state) {

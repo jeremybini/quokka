@@ -254,6 +254,7 @@ var seedPromotions = function (products, categories) {
     parameters: {
       product: products[0]._id
     },
+    promotype: 'Product',
     expirationDate: new Date(2020, 11, 17)
   },
   {
@@ -262,11 +263,13 @@ var seedPromotions = function (products, categories) {
     parameters: {
       category: categories[0]
     },
+    promotype: 'Category',
     expirationDate: new Date(2020, 11, 17)
   },
   {
     title: 'Everything is Promoted!',
     discount: 15,
+    promotype: 'All',
     expirationDate: new Date(2020, 11, 17)
   }];
 
