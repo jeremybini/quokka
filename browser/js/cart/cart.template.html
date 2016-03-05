@@ -16,19 +16,18 @@
             <td class="col-sm-8 col-md-6">
             <div class="media">
                 <a class="thumbnail pull-left" ui-sref="product({ id: item.product._id })"> <img class="media-object" style="width: 72px; height: 72px;" src="{{item.product.photoUrl}}"> </a>
-                <h4 class="col-sm-1 col-md-1" style="text-align: center" ui-sref="product({ id: item.product._id })">{{item.product.title}}</h4>
+                <a class="col-sm-1 col-md-1" style="text-align: center" ui-sref="product({ id: item.product._id })">{{item.product.title}}</a>
             </div></td>
-            <td class="col-sm-1 col-md-1">
+            <td class="col-sm-2 col-md-2">
               <div class="input-group">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="">
+                  <button type="button" class="btn btn-danger btn-number" data-type="minus">
                     <span class="glyphicon glyphicon-minus"></span>
                   </button>
                 </span>
-
-                <input type="text" class="form-control input-number" value="10" min="1" max="100">
+                <input type="text" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="">
+                  <button type="button" class="btn btn-success btn-number" data-type="plus">
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
                 </span>
