@@ -2,7 +2,7 @@ app.controller('AdminProductsCtrl', function(products, $state, $scope, AuthServi
   $scope.products = products;
   $scope.goToEditState = function(product) {
     $state.go('editProduct', {_id: product._id, product: product });
-  }
+  };
 });
 
 app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFactory, $scope) {
@@ -10,7 +10,11 @@ app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFac
   $scope.categories = ['Dogs', 'Cats', 'Other Critters'];
   $scope.categoryName = $scope.product.categories[0].name;
   $scope.save = function(product) {
-    ProductFactory.update(product._id, product);
+    if (product._id) {
+      ProductFactory.update(product._id, product);
+    } else {
+      ProductFactory.create(product);
+    }
     $state.go('adminAllProducts');
   };
   $scope.delete = function(product) {
@@ -19,7 +23,7 @@ app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFac
   };
   $scope.addNewCategory = function(category) {
 
-  }
+  };
 });
 
 app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
@@ -44,6 +48,24 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
       });
     });
   };
+
+});
+
+app.controller('AdminPromotionsCtrl', function(promotions, ProductFactory, CategoryFactory, $scope) {
+
+  $scope.promotions = promotions;
+  $scope.parameters = ['Category', 'Product', 'All'];
+  ProductFactory.fetchAll()
+  .then(function(products) {
+    $scope.products = products;
+  })
+  CategoryFactory.fetchAll()
+  .then(function(categories) {
+    $scope.categories = categories;
+  })
+  $scope.updated = false;
+  $scope.deleted = false;
+  $scope.created = false;
 
 });
 

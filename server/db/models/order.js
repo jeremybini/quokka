@@ -185,7 +185,7 @@ OrderSchema.virtual('totalPrice').get(function() {
 
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
-  return order.find(params)
+  return order.findOne(params)
   .populate('products.product')
   .then(function(result) {
     if (result.length) {

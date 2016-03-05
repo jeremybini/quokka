@@ -47,7 +47,11 @@ router.get('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {
 
 //add user
 router.post('/', auth.ensureAdmin, function(req, res, next) {
-  User.create(req.body).then(null, next);
+  User.create(req.body)
+  .then(function(user) {
+    res.json(user.sanitize());
+  })
+  .then(null, next);
 });
 
 //update user

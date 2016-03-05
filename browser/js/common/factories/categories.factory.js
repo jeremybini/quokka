@@ -11,7 +11,7 @@ app.factory('CategoryFactory', function ($http, $log) {
       .then(res => res.data)
       .then(categories => {
         angular.copy(categories, cache);
-        return categories;
+        return cache;
       })
       .catch($log.error);
     },
