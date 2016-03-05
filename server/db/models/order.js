@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var Product = mongoose.model('Product');
+var Promotion = mongoose.model('Promotion');
 
 var OrderSchema = new mongoose.Schema({
   products: [{
@@ -50,11 +51,10 @@ OrderSchema.statics.submitOrder = function(orderId) {
   var submittedOrder;
   var updatedProducts = [];
 
-  //need to also calculate promotion discount
+  //having issues populating an instance, so made this a static instead
   return this.findById(orderId)
       .populate('products.product')
       .then(function(order) {
-        console.log(order);
         order.products.forEach(function(item) {
           item.price = item.product.price;
           var p = Product.updateStock(item.product._id, item.quantity);
@@ -64,6 +64,13 @@ OrderSchema.statics.submitOrder = function(orderId) {
         order.status = 'Submitted';
         order.dateSubmitted = Date.now();
         return order.save();
+      })
+      .then(function(order) {
+        if (order.promotion) {
+          return order.applyPromotion(order.promotion);
+        }
+
+        return order;
       })
       .then(function(order) {
         submittedOrder = order;
@@ -92,7 +99,7 @@ OrderSchema.methods.addProduct = function(productId, quantity) {
     } else {
       order.products.push({
         product: productId,
-        quantity: +quantity
+        quantity: quantity
       });
     }
     return order.save();
@@ -132,6 +139,42 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
   return order.save();
 };
 
+function applyDiscount(item, discount) {
+  item.price = item.product.price - item.product.price*discount/100;
+};
+
+OrderSchema.methods.applyPromotion = function(promotionCode) {
+  var order = this;
+
+  return Promotion.findOne({ code: promotionCode })
+  .then(function(code) {
+    var promoProduct = code.params.product;
+    var promoCategory = code.params.category;
+
+    //if that is a valid promo code and it has not expired
+    if (code && code.expirationDate > Date.now()) {
+      //set current order's promotion to the returned promotion
+      order.promotion = code._id;
+
+      //check each product for promo code params and apply discount, apply to all if no params
+      order.products.forEach(function(item) {
+        if(!promoProduct && !promoCategory) {
+          applyDiscount(item, code.discount);
+        } else {
+          if (item.product.equals(promoProduct)) {
+            applyDiscount(item, code.discount);
+          } else if (item.product.categories.indexOf(promoCategory) !== -1) {
+            applyDiscount(item, code.discount);
+          }
+        }
+      })
+      return order.save();
+    } else {
+      return new Error("That's not a valid promotion code");
+    }
+  });
+}
+
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;
   this.products.reduce(function(total, item) {
@@ -160,7 +203,7 @@ OrderSchema.pre('validate', function(next) {
   if (this.user || this.session) {
     next();
   } else {
-    next(Error('Either User or Session must be specified.'));
+    next(new Error('Either User or Session must be specified.'));
   }
 });
 
