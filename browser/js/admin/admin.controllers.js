@@ -42,6 +42,7 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
 
 app.controller('AdminOrdersCtrl', function(orders, OrderFactory, $state, $scope) {
   $scope.orders = orders;
+  var allOrders = $scope.orders;
   $scope.statuses = ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'];
 
   $scope.editOrder = function(order) {
@@ -56,6 +57,14 @@ app.controller('AdminOrdersCtrl', function(orders, OrderFactory, $state, $scope)
       });
     });
   };
+
+  $scope.filter = function(status) {
+      $scope.orders = allOrders;
+      if (!status) return;
+      $scope.orders = $scope.orders.filter(function(item) {
+        return item.status === status;
+      });
+    };
 
 });
 
