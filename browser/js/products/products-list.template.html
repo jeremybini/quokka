@@ -2,7 +2,7 @@
 	<div class="container">
 		<h1 class="text-center">{{ category || "All" }} Products</h1>
 		<div class="row">
-			<div ng-repeat="product in products" class="col-md-3 col-sm-4 products-box">
+			<div ng-repeat="product in products | filter" class="col-md-3 col-sm-4 products-box">
 				<a ui-sref="product({ id: product._id })">
 					<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
 						<div class="products-tag">

@@ -39,7 +39,7 @@ app.config(function($stateProvider) {
     url: '/admin/products',
     templateUrl: '/js/admin/admin.products.template.html',
     resolve: {
-      products: function(ProductFactory) {
+      products: function (ProductFactory) {
         return ProductFactory.fetchAll();
       }
     },
@@ -48,10 +48,23 @@ app.config(function($stateProvider) {
 });
 
 app.config(function($stateProvider) {
+  $stateProvider.state('adminOneOrder', {
+    url: '/admin/orders/:orderId',
+    templateUrl: '/js/admin/admin.orderview.template.html',
+    resolve: {
+      order: function(OrderFactory, $stateParams) {
+        return OrderFactory.fetchById($stateParams.orderId);
+      }
+    },
+    controller: 'AdminOneOrderCtrl'
+  });
+});
+
+app.config(function($stateProvider) {
   $stateProvider.state('addProduct', {
     url: '/admin/products/addproduct',
     templateUrl: '/js/admin/admin.edit.product.html'
-  })
+  });
 });
 
 app.config(function($stateProvider) {
@@ -61,7 +74,7 @@ app.config(function($stateProvider) {
         params: {
           product: null
         }
-      })
+      });
       //.state('manageProduct.delete', {
       //  url: '/delete',
       //  templateUrl: 'admin.edit.product.html',
@@ -75,5 +88,19 @@ app.config(function($stateProvider) {
       //  }
       //})
 });
+
+app.config(function($stateProvider) {
+  $stateProvider.state('adminCreatePromotion', {
+    url: '/admin/promotions',
+    templateUrl: '/js/admin/admin.promotions.template.html',
+    resolve: {
+      promotions: function(PromotionFactory) {
+        return PromotionFactory.fetchAll();
+      }
+    },
+    controller: 'AdminPromotionsCtrl'
+  });
+});
+
 
 

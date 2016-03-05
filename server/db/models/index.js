@@ -4,6 +4,7 @@
 
 require('./product');
 require('./review');
+require('./promotion');
 require('./order');
 require('./category');
 require('./user');

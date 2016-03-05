@@ -16,7 +16,7 @@ router.param('id', function(req, res, next, id) {
   .populate('orders.products reviews')
   .then(user => {
     if (user) {
-      req.currentUser = user.sanitize();
+      req.currentUser = user;
       next();
     } else {
       var err = new Error('Something went wrong.');
@@ -47,20 +47,23 @@ router.get('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {
 
 //add user
 router.post('/', auth.ensureAdmin, function(req, res, next) {
-  User.create(req.body).then(null, next);
+  User.create(req.body)
+  .then(function(user) {
+    res.json(user.sanitize());
+  })
+  .then(null, next);
 });
 
 //update user
 router.put('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {
-  _.extend(req.currentUser, req.body);
+  _.merge(req.currentUser, req.body);
   
   if(!req.user.admin) {
     req.currentUser.admin = false;
   }
-
   req.currentUser.save()
-  .then(function(product){
-    res.json(product);
+  .then(function(user){
+    res.json(user.sanitize());
   })
   .then(null, next);
   

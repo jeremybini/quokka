@@ -1,19 +1,38 @@
 THINGS LEFT TO DO
 
 Admin Pages:
---add more functionality to orders page (right now only alters status and deletes, need to be able to alter quantity/products)
---add more functionality to users page? (right now can alter email and admin status and delete)
---add more functionality to products page (be able to persist edits and deletes and edit categories)
 
-Authentication:
+--add create promotion page
+--add more functionality to users page: reset password
+--add more functionality to products page: be able to add categories, edit categories, product can have multiple categories
+
+Authentication/accounts:
+
 --front-end
-
-Cart:
---Get it running
-
-Twist
+--Users can log in and continue editing cart
+--Create account
+--Facebook/Google sign-in
+--Email validation
 
 Navbar
---Populate with categories
 
-UI on all pages
+--Populate dynamically with categories as they're added
+
+UI/Views
+
+--Be able to refine listings by category
+
+Orders
+
+--Email system for shipping/delivery
+--Orders should have a shipping address
+--Users should be able to see all their orders
+
+Other
+--Spiffy up the UI
+--Respond to code review suggestions (UPDATE: JR fixed most outstanding ones 3/5)
+
+Twist
+--Make admins able to offer promotion codes that will give users percentages/$ amounts off their orders
+
+

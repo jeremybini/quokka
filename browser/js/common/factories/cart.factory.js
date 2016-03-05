@@ -8,44 +8,63 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   var CartFactory = {};
 
   CartFactory.add = function(product, quantity) {
-    return $http.post('/api/cart/add', {productId: product._id, quantity: quantity})
+    console.log('333', product, quantity)
+    return $http.post('/api/cart/', {productId: product._id, quantity: quantity})
     .then(function(res) {
       return res.data;
     })
     .then(function(cart) {
       currentCart = cart;
+      return currentCart;
     })
     .catch($log.error);
   };
 
-  CartFactory.remove = function(product) {
-    return $http.post('/api/cart/remove', {productId: product._id})
+  CartFactory.remove = function(productId) {
+    return $http.delete('/api/cart/' + productId)
     .then(function(res) {
       return res.data;
     })
     .then(function(cart) {
       currentCart = cart;
+      return currentCart;
     })
     .catch($log.error);
   };
 
   CartFactory.update = function(product, quantity) {
-    return $http.post('/api/cart/update', {productId: product._id, quantity: quantity})
+    return $http.put('/api/cart/', {productId: product._id, quantity: quantity})
     .then(function(res) {
       return res.data;
     })
     .then(function(cart) {
       currentCart = cart;
+      return currentCart;
     })
     .catch($log.error);
   };
 
-  CartFactory.getCart = function() {
+  CartFactory.getCurrentCart = function() {
+    console.log("FACTORY GET CURRENT CART", currentCart);
     return currentCart;
   };
 
+  //fetch cart gets cart from backend
+  CartFactory.fetchCart = function() {
+    return $http.get('/api/cart/')
+    .then(function(res) {
+      console.log("FACTORY FETCH CART", res);
+      return res.data;
+    })
+    .catch($log.error);
+  };
+
+  CartFactory.submitOrder = function(orderId) {
+    return $http.get('api/cart/submit');
+  };
+
   CartFactory.empty = function() {
-    return $http.get('/api/cart/empty')
+    return $http.get('/api/cart')
     .then(function(res) {
       return res.data;
     })

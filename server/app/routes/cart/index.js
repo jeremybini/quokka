@@ -27,52 +27,56 @@ router.use(function(req, res, next) {
   });
 });
 
+//get the order that is cart status
+router.get('/', function(req, res, next) {
+  res.json(req.cart);
+});
+
+
 //req.body should have a product ID
-router.post('/remove', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
   req.cart.removeProduct(req.body.productId)
   .then(function(result) {
-    res.status = 204;
+    res.status(200);
     res.json(result);
   })
   .then(null, next);
 });
 
 //req.body should have a product ID
-router.post('/add', function(req, res, next) {
+router.post('/', function(req, res, next) {
   req.cart.addProduct(req.body.productId, req.body.quantity)
   .then(function(result) {
-    console.log(result, '1!!!!!');
-    //res.status(204);
+    res.status(201);
     res.json(result);
   })
   .then(null, next);
 });
 
 //req.body should have a product ID, updated quantity
-router.post('/update', function(req, res, next) {
+router.put('/', function(req, res, next) {
   req.cart.updateQuantity(req.body.productId, req.body.quantity)
   .then(function(result) {
-    res.status = 204;
+    res.status(200);
     res.json(result);
   })
   .then(null, next);
 });
 
 //at this time, confirmation email should be sent and other actions probably triggered
-router.post('/submit', function(req, res, next) {
+router.get('/submit', function(req, res, next) {
   Order.submitOrder(req.cart._id)
   .then(function(result) {
-    res.status = 204;
+    res.status(200);
     res.json(result);
   })
   .then(null, next);
 });
 
-router.post('/empty', function(req, res, next) {
+router.delete('/', function(req, res, next) {
   req.cart.products = [];
   req.cart.save()
   .then(function(result) {
-    res.status = 204;
     res.json(result);
   })
   .then(null, next);

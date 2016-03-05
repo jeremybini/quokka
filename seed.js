@@ -26,6 +26,7 @@ var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
 var Category = Promise.promisifyAll(mongoose.model('Category'));
 var Order = Promise.promisifyAll(mongoose.model('Order'));
+var Promotion = Promise.promisifyAll(mongoose.model('Promotion'));
 
 var seedUsers = function () {
 
@@ -214,7 +215,13 @@ var seedOrders = function (user, product) {
             user: user[0]._id,
             products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
             status: 'Completed'
+        },
+        {
+            user: user[1]._id,
+            products: [ { product: product[6]._id, quantity: 4, price: 77 } ],
+            status: 'Cart'
         }
+
 
     ];
 
@@ -240,14 +247,46 @@ var seedCategories = function () {
 
 };
 
+var seedPromotions = function (products, categories) {
+  var promos = [{
+    title: 'Kitten Mittons Promotion',
+    discount: 50,
+    parameters: {
+      product: products[0]._id
+    },
+    promotype: 'Product',
+    expirationDate: new Date(2020, 11, 17)
+  },
+  {
+    title: 'Category Promotion',
+    discount: 90,
+    parameters: {
+      category: categories[0]
+    },
+    promotype: 'Category',
+    expirationDate: new Date(2020, 11, 17)
+  },
+  {
+    title: 'Everything is Promoted!',
+    discount: 15,
+    promotype: 'All',
+    expirationDate: new Date(2020, 11, 17)
+  }];
+
+  return Promotion.createAsync(promos);
+}
+
+var cats;
+
 connectToDb.then(function (db) {
     return db.db.dropDatabase();
 }).then(function() {
     return seedCategories();
 }).then(function(categories) {
+    cats = categories;
     Promise.all([seedUsers(), seedProducts(categories)])
     .spread(function (users, products) {
-        return Promise.all([seedReviews(users, products), seedOrders(users, products)]);
+        return Promise.all([seedReviews(users, products), seedOrders(users, products), seedPromotions(products, cats)]);
     })
     .then(function() {
         console.log(chalk.green('Seed successful!'));   

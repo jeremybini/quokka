@@ -1,18 +1,38 @@
+<div class="text-center">
+View Orders By Status:
+<select ng-model="order.status" ng-options="status as status for status in statuses"></select>
+<button type="button" class="btn btn-info" ng-click="filter(order.status)">Filter</button>
+<button type="button" class="btn btn-info" ng-click="filter()">See All</button>
+</div>
+<br>
+<div class="text-center">
+<h4 ng-show="updated">
+<font color="green">Order successfully updated!</font>
+</h4>
+</div>
+<div class="text-center">
+<h4 ng-show="deleted">
+<font color="red">Order successfully deleted!</font>
+</h4>
+</div>
+<br>
 <div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="order in orders">
-        <td>{{order._id}}</td>
-        <td><select ng-model="order.status" ng-options="status as status for status in statuses"></select></td>
-        <td><button type="button" class="btn btn-warning" ng-click="editOrder(order)">Update Order</button></td>
-        <td><button type="button" class="btn btn-danger" ng-click="deleteOrder(order)">Delete Order</button></td>
-      </tr>
-    </tbody>
-  </table>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <form>
+    <tr ng-repeat="order in orders">
+      <td>{{order._id}}</td>
+      <td><select ng-model="order.status" ng-options="status as status for status in statuses"></select></td>
+      <td><button type="button" class="btn btn-info" ng-click="viewOrder(order._id)">View Order</button></td>
+      <td><button type="button" class="btn btn-warning" ng-click="editOrder(order)">Update Order</button></td>
+      <td><button type="button" class="btn btn-danger" ng-click="deleteOrder(order)">Delete Order</button></td>
+    </tr>
+  </tbody>
+</table>
 </div>
