@@ -75,18 +75,6 @@ app.config(function($stateProvider) {
           product: null
         }
       });
-      //.state('manageProduct.delete', {
-      //  url: '/delete',
-      //  templateUrl: 'admin.edit.product.html',
-      //  controller: function($stateParams, $http) {
-      //    if (confirm('Are you sure you want to delete?')) {
-      //      $http.delete('/cards/' + $stateParams._id)
-      //          .then(function(res) {
-      //            console.log(res);
-      //          });
-      //    }
-      //  }
-      //})
 });
 
 app.config(function($stateProvider) {

@@ -33,7 +33,7 @@
       <br>
     </form>
     <button class="btn btn-success" ng-click="save(product)">Save</button>
-    <button class="btn btn-danger" ng-click="delete(product)">Delete</button>
+    <button class="btn btn-danger" ng-show="isEditProduct" ng-click="delete(product)">Delete</button>
   </div>
 </div>
 
