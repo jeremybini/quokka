@@ -7,20 +7,27 @@ app.controller('AdminProductsCtrl', function(products, $state, $scope, AuthServi
 
 app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFactory, $scope) {
   $scope.product = $stateParams.product;
+  $scope.isEditProduct = $scope.product !== undefined;
   $scope.categories = ['Dogs', 'Cats', 'Other Critters'];
-  $scope.categoryName = $scope.product.categories[0].name;
+  if ($scope.isEditProduct) {
+    $scope.categoryName = $scope.product.categories[0].name;
+  }
+  console.log('scope', $scope);
+
   $scope.save = function(product) {
-    if (product._id) {
+    if ($scope.isEditProduct) {
       ProductFactory.update(product._id, product);
     } else {
       ProductFactory.create(product);
     }
     $state.go('adminAllProducts');
   };
+
   $scope.delete = function(product) {
     ProductFactory.delete(product._id);
     $state.go('adminAllProducts');
   };
+
   $scope.addNewCategory = function(category) {
 
   };
@@ -51,10 +58,14 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
 
 });
 
-app.controller('AdminPromotionsCtrl', function(promotions, ProductFactory, CategoryFactory, $scope) {
+app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, ProductFactory, CategoryFactory, $scope) {
 
   $scope.promotions = promotions;
+  var allPromotions = $scope.promotions;
   $scope.parameters = ['Category', 'Product', 'All'];
+  $scope.promotions.forEach(function(promotion) {
+    promotion.expirationDate = promotion.expirationDate.slice(0, 10);
+  });
   ProductFactory.fetchAll()
   .then(function(products) {
     $scope.products = products;
@@ -66,6 +77,31 @@ app.controller('AdminPromotionsCtrl', function(promotions, ProductFactory, Categ
   $scope.updated = false;
   $scope.deleted = false;
   $scope.created = false;
+
+  $scope.editPromotion = function(promotion) {
+    promotion.expirationDate = promotion.expirationDate + "05:00:00.000Z";
+    if (promotion.promotype === 'Category') {
+      promotion.parameters = {category: promotion.parameters.category._id};
+    } else if (promotion.promotype === 'Product') {
+      promotion.parameters = {product: promotion.parameters.product._id};
+    }
+    console.log(promotion);
+    PromotionFactory.update(promotion._id, promotion)
+    .then(function(promotion) {
+      $scope.updated = true;
+      $scope.deleted = false;
+      $scope.created = false;
+    });
+  };
+
+  $scope.deletePromotion = function(promotion) {
+    PromotionFactory.delete(promotion._id)
+    .then(function() {
+      $scope.updated = false;
+      $scope.deleted = true;
+      $scope.created = false;
+    });
+  };
 
 });
 

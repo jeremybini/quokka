@@ -1,4 +1,4 @@
-<div ng-controller="AdminEditProductCtrl">
+<div class="container" ng-controller="AdminEditProductCtrl">
   <div class="col-xs-4">
     <form name="editProductForm">
       Photo Url:
@@ -10,13 +10,17 @@
              ng-model="product.title">
       <br>
       Description:
-       <textarea class="form-control" name="description"
+       <textarea class="description-text-area form-control" name="description"
                  ng-model="product.description">
        </textarea>
       <br>
       Price:
-      <input class="form-control" name="price"
-             ng-model="product.price">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="text"
+               class="form-control"
+               ng-model="product.price">
+      </div>
       <br>
       Category:
       <select class="form-control" ng-model="categoryName"
@@ -29,7 +33,7 @@
       <br>
     </form>
     <button class="btn btn-success" ng-click="save(product)">Save</button>
-    <button class="btn btn-danger" ng-click="delete(product)">Delete</button>
+    <button class="btn btn-danger" ng-show="isEditProduct" ng-click="delete(product)">Delete</button>
   </div>
 </div>
 
