@@ -7,20 +7,27 @@ app.controller('AdminProductsCtrl', function(products, $state, $scope, AuthServi
 
 app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFactory, $scope) {
   $scope.product = $stateParams.product;
+  $scope.isEditProduct = $scope.product !== undefined;
   $scope.categories = ['Dogs', 'Cats', 'Other Critters'];
-  $scope.categoryName = $scope.product.categories[0].name;
+  if ($scope.isEditProduct) {
+    $scope.categoryName = $scope.product.categories[0].name;
+  }
+  console.log('scope', $scope);
+
   $scope.save = function(product) {
-    if (product._id) {
+    if ($scope.isEditProduct) {
       ProductFactory.update(product._id, product);
     } else {
       ProductFactory.create(product);
     }
     $state.go('adminAllProducts');
   };
+
   $scope.delete = function(product) {
     ProductFactory.delete(product._id);
     $state.go('adminAllProducts');
   };
+
   $scope.addNewCategory = function(category) {
 
   };
