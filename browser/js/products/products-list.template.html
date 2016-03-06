@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row">
-		<div class="col-sm-2">
+		<div class="sidebar">
 			<div ng-click="setCategory()">
 				<h1>All</h1>
 			</div>
@@ -8,17 +8,10 @@
 				<h1>{{ category.name }}</h1>
 			</div>
 		</div>
-		<div class="col-sm-10">
+		<div class="">
 			<h1 class="text-center">{{ category.name || "All" }} Products</h1>
-			<div ng-repeat="product in products | filter: filterByCategory" class="col-md-3 col-sm-4 products-box">
-				<a ui-sref="product({ id: product._id })">
-					<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
-						<div class="products-tag">
-							<span>{{ product.title }}</span>
-							<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
-						</div>
-					</div>
-				</a>
+			<div ng-repeat="product in products | filter: filterByCategory">
+				<product-box product="product"></product-box>
 			</div>
 		</div>
 	</div>

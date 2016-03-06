@@ -46,7 +46,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
                 if ($window.pageYOffset >= 300) {
                     element.removeClass('navbar-hidden');
                     element.addClass('navbar-stuck');
-                } else if ($window.pageYOffset > 93) {
+                } else if ($window.pageYOffset > 60) {
                     element.addClass('navbar-hidden');
                 } else {
                     element.removeClass('navbar-stuck');

@@ -4,35 +4,11 @@
 		<h2 class="text-center">Browse by Category</h2>
 		</div>
 		<div class="row">
-			<div class="col-md-4 col-sm-6 category-box"> <!--ng-repeat="category in categorys"-->
+			<div ng-repreat="category in categories" class="col-md-4 col-sm-6 category-box" ng-click="renderProducts(category)">
 				<div class="category-card">
 					<img src=""/>
 					<div class="category-tag text-center">
-						<h1>Dogs</h1>
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-4 col-sm-6 category-box"> <!--ng-repeat="category in categorys"-->
-				<div class="category-card">
-					<img src=""/>
-					<div class="category-tag text-center">
-						<h1>Cats</h1>
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-4 col-sm-6 category-box"> <!--ng-repeat="category in categorys"-->
-				<div class="category-card">
-					<img src=""/>
-					<div class="category-tag text-center">
-						<h1>Formal Wear</h1>
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-4 col-sm-6 category-box"> <!--ng-repeat="category in categorys"-->
-				<div class="category-card">
-					<img src=""/>
-					<div class="category-tag text-center">
-						<h1>Casual Wear</h1>
+						<h1>{{ category.title }}</h1>
 					</div>
 				</div>
 			</div>
@@ -50,51 +26,10 @@
 			<h2 class="text-center">Featured Products</h2>
 		</div>
 		<div class="row">
-			<div  class="col-md-3 col-sm-4 products-box"> <!--ng-repeat="product in products"-->
-				<div class="products-card">
-					<img src=""/>
+			<div ng-repeat="product in products" class="col-md-3 col-sm-4 products-box">
+				<div class="products-card" style="background-image: url('product.photoUrl')">
 					<div class="products-tag">
-						<span>$500</span>
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-3 col-sm-4 products-box"> <!--ng-repeat="product in products"-->
-				<div class="products-card">
-					<img src=""/>
-					<div class="products-tag">
-
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-3 col-sm-4 products-box"> <!--ng-repeat="product in products"-->
-				<div class="products-card">
-					<img src=""/>
-					<div class="products-tag">
-
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-3 col-sm-4 products-box"> <!--ng-repeat="product in products"-->
-				<div class="products-card">
-					<img src=""/>
-					<div class="products-tag">
-						<span>$500</span>
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-3 col-sm-4 products-box"> <!--ng-repeat="product in products"-->
-				<div class="products-card">
-					<img src=""/>
-					<div class="products-tag">
-
-					</div>
-				</div>
-			</div>
-			<div  class="col-md-3 col-sm-4 products-box"> <!--ng-repeat="product in products"-->
-				<div class="products-card">
-					<img src=""/>
-					<div class="products-tag">
-
+						<span>{{ product.price/100 | currency: $ }}</span>
 					</div>
 				</div>
 			</div>
