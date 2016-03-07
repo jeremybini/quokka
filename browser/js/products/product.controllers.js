@@ -57,16 +57,16 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 
 app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
 	$scope.categories = categories;
-	$scope.category;
+	$scope.activeCategory;
 
 	$scope.setCategory = function(category) {
-		$scope.category = category
+		$scope.activeCategory = category
 	};
 
 	$scope.filterByCategory = function(product) {
-		if( !$scope.category ) return true;
+		if( !$scope.activeCategory ) return true;
 		return product.categories.find(function(category) {
-			return category._id === $scope.category._id
+			return category._id === $scope.activeCategory._id
 		});
 	};
 

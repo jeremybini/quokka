@@ -8,7 +8,7 @@ blue: #69D2E7
 
 * {
   box-sizing: border-box;
-  font-family: 'Sintony', sans-serif;
+  /*font-family: 'Sintony', sans-serif;*/
 	font-family: 'Coming Soon', cursive;
 }
 
@@ -45,13 +45,13 @@ body {
 }
 
 #main {
-  padding-top: 120px;
   margin: 0 auto;
+  padding-top: 100px;
 }
 
 #heading {
 	padding: none;
-	height: 300px;
+	height: 180px;
 	width: 100%;
 	background-image: url('/scss/directives/gplaypattern.png');
 	/*========================================================
@@ -60,17 +60,40 @@ body {
 	 ========================================================
 	*/
 	position: relative;
-	border-bottom: 2px solid black;
+	border-bottom: 1px solid black;
+	text-align: center;
 	img {
-		display: none;
-		display: block;
-		margin: auto;
-		width: 300px;
-		height: 300px;
+		width: 100px;
+		height: 100px;
 	}
 }
 
+#heading-img {
+	margin: 15px auto;
+	font-family: 'Delius Unicase', cursive;
+	display: inline-block;
+	h1 {
+		margin: 0;
+		color: #69D2E7;
+		padding: 8px 0 5px 0;
+	}
+}
+
+.orange {
+	color:#F38630;
+}
+
+.light-orange {
+	font-size: 1.2em;
+	color: #F38630;
+}
+
+.black {
+	color: black;
+}
+
 #footer {
+	z-index: 999999;
 	width: 100%;
 	height: 250px;
 	background-color: #A7DBDB;
@@ -78,13 +101,16 @@ body {
 
 .products-box {
 	padding: 20px;
-	height: 300px;
+	height: 250px;
 }
 
 .products-box:hover {
 	.products-card {
 		border: 3px solid #F38630;
 		transition: .7s;
+		&:hover {
+			cursor: pointer;
+		};
 	}
 	.products-tag {
 		display:block;
@@ -129,7 +155,7 @@ body {
 .category-tag {
 	height: 100%;
 	width: 100%;
-	h1 {
+	h2 {
 		color: white;
 		display: inline-block;
 		vertical-align: center;
@@ -146,29 +172,90 @@ body {
 	.category-card {
 		border: 3px solid #F38630;
 		transition: .7s;
+		&:hover {
+			cursor: pointer;
+		};
 	}
 	.category-tag {
 		background-color: #FA6900;
 		color: white;
 		opacity: .5;
 		transition: all .4s ease;
-		h1 {
+		h2 {
 			opacity: 1;
 			transition: .4s ease
 		}
 	}
 }
 
-.sidebar {
-	width: 100%;
-	height: 100%;
+#product-container {
+	width: 100% !important;
+	padding: 0 !important;
+	overflow: hidden; 
+	.container {
+    display:table;
+    margin: 0 !important;
+    padding: 0 !important;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	}
+
+	header {
+    background: green;
+    height: 50px;
+	}
+
+	.row {
+    height: 100%;
+    display: table-row;
+    margin: 0 !important;
+    
+	}
+
+	.col-xs-2.no-float, .col-xs-10.no-float {
+	    float: none;
+	}
+
+	.col-xs-2 {
+	    display: table-cell;
+	    width: 15%;
+	}
+	.col-xs-10 {
+	    display: table-cell;
+	    width: 85%;
+	}
+}
+
+#sidebar {
+	width: 75%;
+	font-size: 20px;
+	background-color: #E0E4CC;
+	padding: 0 !important;
+	margin: 0 !important;
+	/*padding-top: 200px !important;*/
+	-moz-box-shadow: 2px 2px 3px #888, -2px 2px 3px #888;
+	-webkit-box-shadow: 2px 2px 3px #888, -2px 2px 3px #888;
+	box-shadow: 2px 2px 3px #888, -2px 2px 3px #888;
+	overflow: hidden;
+}
+
+.category-btn {
+	margin-top: 0 !important;
+	padding: 20px 0;
+	&:hover {
+		color: lighten(#F38630, 5%);
+		cursor: pointer;
+	};
+}
+
+.active-btn {
+	background-color: darken(#E0E4CC, 5%);
+	color: #F38630;
 }
 
 .fixed {
 	position: fixed;
 }
-
-
 
 @import 'directives/main';
 @import 'home/main';
