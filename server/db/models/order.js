@@ -193,8 +193,8 @@ OrderSchema.statics.findOrCreate = function(params) {
   return order.findOne(params)
   .populate('products.product')
   .then(function(result) {
-    if (result.length) {
-      return result[0];
+    if (result) {
+      return result;
     } else {
       return order.create(params);
     }

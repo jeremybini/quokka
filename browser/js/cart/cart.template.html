@@ -47,21 +47,21 @@
             <td>   </td>
             <td>   </td>
             <td><h5>Subtotal</h5></td>
-            <td class="text-right"><h5><strong>$PRODUCT TOTAL$</strong></h5></td>
+            <td class="text-right"><h5><strong>{{orderSubtotal() | currency:$}}</strong></h5></td>
         </tr>
         <tr>
             <td>   </td>
             <td>   </td>
             <td>   </td>
-            <td><h5>Estimated shipping</h5></td>
-            <td class="text-right"><h5><strong>$SHIPPING$</strong></h5></td>
+            <td><h5>Flat Rate Shipping</h5></td>
+            <td class="text-right"><h5><strong>$5.00</strong></h5></td>
         </tr>
         <tr>
             <td>   </td>
             <td>   </td>
             <td>   </td>
             <td><h3>Total</h3></td>
-            <td class="text-right"><h3><strong>$ORDER TOTAL$</strong></h3></td>
+            <td class="text-right"><h3><strong>{{orderSubtotal() + 5 | currency:$}}</strong></h3></td>
         </tr>
         <tr>
             <td>   </td>
