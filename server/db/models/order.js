@@ -23,10 +23,6 @@ var OrderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Promotion'
   },
-  categories: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category'
-  }],
   status: {
     type: String,
     enum: ['Cart', 'Submitted', 'Processing', 'Completed', 'Cancelled'],
