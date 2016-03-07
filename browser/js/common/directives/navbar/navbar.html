@@ -7,14 +7,15 @@
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
             </li>
         </ul>
+        <button ui-sref="cart" class="btn login-button" style="margin-left: 10px">
+            <i class="fa fa-shopping-cart fa-5"></i> {{ total }}
+        </button>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <button ng-show="!user" ui-sref="signup" class="btn login-button">Signup</button>
         <div ng-show="user" class="welcome">
             <span>Welcome, {{ user.email }}!</span>
             <a ng-click="logout()">Logout</a>
         </div>
-        <button class="btn login-button">
-            <i class="fa fa-shopping-cart fa-5"></i>
-        </button>
+        
     </div>
 </nav>
