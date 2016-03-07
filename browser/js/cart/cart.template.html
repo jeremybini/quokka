@@ -8,7 +8,6 @@
             <th>Quantity</th>
             <th class="text-center">Price</th>
             <th class="text-center">Total</th>
-            <th>.</th>
             <th ng-show="cart.promotion" class="text-center">Promotion Price!</th>
             <th>.</th>
         </tr>
@@ -64,7 +63,11 @@
             <td class="text-right"><h5><strong>$5.00</strong></h5></td>
         </tr>
         <tr>
-          <td>   </td>
+          <td>
+            <div ng-show="promoMessage" ng-hide="removeMessage" class="alert alert-{{ promoMessage.type }} fade in">
+              <strong>{{promoMessage.message}}</strong>
+            </div>
+          </td>
           <td>
             <div class="input-group">
               <input type="text" class="col-md-1 form-control" placeholder="Enter Promo Code" ng-model="promotion" style="text-align: left">
@@ -74,21 +77,19 @@
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" ng-click="applyPromo()">Apply</button>
             </span>
-            <div ng-show="promoMessage" class="alert alert-{{ cartMessage.type }} fade in">
-              <strong>Success! {{promoMessage:message}}</strong>
-            </div>
           </td>
           <td>
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" ng-click="removePromo()">Remove Promotion</button>
             </span>
           </td>
-          <td>   </td>
+          <td>
+            <div ng-hide="promoMessage" ng-show="removeMessage" class="ng-empty" >
+              <strong>{{removeMessage.message}}</strong>
+            </div>
+          </td>
           <td>   </td>
         </tr>
-
-
-
         <tr>
             <td>   </td>
             <td>   </td>

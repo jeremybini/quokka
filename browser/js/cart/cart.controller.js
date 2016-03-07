@@ -45,19 +45,24 @@ app.controller('CartController', function($scope, CartFactory, cart) {
     if ($scope.promotion) {
       return CartFactory.applyPromo($scope.promotion)
       .then(function(cart) {
+        $scope.cart = cart;
         $scope.promoMessage = {
           type: 'success',
-          message: $scope.promotion + " " + $scope.promotion.title + " discount was applied to your order! You saved " + $scope.promotion.discount + "% on select products!"
+          message: $scope.promotion+ " " + $scope.cart.promotion.title + " discount was applied to your order! You saved " + $scope.cart.promotion.discount + "% on select products!"
         };
-        $scope.cart = cart;
       });
     }
   };
 
   $scope.removePromo = function() {
-    if ($scope.promotion) {
+    if ($scope.cart.promotion) {
       return CartFactory.removePromo()
       .then(function(cart) {
+        $scope.promotion = null;
+        $scope.removeMessage = {
+          type: 'removed',
+          message: "Promo code removed successfully"
+        };
         $scope.cart = cart;
       });
     }

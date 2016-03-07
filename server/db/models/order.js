@@ -179,6 +179,7 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
 };
 
 OrderSchema.methods.removePromotion = function() {
+  console.log(this, "IN ORDER MODEL");
   this.promotion = null;
   this.products.forEach(function(item) {
     item.price = null;
@@ -197,7 +198,7 @@ OrderSchema.virtual('totalPrice').get(function() {
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
   return order.findOne(params)
-  .populate('products.product')
+  .populate('products.product promotion')
   .then(function(result) {
     if (result) {
       return result;
