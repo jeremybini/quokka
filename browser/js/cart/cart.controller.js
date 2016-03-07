@@ -41,12 +41,12 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   };
 
   $scope.applyPromo = function() {
-    console.log($scope.promotion);
-    return CartFactory.applyPromo($scope.promotion)
-    .then(function(cart) {
-      console.log(cart, "CART AFTER PROMO APPLIED");
-      $scope.cart = cart;
-    });
+    if ($scope.promotion) {
+      return CartFactory.applyPromo($scope.promotion)
+      .then(function(cart) {
+        $scope.cart = cart;
+      });
+    }
   };
 
 

@@ -73,7 +73,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   };
 
   CartFactory.applyPromo = function(code) {
-    return $http.get('/api/cart/apply-promo/' + {code: code})
+    return $http.get('/api/cart/apply-promo/' + code)
     .then(function(res) {
       return res.data;
     })
