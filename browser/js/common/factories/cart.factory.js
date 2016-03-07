@@ -75,7 +75,17 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   CartFactory.applyPromo = function(code) {
     return $http.get('/api/cart/apply-promo/' + code)
     .then(function(res) {
-      return res.data;
+      currentCart = res.data;
+      return currentCart;
+    })
+    .catch($log.error);
+  };
+
+  CartFactory.removePromo = function(code) {
+    return $http.delete('/api/cart/apply-promo/' + code)
+    .then(function(res) {
+      currentCart = res.data;
+      return currentCart;
     })
     .catch($log.error);
   };
