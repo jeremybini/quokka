@@ -24,7 +24,7 @@ app.factory('ProductFactory', function($http, $log) {
 		},
 
 		fetchReviews: function(productId) {
-			return $http.get(homePath+productId+'/reviews')
+			return $http.get(homePath+productId+'/reviews/')
 			.then(res => res.data)
 			.catch($log.error);
 		},
@@ -38,7 +38,6 @@ app.factory('ProductFactory', function($http, $log) {
 		submitReview: function(review, productId) {
 			return $http.post(homePath+productId+'/reviews/', review)
 			.then(res => res.data)
-			.catch($log.error)
 		},
 
     delete: function(productId) {
@@ -51,7 +50,6 @@ app.factory('ProductFactory', function($http, $log) {
       return $http.put(homePath+productId, productInfo)
               .then(res => res.data)
       .catch($log.error);
-
     },
 
     create: function(productInfo) {

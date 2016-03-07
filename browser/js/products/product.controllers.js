@@ -1,12 +1,25 @@
-app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory) {
+app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory) {
 	$scope.product = product;
 	$scope.reviews = reviews;
-	$scope.message;
 	$scope.cartQuantity = 1;
+	$scope.cartMessage;
 
 	$scope.addToCart = function() {
-		$scope.message = $scope.cartQuantity + " " + $scope.product.title + " added to you cart!"
-		return CartFactory.add($scope.product, $scope.cartQuantity);
+		CartFactory.add($scope.product, $scope.cartQuantity)
+		.then(cart => {
+			$scope.product.stock -= $scope.cartQuantity;
+			$scope.cartMessage = {
+				type: 'success',
+				message: $scope.cartQuantity + " " + $scope.product.title + " added to you cart!"
+			};
+			$scope.cartQuantity = 1;
+		})
+		.catch(err => {
+			$scope.cartMessage = {
+				type: 'error',
+				message: err.message
+			};
+		});
 	}
 
 	$scope.addReview = function() {
@@ -14,31 +27,47 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 	}
 
 	$scope.submitReview = function() {
-		$scope.submittingReview = true;
-		$scope.newReview.product = $scope.product._id;
-		ProductFactory.submitReview($scope.newReview, $scope.product._id)
-		.then(function(reviews) {
-			$scope.reviews = reviews;
+		if( $scope.newReview ) {
+			//used for showing and hiding buttons/animations
+			$scope.submittingReview = true;
 			$scope.addingReview = false;
-			$scope.submittingReview = false;
-		})
+
+			//explicitly set product id on request body
+			$scope.newReview.product = $scope.product._id;
+			ProductFactory.submitReview($scope.newReview, $scope.product._id)
+			.then(reviews => {
+				$scope.newReview = null;
+				$scope.reviews = reviews;
+				$scope.submittingReview = false;
+				$scope.reviewMessage = {
+					type: 'success',
+					message: 'Thanks for the review!'
+				}
+			})
+			.catch(err => {
+				$scope.submittingReview = false;
+				$scope.reviewMessage = err.message;
+			})
+		} else {
+			$scope.addingReview = false;
+			$scope.reviewMessage = {
+				type: 'error',
+				message: 'You must enter valid stuffs'
+			}
+		}
 	}
 });
 
-app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
+app.controller('ProductsCtrl', function(products, $state, $scope, categories, CategoryFactory) {
 	$scope.products = products;
 	$scope.categories = categories;
-	$scope.category;
+	$scope.activeCategory;
 
 	$scope.setCategory = function(category) {
-		$scope.category = category
+		$scope.activeCategory = category
 	};
 
 	$scope.filterByCategory = function(product) {
-		if( !$scope.category ) return true;
-		return product.categories.find(function(category) {
-			return category._id === $scope.category._id
-		});
+		return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
 	};
-
 });
