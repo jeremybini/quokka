@@ -110,6 +110,8 @@ OrderSchema.methods.removeProduct = function(productId) {
   var order = this;
   
   order.products = order.products.filter(function(item) {
+    console.log(item, "ITEM");
+    console.log(productId);
     if (item.product.equals(productId)) {
       item.quantity = 0;
       return false;
@@ -124,9 +126,12 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
   var order = this;
 
   if (order.products.length) {
+    console.log(order, "ORDER");
+    console.log(productId, "product ID");
+    console.log(quantity, "QUANTITY");
     order.products.forEach(function(item) {
       if (item.product.equals(productId)) {
-        item.quantity = quantity;
+        item.quantity += quantity;
       }
     });
   } else {

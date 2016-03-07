@@ -43,6 +43,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
     .catch($log.error);
   };
 
+
   CartFactory.getCurrentCart = function() {
     return currentCart;
   };

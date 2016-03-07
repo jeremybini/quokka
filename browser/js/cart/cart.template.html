@@ -21,13 +21,13 @@
             <td class="col-sm-2 col-md-2">
               <div class="input-group">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-danger btn-number" data-type="minus">
+                  <button type="button" class="btn btn-danger btn-number" ng-click="update(item.product, -1)">
                     <span class="glyphicon glyphicon-minus"></span>
                   </button>
                 </span>
                 <input type="text" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-success btn-number" data-type="plus">
+                  <button type="button" class="btn btn-success btn-number" ng-click="update(item.product, 1)" >
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
                 </span>
@@ -37,7 +37,7 @@
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.product.price/100 | currency : $ }}</strong></td>
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.product.price/100) * (item.quantity) | currency:$}}</strong></td>
             <td class="col-sm-1 col-md-1" style="text-align: center">
-                <button type="button" class="btn btn-danger">
+                <button type="button" class="btn btn-danger" ng-click="remove(item.product._id)">
                     <span class="glyphicon glyphicon-remove pull-right"></span> Remove
                 </button>
             </td>
@@ -72,7 +72,7 @@
                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
             </button></td>
             <td>
-            <button type="button" class="btn btn-success">
+            <button type="button" class="btn btn-success" ng-click="checkout(item._id)">
                 Checkout <span class="glyphicon glyphicon-play"></span>
             </button></td>
           </tr>

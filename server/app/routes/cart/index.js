@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
 
 //req.body should have a product ID
 router.delete('/:id', function(req, res, next) {
-  req.cart.removeProduct(req.body.productId)
+  req.cart.removeProduct(req.params.id)
   .then(function(result) {
     res.status = 204;
     res.json(result);
@@ -56,7 +56,6 @@ router.post('/', function(req, res, next) {
 router.put('/', function(req, res, next) {
   req.cart.updateQuantity(req.body.productId, req.body.quantity)
   .then(function(result) {
-    res.status = 204;
     res.json(result);
   })
   .then(null, next);
@@ -66,7 +65,6 @@ router.put('/', function(req, res, next) {
 router.get('/submit', function(req, res, next) {
   Order.submitOrder(req.cart._id)
   .then(function(result) {
-    res.status = 204;
     res.json(result);
   })
   .then(null, next);
