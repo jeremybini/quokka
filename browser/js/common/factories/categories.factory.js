@@ -20,6 +20,13 @@ app.factory('CategoryFactory', function ($http, $log) {
       return cache;
     },
 
+    filterProductsByCategory: function(product, activeCategory) {
+      if( !activeCategory ) return true;
+      return product.categories.find(function(category) {
+        return category._id === activeCategory._id;
+      });
+    },
+
     add: function(name) {
       return $http.post(homePath, {
         name: name

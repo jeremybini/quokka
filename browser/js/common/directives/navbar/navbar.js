@@ -7,9 +7,8 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
         link: function (scope, element, attr) {
 
             scope.items = [
-                { label: 'Dogs', state: 'home' },
-                { label: 'Cats', state: 'about' },
-                { label: 'Other Critters', state: 'docs' },
+                { label: 'Catalogue', state: 'products' },
+                { label: 'Our Mission', state: 'about' },
                 { label: 'Profile', state: 'profile({ id: user._id })', auth: true }
             ];
 
@@ -43,14 +42,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
 
             var $win = angular.element($window);
             $win.on('scroll', function (e) {
-                if ($window.pageYOffset >= 300) {
-                    element.removeClass('navbar-hidden');
+                if ($window.pageYOffset >= 180) {
                     element.addClass('navbar-stuck');
-                } else if ($window.pageYOffset > 93) {
-                    element.addClass('navbar-hidden');
                 } else {
                     element.removeClass('navbar-stuck');
-                    element.removeClass('navbar-hidden');
                 }
             });
         }
