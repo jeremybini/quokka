@@ -52,7 +52,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   CartFactory.fetchCart = function() {
     return $http.get('/api/cart/')
     .then(function(res) {
-      return res.data;
+      return res.data
     })
     .catch($log.error);
   };

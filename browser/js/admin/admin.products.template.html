@@ -25,7 +25,8 @@
         <div class="caption">
           <h4>{{ product.title }}</h4>
           <p class="product-description">{{ product.description }}</p>
-          <p>{{ product.price | currency : symbol }}</p>
+          <p>{{ product.price/100 | currency : $ }}</p>
+          <p><b>{{ product.stock }} in stock</b></p>
           <button ng-click="goToEditState(product)" class="edit-product-btn btn btn-primary">Edit Product</button>
         </div>
       </div>
