@@ -110,6 +110,8 @@ OrderSchema.methods.removeProduct = function(productId) {
   var order = this;
   
   order.products = order.products.filter(function(item) {
+    console.log(item, "ITEM");
+    console.log(productId);
     if (item.product.equals(productId)) {
       item.quantity = 0;
       return false;
@@ -124,9 +126,12 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
   var order = this;
 
   if (order.products.length) {
+    console.log(order, "ORDER");
+    console.log(productId, "product ID");
+    console.log(quantity, "QUANTITY");
     order.products.forEach(function(item) {
       if (item.product.equals(productId)) {
-        item.quantity = quantity;
+        item.quantity += quantity;
       }
     });
   } else {
@@ -148,15 +153,16 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
 
   return Promotion.findOne({ code: promotionCode })
   .then(function(code) {
-    var promoProduct = code.params.product;
-    var promoCategory = code.params.category;
-
+    if (code.parameters) {
+      var promoProduct = code.parameters.product;
+      var promoCategory = code.parameters.category;
+    }
     //if that is a valid promo code and it has not expired
     if (code && code.expirationDate > Date.now()) {
       //set current order's promotion to the returned promotion
       order.promotion = code._id;
 
-      //check each product for promo code params and apply discount, apply to all if no params
+      //check each product for promo code parameters and apply discount, apply to all if no params
       order.products.forEach(function(item) {
         if(!promoProduct && !promoCategory) {
           applyDiscount(item, code.discount);
@@ -167,7 +173,7 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
             applyDiscount(item, code.discount);
           }
         }
-      })
+      });
       return order.save();
     } else {
       return new Error("That's not a valid promotion code");

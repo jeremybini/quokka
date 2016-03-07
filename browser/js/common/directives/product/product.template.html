@@ -1,0 +1,10 @@
+<div class="col-md-3 col-sm-4 products-box">
+	<a ui-sref="product({ id: product._id })">
+		<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
+			<div class="products-tag">
+				<span>{{ product.title }}</span>
+				<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
+			</div>
+		</div>
+	</a>
+</div>
