@@ -33,6 +33,9 @@ router.get('/:id', function(req, res, next) {
 router.post('/', auth.ensureAdmin, function(req, res, next) {
   Promotion.create(req.body)
   .then(function(newPromotion) {
+    return newPromotion.populate('parameters.product parameters.category');
+  })
+  .then(function(newPromotion) {
     res.status(201);
     res.send(newPromotion);
   })
@@ -41,9 +44,10 @@ router.post('/', auth.ensureAdmin, function(req, res, next) {
 
 //update promotion
 router.put('/:id', auth.ensureAdmin, function(req, res, next) {
-  Promotion.findById({id: req.params.id})
+  Promotion.findById(req.params.id)
   .then(function(promotion) {
     _.merge(promotion, req.body);
+    return promotion.save();
   })
   .then(function(updatedPromotion) {
     res.send(updatedPromotion);
