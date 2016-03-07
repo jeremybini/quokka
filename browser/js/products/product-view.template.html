@@ -10,7 +10,7 @@
 				<li>{{ product.description }}</li>
 				<li>Item Price: {{ product.price/100 | currency: $ }}</li>
 				<li>{{ product.stock }} in stock</li>
-				<form class="form-horizontal">
+				<form class="form-horizontal" ng-disable>
 				  <div class="form-group">
 				    <label class="col-sm-2 control-label">Quantity</label>
 				    <div class="col-sm-6">

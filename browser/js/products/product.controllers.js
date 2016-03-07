@@ -1,4 +1,4 @@
-app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory) {
+app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory) {
 	$scope.product = product;
 	$scope.reviews = reviews;
 	$scope.cartQuantity = 1;
@@ -7,6 +7,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 	$scope.addToCart = function() {
 		CartFactory.add($scope.product, $scope.cartQuantity)
 		.then(cart => {
+			$scope.product.stock -= $scope.cartQuantity;
 			$scope.cartMessage = {
 				type: 'success',
 				message: $scope.cartQuantity + " " + $scope.product.title + " added to you cart!"
@@ -35,6 +36,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 			$scope.newReview.product = $scope.product._id;
 			ProductFactory.submitReview($scope.newReview, $scope.product._id)
 			.then(reviews => {
+				$scope.newReview = null;
 				$scope.reviews = reviews;
 				$scope.submittingReview = false;
 				$scope.reviewMessage = {
@@ -47,6 +49,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 				$scope.reviewMessage = err.message;
 			})
 		} else {
+			$scope.addingReview = false;
 			$scope.reviewMessage = {
 				type: 'error',
 				message: 'You must enter valid stuffs'
@@ -55,7 +58,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 	}
 });
 
-app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
+app.controller('ProductsCtrl', function(products, $state, $scope, categories, CategoryFactory) {
 	$scope.categories = categories;
 	$scope.activeCategory;
 
@@ -64,10 +67,7 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
 	};
 
 	$scope.filterByCategory = function(product) {
-		if( !$scope.activeCategory ) return true;
-		return product.categories.find(function(category, i) {
-			return category._id === $scope.activeCategory._id;
-		});
+		return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
 	};
 
 	$scope.products = products

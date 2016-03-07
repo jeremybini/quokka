@@ -8,7 +8,6 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   var CartFactory = {};
 
   CartFactory.add = function(product, quantity) {
-    console.log('333', product, quantity)
     return $http.post('/api/cart/', {productId: product._id, quantity: quantity})
     .then(function(res) {
       return res.data;
