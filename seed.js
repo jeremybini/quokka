@@ -203,22 +203,22 @@ var seedOrders = function (user, product) {
     var orders = [
         {
             user: user[0]._id,
-            products: [ { product: product[0]._id, quantity: 2, price: 56 } ],
+            products: [ { product: product[0]._id, quantity: 2, price: product[0].price } ],
             status: 'Submitted'
         },
         {
             user: user[1]._id,
-            products: [ { product: product[1]._id, quantity: 1, price: 33 } ],
+            products: [ { product: product[1]._id, quantity: 1, price: product[1].price } ],
             status: 'Processing'
         },
         {
             user: user[0]._id,
-            products: [ { product: product[2]._id, quantity: 4, price: 77 } ],
+            products: [ { product: product[2]._id, quantity: 4, price: product[2].price } ],
             status: 'Completed'
         },
         {
             user: user[1]._id,
-            products: [ { product: product[6]._id, quantity: 4, price: 77 } ],
+            products: [ { product: product[6]._id, quantity: 4, price: product[6].price } ],
             status: 'Cart'
         }
 
@@ -252,7 +252,7 @@ var seedPromotions = function (products, categories) {
     title: 'Kitten Mittons Promotion',
     discount: 50,
     parameters: {
-      product: products[0]._id
+      product: products[1]._id
     },
     promotype: 'Product',
     expirationDate: new Date(2020, 11, 17)
