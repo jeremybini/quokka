@@ -9,30 +9,41 @@
       <input class="form-control" name="title"
              ng-model="product.title">
       <br>
+
       Description:
        <textarea class="description-text-area form-control" name="description"
                  ng-model="product.description">
        </textarea>
       <br>
+
       Price:
       <div class="input-group">
         <span class="input-group-addon">$</span>
-        <input type="text"
+        <input type="string"
                class="form-control"
-               ng-model="product.price">
+               ng-model="decimalPrice">
       </div>
       <br>
+
       Category:
-      <select class="form-control" ng-model="categoryName"
+      <select class="form-control"
+              ng-model="categoryName"
               ng-options="category as category for category in categories">
       </select>
       <br>
+
+      Stock:
+      <input class="form-control"
+             type="number"
+             ng-model="product.stock">
+
+
       <!--<input name="category"-->
       <!--ng-model="product.categories.name">-->
       <!--<button ng-click="addNewCategory(category)">Add New Category </button>-->
       <br>
     </form>
-    <button class="btn btn-success" ng-click="save(product)">Save</button>
+    <button class="btn btn-success" ng-click="save(product, decimalPrice)">Save</button>
     <button class="btn btn-danger" ng-show="isEditProduct" ng-click="delete(product)">Delete</button>
   </div>
 </div>
