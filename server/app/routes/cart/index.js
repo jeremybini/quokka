@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
 
 //req.body should have a product ID
 router.delete('/:id', function(req, res, next) {
-  req.cart.removeProduct(req.body.productId)
+  req.cart.removeProduct(req.params.id)
   .then(function(result) {
     res.status(200);
     res.json(result);

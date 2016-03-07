@@ -43,8 +43,8 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
     .catch($log.error);
   };
 
+
   CartFactory.getCurrentCart = function() {
-    console.log("FACTORY GET CURRENT CART", currentCart);
     return currentCart;
   };
 
@@ -52,7 +52,6 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   CartFactory.fetchCart = function() {
     return $http.get('/api/cart/')
     .then(function(res) {
-      console.log("FACTORY FETCH CART", res);
       return res.data;
     })
     .catch($log.error);
