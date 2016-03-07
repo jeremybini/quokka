@@ -8,14 +8,13 @@
             </li>
         </ul>
         <button ui-sref="cart" class="btn login-button" style="margin-left: 10px">
-            <i class="fa fa-shopping-cart fa-5"></i> {{ total }}
+            <i class="fa fa-shopping-cart fa-5"></i>
         </button>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <button ng-show="!user" ui-sref="signup" class="btn login-button">Signup</button>
         <div ng-show="user" class="welcome">
             <span>Welcome, {{ user.email }}!</span>
             <a ng-click="logout()">Logout</a>
-        </div>
-        
+        </div>  
     </div>
 </nav>

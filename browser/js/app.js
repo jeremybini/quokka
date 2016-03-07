@@ -39,10 +39,7 @@ app.run(function ($rootScope, AuthService, $state, CategoryFactory, CartFactory)
             // (the second time, AuthService.isAuthenticated() will work)
             // otherwise, if no user is logged in, go to "login" state.
             if (user) {
-                CartFactory.fetchCart()
-                .then(()=>{
-                    $state.go(toState.name, toParams);
-                })
+                $state.go(toState.name, toParams);
             } else {
                 $state.go('login');
             }

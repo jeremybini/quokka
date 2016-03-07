@@ -3,7 +3,7 @@
 
 app.factory('CartFactory', function($http, ProductFactory, $log) {
 
-  var currentCart;
+  var currentCart = [];
 
   var CartFactory = {};
 
@@ -52,8 +52,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   CartFactory.fetchCart = function() {
     return $http.get('/api/cart/')
     .then(function(res) {
-      currentCart = res.data;
-      return currentCart;
+      return res.data
     })
     .catch($log.error);
   };
