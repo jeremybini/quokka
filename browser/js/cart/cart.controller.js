@@ -3,6 +3,7 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   $scope.cart = cart;
   $scope.subtotal = 0;
 
+
   $scope.remove = function(productId) {
     return CartFactory.remove(productId)
     .then(function(cart) {
@@ -11,7 +12,6 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   };
 
   $scope.update = function(product, quantity) {
-    console.log($scope.cart, "CART in update");
     return CartFactory.update(product, quantity)
     .then(function(cart) {
       $scope.cart = cart;
@@ -34,12 +34,20 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   };
 
   $scope.orderSubtotal = function() {
-
     return $scope.cart.products.reduce(function(total, item) {
       var price = item.price || item.product.price;
       return total+=(price* item.quantity)/100;
     }, 0);
-
   };
+
+  $scope.applyPromo = function() {
+    console.log($scope.promotion);
+    return CartFactory.applyPromo($scope.promotion)
+    .then(function(cart) {
+      console.log(cart, "CART AFTER PROMO APPLIED");
+      $scope.cart = cart;
+    });
+  };
+
 
 });
