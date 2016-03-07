@@ -1,7 +1,13 @@
-app.controller('AdminProductsCtrl', function(products, $state, $scope, AuthService) {
+app.controller('AdminProductsCtrl', function(products, categories, $state, $scope, AuthService, CategoryFactory) {
   $scope.products = products;
+  $scope.categories = categories;
   $scope.goToEditState = function(product) {
     $state.go('editProduct', {_id: product._id, product: product });
+  };
+  $scope.activeCategory;
+
+  $scope.filterByCategory = function(product) {
+    return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
   };
 });
 
