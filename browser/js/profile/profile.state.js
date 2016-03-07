@@ -29,26 +29,21 @@ app.config(function($stateProvider) {
 			controller: 'UserOrderController'
 		})
 
-		.state('editProfile', {
-			url: 'profile/:id/edit',
-			templateUrl: '/js/profile/profile-edit.template.html',
-			resolve: {
-				user: function(UserFactory, $stateParams) {
-					return UserFactory.fetchById($stateParams.id);
-				}
-			},
-			controller: 'ProfileController'
-		})
+		// .state('editProfile', {
+		// 	url: 'profile/:id/edit',
+		// 	templateUrl: '/js/profile/profile-edit.template.html',
+		// 	resolve: {
+		// 		user: function(UserFactory, $stateParams) {
+		// 			return UserFactory.fetchById($stateParams.id);
+		// 		}
+		// 	},
+		// 	controller: 'ProfileController'
+		// })
 
-		.state('passwordReset', {
-			url: 'profile/:id/passwordReset',
+		.state('resetPassword', {
+			url: '/password-reset',
 			templateUrl: '/js/profile/password-reset.template.html',
-			resolve: {
-				user: function(UserFactory, $stateParams) {
-					return UserFactory.fetchById($stateParams.id);
-				}
-			},
-			controller: 'ProfileController'
+			controller: 'PasswordResetCtrl'
 		})
 
 
