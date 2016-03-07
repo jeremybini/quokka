@@ -1,5 +1,5 @@
 <div class="text-center">
-<h4 ng-show="created">
+<h4 ng-show="actuallyCreated">
 <font color="green">Promotion successfully created!</font>
 </h4>
 </div>
@@ -14,11 +14,14 @@
 </h4>
 </div>
 <div class="text-center">
-<button type="button" class="btn btn-info" ng-click="createPromotion(promotion)">Create Promotion</button>
+<button type="button" ng-hide="created" class="btn btn-info" ng-click="createPromotion()">Create Promotion</button>
+</div>
+<div class="text-center">
+<button type="button" ng-show="created" class="btn btn-info" ng-click="createPromotion(newpromotion)">Save Promotion</button>
 </div>
 <br>
 <div>
-<table class="table">
+<table class="table" ng-hide="created">
   <thead>
     <tr>
       <th>Promotion Title</th>
@@ -34,7 +37,7 @@
       <td><input ng-model="promotion.title"></td>
       <td>{{promotion.code}}</td>
       <td><input ng-model="promotion.discount"></td>
-      <td><input ng-model="promotion.expirationDate"></td>
+      <td><input ng-model="promotion.readableDate"></td>
       <td><select ng-model="promotion.promotype" ng-options="parameter as parameter for parameter in parameters"></select></td>
       <td><select ng-show="promotion.promotype==='Product'" ng-model="promotion.parameters.product.title" ng-options="product.title as product.title for product in products"></select>
       <select ng-show="promotion.promotype==='Category'" ng-model="promotion.parameters.category.name" ng-options="category.name as category.name for category in categories"></select></td>
@@ -43,5 +46,26 @@
     </tr>
   </tbody>
 </table>
+<table class="table" ng-show="created">
+  <thead>
+    <tr>
+      <th>Promotion Title</th>
+      <th>Discount (%)</th>
+      <th>Expiration Date</th>
+      <th>Type</th>
+      <th>Applies To</th>
+    </tr>
+  </thead>
+  <tbody>
+    <td><input ng-model="newpromotion.title"></td>
+    <td><input ng-model="newpromotion.discount"></td>
+    <td><input ng-model="newpromotion.expirationDate"></td>
+    <td><select ng-model="newpromotion.promotype" ng-options="parameter as parameter for parameter in parameters"></select></td>
+    <td><select ng-show="newpromotion.promotype==='Product'" ng-model="productName" ng-options="product.title as product.title for product in products"></select>
+    <select ng-show="newpromotion.promotype==='Category'" ng-model="categoryName" ng-options="category.name as category.name for category in categories"></select></td>
+  </tbody>
+</table>
 </div>
 <br>
+
+
