@@ -14,11 +14,13 @@ module.exports = function (app) {
             session: sessionID
         })
         .then(order =>{
-            order.session = null;
-            order.user = user._id;
-            return order.save();
+            if (order) {
+                order.session = null;
+                order.user = user._id;
+                return order.save();
+            }
         })
-        .then(res =>{
+        .then(() =>{
             return user;
         })
         .then(null, function(err) {
