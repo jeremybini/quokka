@@ -5,22 +5,26 @@
 				<div class="category-btn" ng-class="(!activeCategory) ? 'active-btn' : ''" ng-click="setCategory()">
 					<p>All</p>
 				</div>
-				<div class="category-btn" ng-class="(activeCategory==category) ? 'active-btn' : ''" ng-repeat="category in categories" ng-click="setCategory(category)">
+				<div class="category-btn" ng-class="(activeCategory===category) ? 'active-btn' : ''" ng-repeat="category in categories" ng-click="setCategory(category)">
 					<p>{{ category.name }}</p>
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-10 no-float">
-			<h1 class="text-center">{{ activeCategory.name || "All" }} Products</h1>
-			<div ng-repeat="product in products | filter: filterByCategory" class="col-md-3 col-sm-4 products-box">
-				<a ui-sref="product({ id: product._id })">
-					<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
-						<div class="products-tag">
-							<span>{{ product.title }}</span>
-							<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
-						</div>
-					</div>
-				</a>
+		<div id="all-products" class="col-xs-10 no-float">
+			<h2 class="text-center">{{ activeCategory.name || "All" }} Products</h2>
+			<div class="container">
+				<div class="row">
+					<div ng-repeat="product in products | filter: filterByCategory" class="col-sm-6 col-md-3 products-box">
+						<a ui-sref="product({ id: product._id })">
+							<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
+								<div class="products-tag">
+									<span>{{ product.title }}</span>
+									<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
+								</div>
+							</div>
+						</a>
+					</div>	
+				</div>	
 			</div>
 		</div>
 	</div>

@@ -200,11 +200,6 @@ body {
     box-sizing: border-box;
 	}
 
-	header {
-    background: green;
-    height: 50px;
-	}
-
 	.row {
     height: 100%;
     display: table-row;
@@ -255,6 +250,14 @@ body {
 
 .fixed {
 	position: fixed;
+}
+
+#all-products {
+	@media (max-width: 768px) {
+		.container {
+			width: 100% !important;
+		}
+	}
 }
 
 @import 'directives/main';

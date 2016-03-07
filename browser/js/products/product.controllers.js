@@ -65,8 +65,8 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
 
 	$scope.filterByCategory = function(product) {
 		if( !$scope.activeCategory ) return true;
-		return product.categories.find(function(category) {
-			return category._id === $scope.activeCategory._id
+		return product.categories.find(function(category, i) {
+			return category._id === $scope.activeCategory._id;
 		});
 	};
 
