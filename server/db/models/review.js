@@ -5,16 +5,21 @@ var ReviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
     default: null,
-    required: true
+    //required: true
+  },
+  title: {
+    type: String,
+    minlength: 5,
+    maxlength: 50
   },
   content: {
     type: String,
     minlength: 5,
+    maxlength: 255
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-    //required: true
   },
   product: {
     type: mongoose.Schema.Types.ObjectId,

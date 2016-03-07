@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
   req.cart.removeProduct(req.params.id)
   .then(function(result) {
-    res.status = 204;
+    res.status(200);
     res.json(result);
   })
   .then(null, next);
@@ -47,6 +47,7 @@ router.delete('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   req.cart.addProduct(req.body.productId, req.body.quantity)
   .then(function(result) {
+    res.status(201);
     res.json(result);
   })
   .then(null, next);
@@ -56,6 +57,7 @@ router.post('/', function(req, res, next) {
 router.put('/', function(req, res, next) {
   req.cart.updateQuantity(req.body.productId, req.body.quantity)
   .then(function(result) {
+    res.status(200);
     res.json(result);
   })
   .then(null, next);
@@ -65,6 +67,7 @@ router.put('/', function(req, res, next) {
 router.get('/submit', function(req, res, next) {
   Order.submitOrder(req.cart._id)
   .then(function(result) {
+    res.status(200);
     res.json(result);
   })
   .then(null, next);

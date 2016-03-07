@@ -15,13 +15,10 @@ router.param('reviewId', function(req, res, next, id) {
       req.review = review;
       next();
     } else {
-      next(Error("Uhoh, that review doesn't exist"));
+      next(new Error("Uhoh, that review doesn't exist"));
     }
   })
-  .then(null,  function(err) {
-    err.status = 404;
-    next(err);
-  });
+  .then(null, next);
 });
 
 router.get('/', function(req, res, next) {
@@ -40,8 +37,12 @@ router.post('/', auth.ensureUser, function(req, res, next) {
     return Product.addReview(review)
   })
   .then(product => {
-    res.status(201);
-    res.json(product);
+    return Review.find({
+      product: req.product._id
+    })
+  })
+  .then(reviews => {
+    res.status(201).json(reviews);
   })
   .then(null, next);
 })
@@ -71,7 +72,7 @@ router.delete('/:reviewId', function(req, res, next) {
       return Product.removeReview(review);
     })
     .then(function(product) {
-      res.status = 204;
+      res.status(200);
       res.json(product);
     })
     .then(null, next);

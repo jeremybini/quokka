@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="add-button-container">
+    <a ui-sref="addProduct" class="btn btn-lg btn-success">Add Product</a>
+  </div>
   <div ng-repeat="product in products" class="item col-xs-4">
     <div class="thumbnail">
       <div class="adminProductImage" style="background-image: url('{{ product.photoUrl }}'); width: 100%; height: 300px; background-size: contain; background-repeat: no-repeat; background-position: center">

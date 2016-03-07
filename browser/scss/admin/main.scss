@@ -1,3 +1,8 @@
+.add-button-container {
+  text-align: center;
+  padding-bottom: 12px;
+}
+
 .item {
   height: 500px;
   margin: 12px 0;
@@ -24,6 +29,17 @@
 .product-description {
   font-size: small;
 }
+
+.description-text-area {
+  resize: none;
+}
+
+.admin-buttons .btn {
+  width:200px;
+  display: block;
+  margin: 12px auto;
+}
+
 
 
 

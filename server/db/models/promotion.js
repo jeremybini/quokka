@@ -26,6 +26,10 @@ var PromotionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  promotype: {
+    type: String,
+    enum: ['All', 'Product', 'Category']
+  },
   expirationDate: Date
 });
 

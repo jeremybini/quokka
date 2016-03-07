@@ -35,9 +35,15 @@ app.factory('ProductFactory', function($http, $log) {
 			.catch($log.error);
 		},
 
+		submitReview: function(review, productId) {
+			return $http.post(homePath+productId+'/reviews/', review)
+			.then(res => res.data)
+			.catch($log.error)
+		},
+
     delete: function(productId) {
       return $http.delete(homePath+productId)
-              .then(res => res.data)
+      .then(res => res.data)
       .catch($log.error);
     },
 
@@ -45,7 +51,14 @@ app.factory('ProductFactory', function($http, $log) {
       return $http.put(homePath+productId, productInfo)
               .then(res => res.data)
       .catch($log.error);
+
+    },
+
+    create: function(productInfo) {
+      return $http.post(homePath, productInfo)
+          .then(res => res.data)
+      .catch($log.error);
     }
 
 	}
-})
+});
