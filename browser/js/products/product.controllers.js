@@ -10,7 +10,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 			$scope.product.stock -= $scope.cartQuantity;
 			$scope.cartMessage = {
 				type: 'success',
-				message: $scope.cartQuantity + " " + $scope.product.title + " added to you cart!"
+				message: $scope.cartQuantity + " " + $scope.product.title + " added to your cart!"
 			};
 			$scope.cartQuantity = 1;
 		})
