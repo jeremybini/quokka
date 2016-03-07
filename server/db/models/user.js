@@ -43,7 +43,8 @@ var UserSchema = new Schema({
     type: String
   },
   resetPassword: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 });
 

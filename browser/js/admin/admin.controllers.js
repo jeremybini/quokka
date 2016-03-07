@@ -51,6 +51,12 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
     $scope.deleted = false;
   };
 
+  $scope.resetPassword = function(user) {
+    UserFactory.update(user._id, {resetPassword: true});
+    $scope.updated = true;
+    $scope.deleted = false;
+  };
+
   $scope.deleteUser = function(user) {
     UserFactory.delete(user._id)
     .then(function() {
