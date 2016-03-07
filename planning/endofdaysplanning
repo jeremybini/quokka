@@ -2,31 +2,19 @@ THINGS LEFT TO DO
 
 Admin Pages:
 
---promotion page: make dates display better
 --add more functionality to users page: reset password
 --add more functionality to products page: be able to add categories, edit categories, product can have multiple categories
 
 Authentication/accounts:
 
 --front-end
---Users can log in and continue editing cart
---Create account
 --Facebook/Google sign-in
 --Email validation
-
-Navbar
-
---Populate dynamically with categories as they're added
-
-UI/Views
-
---Be able to refine listings by category
 
 Orders
 
 --Email system for shipping/delivery
 --Orders should have a shipping address
---Users should be able to see all their orders
 
 Other
 --Spiffy up the UI

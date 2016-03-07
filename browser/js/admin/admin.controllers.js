@@ -1,7 +1,13 @@
-app.controller('AdminProductsCtrl', function(products, $state, $scope, AuthService) {
+app.controller('AdminProductsCtrl', function(products, categories, $state, $scope, AuthService, CategoryFactory) {
   $scope.products = products;
+  $scope.categories = categories;
   $scope.goToEditState = function(product) {
     $state.go('editProduct', {_id: product._id, product: product });
+  };
+  $scope.activeCategory;
+
+  $scope.filterByCategory = function(product) {
+    return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
   };
 });
 
@@ -28,7 +34,7 @@ app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFac
     $state.go('adminAllProducts');
   };
 
-  $scope.addNewCategory = function(category) {
+  $scope.addNewCategory = function() {
 
   };
 });
@@ -41,6 +47,12 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
 
   $scope.editUser = function(user) {
     UserFactory.update(user._id, {admin: user.admin, email: user.email});
+    $scope.updated = true;
+    $scope.deleted = false;
+  };
+
+  $scope.resetPassword = function(user) {
+    UserFactory.update(user._id, {resetPassword: true});
     $scope.updated = true;
     $scope.deleted = false;
   };
@@ -62,9 +74,6 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
 
   $scope.promotions = promotions;
   $scope.parameters = ['Category', 'Product', 'All'];
-  $scope.promotions.forEach(function(promotion) {
-    promotion.expirationDate = promotion.expirationDate.slice(0, 10);
-  });
   ProductFactory.fetchAll()
   .then(function(products) {
     $scope.products = products;
@@ -79,7 +88,7 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
   $scope.actuallyCreated = false;
 
   $scope.editPromotion = function(promotion) {
-    promotion.expirationDate = new Date(promotion.readableDate);
+    promotion.expirationDate = promotion.readableDate;
     if (promotion.promotype === 'Category') {
       promotion.parameters.category = $scope.categories.filter(function(category) {
         return category.name === promotion.parameters.category.name;
@@ -113,6 +122,7 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
   };
 
   $scope.createPromotion = function(promotion) {
+
     if (!$scope.created) {
       $scope.updated = false;
       $scope.deleted = false;
@@ -121,7 +131,7 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
       $scope.newpromotion = {};
     } else {
       //actually create promotion
-      promotion.expirationDate = new Date(promotion.readableDate);
+      promotion.expirationDate = promotion.readableDate;
       promotion.parameters = {};
       if (promotion.promotype === 'Category') {
         promotion.parameters.category = $scope.categories.filter(function(category) {
@@ -137,8 +147,8 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
         PromotionFactory.fetchAll();
       })
       .then(function() {
-        $scope.promotions.forEach(function(promotion) {
-          promotion.expirationDate = promotion.expirationDate.slice(0, 10);
+        $scope.promotions.forEach(function(item) {
+          item.expirationDate = item.expirationDate.slice(0, 10);
         });
         $scope.updated = false;
         $scope.deleted = false;
