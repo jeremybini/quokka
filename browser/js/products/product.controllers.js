@@ -26,6 +26,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 });
 
 app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
+	$scope.products = products;
 	$scope.categories = categories;
 	$scope.category;
 
@@ -40,5 +41,4 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories) {
 		});
 	};
 
-	$scope.products = products
 });
