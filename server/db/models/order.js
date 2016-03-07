@@ -110,8 +110,6 @@ OrderSchema.methods.removeProduct = function(productId) {
   var order = this;
   
   order.products = order.products.filter(function(item) {
-    console.log(item, "ITEM");
-    console.log(productId);
     if (item.product.equals(productId)) {
       item.quantity = 0;
       return false;
@@ -126,9 +124,6 @@ OrderSchema.methods.updateQuantity = function(productId, quantity) {
   var order = this;
 
   if (order.products.length) {
-    console.log(order, "ORDER");
-    console.log(productId, "product ID");
-    console.log(quantity, "QUANTITY");
     order.products.forEach(function(item) {
       if (item.product.equals(productId)) {
         item.quantity += quantity;
@@ -153,7 +148,6 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
 
   return Promotion.findOne({ code: promotionCode })
   .then(function(code) {
-    console.log(code, "CODE CODE CODE");
     //if that is a valid promo code and it has not expired
     if (code && code.expirationDate > Date.now()) {
       if (code.parameters) {
@@ -181,7 +175,6 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
           }
         }
       });
-      console.log(order)
       return order.save();
     } else {
       return new Error("That's not a valid promotion code");
