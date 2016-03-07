@@ -2,7 +2,7 @@ THINGS LEFT TO DO
 
 Admin Pages:
 
---create promotion page: add actual update, delete, create functionality, make dates display better
+--promotion page: make dates display better
 --add more functionality to users page: reset password
 --add more functionality to products page: be able to add categories, edit categories, product can have multiple categories
 
@@ -31,8 +31,5 @@ Orders
 Other
 --Spiffy up the UI
 --Respond to code review suggestions (UPDATE: JR fixed most outstanding ones 3/5)
-
-Twist
---Make admins able to offer promotion codes that will give users percentages/$ amounts off their orders
 
 

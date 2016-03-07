@@ -67,7 +67,6 @@ app.controller('AdminUsersCtrl', function(users, UserFactory, $state, $scope) {
 app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, ProductFactory, CategoryFactory, $scope) {
 
   $scope.promotions = promotions;
-  var allPromotions = $scope.promotions;
   $scope.parameters = ['Category', 'Product', 'All'];
   $scope.promotions.forEach(function(promotion) {
     promotion.expirationDate = promotion.expirationDate.slice(0, 10);
@@ -75,28 +74,37 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
   ProductFactory.fetchAll()
   .then(function(products) {
     $scope.products = products;
-  })
+  });
   CategoryFactory.fetchAll()
   .then(function(categories) {
     $scope.categories = categories;
-  })
+  });
   $scope.updated = false;
   $scope.deleted = false;
   $scope.created = false;
+  $scope.actuallyCreated = false;
 
   $scope.editPromotion = function(promotion) {
-    promotion.expirationDate = promotion.expirationDate + "05:00:00.000Z";
+    promotion.expirationDate = new Date(promotion.readableDate);
     if (promotion.promotype === 'Category') {
-      promotion.parameters = {category: promotion.parameters.category._id};
+      promotion.parameters.category = $scope.categories.filter(function(category) {
+        return category.name === promotion.parameters.category.name;
+      })[0];
     } else if (promotion.promotype === 'Product') {
-      promotion.parameters = {product: promotion.parameters.product._id};
+      promotion.parameters.product = $scope.products.filter(function(product) {
+        return product.title === promotion.parameters.product.title;
+      })[0];
     }
     console.log(promotion);
     PromotionFactory.update(promotion._id, promotion)
-    .then(function(promotion) {
+    .then(function() {
+        PromotionFactory.fetchAll();
+    })
+    .then(function() {
       $scope.updated = true;
       $scope.deleted = false;
       $scope.created = false;
+      $scope.actuallyCreated = false;
     });
   };
 
@@ -106,7 +114,44 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
       $scope.updated = false;
       $scope.deleted = true;
       $scope.created = false;
+      $scope.actuallyCreated = false;
     });
+  };
+
+  $scope.createPromotion = function(promotion) {
+    if (!$scope.created) {
+      $scope.updated = false;
+      $scope.deleted = false;
+      $scope.created = true;
+      $scope.actuallyCreated = false;
+      $scope.newpromotion = {};
+    } else {
+      //actually create promotion
+      promotion.expirationDate = new Date(promotion.readableDate);
+      promotion.parameters = {};
+      if (promotion.promotype === 'Category') {
+        promotion.parameters.category = $scope.categories.filter(function(category) {
+          return category.name === $scope.categoryName;
+        })[0];
+      } else if (promotion.promotype === 'Product') {
+        promotion.parameters.product = $scope.products.filter(function(product) {
+          return product.title === $scope.productName;
+        })[0];
+      }
+      PromotionFactory.add(promotion)
+      .then(function() {
+        PromotionFactory.fetchAll();
+      })
+      .then(function() {
+        $scope.promotions.forEach(function(promotion) {
+          promotion.expirationDate = promotion.expirationDate.slice(0, 10);
+        });
+        $scope.updated = false;
+        $scope.deleted = false;
+        $scope.created = false;
+        $scope.actuallyCreated = true;
+      });
+    }
   };
 
 });

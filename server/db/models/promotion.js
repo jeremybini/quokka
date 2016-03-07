@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 var PromotionSchema = new mongoose.Schema({
   title: {
@@ -31,6 +32,18 @@ var PromotionSchema = new mongoose.Schema({
     enum: ['All', 'Product', 'Category']
   },
   expirationDate: Date
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
+});
+
+PromotionSchema.virtual('readableDate')
+.get(function() {
+  return moment(this.expirationDate).format("M/D/YYYY");
 });
 
 PromotionSchema.pre('validate', function(next){
