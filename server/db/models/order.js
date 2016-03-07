@@ -176,7 +176,15 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
       return new Error("That's not a valid promotion code");
     }
   });
-}
+};
+
+OrderSchema.methods.removePromotion = function() {
+  this.promotion = null;
+  this.products.forEach(function(item) {
+    item.price = null;
+  });
+  return this.save();
+};
 
 OrderSchema.virtual('totalPrice').get(function() {
   var total = 0;

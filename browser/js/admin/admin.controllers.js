@@ -1,4 +1,4 @@
-app.controller('AdminProductsCtrl', function(products, categories, $state, $scope, AuthService, CategoryFactory) {
+app.controller('AdminProductsCtrl', function($state, $scope, products, categories, AuthService, CategoryFactory) {
   $scope.products = products;
   $scope.categories = categories;
   $scope.goToEditState = function(product) {
@@ -11,22 +11,22 @@ app.controller('AdminProductsCtrl', function(products, categories, $state, $scop
   };
 });
 
-app.controller('AdminEditProductCtrl', function($stateParams, $state, ProductFactory, $scope) {
+app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $filter, ProductFactory) {
   $scope.product = $stateParams.product;
   $scope.isEditProduct = $scope.product !== undefined;
   $scope.categories = ['Dogs', 'Cats', 'Other Critters'];
   if ($scope.isEditProduct) {
     $scope.categoryName = $scope.product.categories[0].name;
   }
-  console.log('scope', $scope);
+  $scope.decimalPrice = ($scope.product.price/100).toFixed(2);
 
-  $scope.save = function(product) {
+  $scope.save = function(product, decimalPrice) {
+    product.price = decimalPrice * 100;
     if ($scope.isEditProduct) {
-      ProductFactory.update(product._id, product);
+      ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
     } else {
-      ProductFactory.create(product);
+      ProductFactory.create(product).then($state.go('adminAllProducts'));
     }
-    $state.go('adminAllProducts');
   };
 
   $scope.delete = function(product) {

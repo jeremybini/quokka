@@ -3,7 +3,6 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   $scope.cart = cart;
   $scope.subtotal = 0;
 
-
   $scope.remove = function(productId) {
     return CartFactory.remove(productId)
     .then(function(cart) {
@@ -41,13 +40,26 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   };
 
   $scope.applyPromo = function() {
+
     if ($scope.promotion) {
       return CartFactory.applyPromo($scope.promotion)
       .then(function(cart) {
+        $scope.promoMessage = {
+          type: 'success',
+          message: $scope.promotion + " " + $scope.promotion.title + " discount was applied to your order! You saved " + $scope.promotion.discount + "% on select products!"
+        };
         $scope.cart = cart;
       });
     }
   };
 
+  $scope.removePromo = function() {
+    if ($scope.promotion) {
+      return CartFactory.removePromo()
+      .then(function(cart) {
+        $scope.cart = cart;
+      });
+    }
+  };
 
 });

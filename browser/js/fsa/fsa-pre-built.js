@@ -48,7 +48,7 @@
         ]);
     });
 
-    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q) {
+    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q, $state) {
 
         function onSuccessfulLogin(response) {
             var data = response.data;
@@ -84,7 +84,9 @@
             // Make request GET /session.
             // If it returns a user, call onSuccessfulLogin with the response.
             // If it returns a 401 response, we catch it and instead resolve to null.
-            return $http.get('/session').then(onSuccessfulLogin).catch(function () {
+            return $http.get('/session')
+            .then(onSuccessfulLogin)
+            .catch(function () {
                 return null;
             });
 

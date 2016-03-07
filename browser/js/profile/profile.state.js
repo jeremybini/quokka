@@ -4,8 +4,12 @@ app.config(function($stateProvider) {
 			url: '/profile/:id',
 			templateUrl: '/js/profile/profile.template.html',
 			resolve: {
-				user: function(UserFactory, $stateParams) {
-					return UserFactory.fetchById($stateParams.id);
+				user: function(UserFactory, $stateParams, Session) {
+					if(Session.user._id === $stateParams.id) {
+						return Session.user;
+					} else {
+						return UserFactory.fetchById($stateParams.id);
+					}
 				},
 				orders: function(OrderFactory, $stateParams) {
 					return OrderFactory.fetchAllforUser($stateParams.id)
@@ -35,6 +39,12 @@ app.config(function($stateProvider) {
 		// 	},
 		// 	controller: 'ProfileController'
 		// })
+
+		.state('resetPassword', {
+			url: '/password-reset',
+			templateUrl: '/js/profile/password-reset.template.html',
+			controller: 'PasswordResetCtrl'
+		})
 
 
 });
