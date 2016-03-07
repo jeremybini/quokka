@@ -252,7 +252,7 @@ var seedPromotions = function (products, categories) {
     title: 'Kitten Mittons Promotion',
     discount: 50,
     parameters: {
-      product: products[0]._id
+      product: products[1]._id
     },
     promotype: 'Product',
     expirationDate: new Date(2020, 11, 17)
