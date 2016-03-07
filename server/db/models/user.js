@@ -41,6 +41,9 @@ var UserSchema = new Schema({
   }],
   interests: {
     type: String
+  },
+  resetPassword: {
+    type: Boolean
   }
 });
 

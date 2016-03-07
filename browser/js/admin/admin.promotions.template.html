@@ -59,7 +59,7 @@
   <tbody>
     <td><input ng-model="newpromotion.title"></td>
     <td><input ng-model="newpromotion.discount"></td>
-    <td><input ng-model="newpromotion.expirationDate"></td>
+    <td><input ng-model="newpromotion.readableDate"></td>
     <td><select ng-model="newpromotion.promotype" ng-options="parameter as parameter for parameter in parameters"></select></td>
     <td><select ng-show="newpromotion.promotype==='Product'" ng-model="productName" ng-options="product.title as product.title for product in products"></select>
     <select ng-show="newpromotion.promotype==='Category'" ng-model="categoryName" ng-options="category.name as category.name for category in categories"></select></td>
