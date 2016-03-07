@@ -70,5 +70,4 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories, Ca
 	$scope.filterByCategory = function(product) {
 		return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
 	};
-
 });
