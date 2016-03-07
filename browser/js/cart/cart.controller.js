@@ -3,7 +3,6 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   $scope.cart = cart;
   $scope.subtotal = 0;
 
-
   $scope.remove = function(productId) {
     return CartFactory.remove(productId)
     .then(function(cart) {
@@ -62,6 +61,5 @@ app.controller('CartController', function($scope, CartFactory, cart) {
       });
     }
   };
-
 
 });
