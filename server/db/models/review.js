@@ -5,6 +5,8 @@ var ReviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
     default: null,
+    min: 1,
+    max: 5
     //required: true
   },
   title: {
