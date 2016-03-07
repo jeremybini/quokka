@@ -72,8 +72,11 @@
           </td>
           <td>
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="applyPromo()" ng-show="promoMessage">Apply</button>
+              <button class="btn btn-default" type="button" ng-click="applyPromo()">Apply</button>
             </span>
+            <div ng-show="promoMessage" class="alert alert-{{ cartMessage.type }} fade in">
+              <strong>Success! {{promoMessage:message}}</strong>
+            </div>
           </td>
           <td>
             <span class="input-group-btn">
