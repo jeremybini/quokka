@@ -11,7 +11,7 @@ app.controller('ProfileController', function(user, orders, $scope, $state) {
 
 });
 
-app.controller('UserOrderController', function ($scope, order) {
+app.controller('UserOrderCtrl', function ($scope, order) {
   $scope.order = order;
 });
 
@@ -44,4 +44,8 @@ app.controller('PasswordResetCtrl', function($scope, $state, Session, UserFactor
       }
     });
   };
+})
+
+app.controller('EditProfileCtrl', function($scope, user, UserFactory){
+  $scope.user = user;
 })

@@ -1,8 +1,9 @@
-app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory) {
+app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory, AuthService) {
 	$scope.product = product;
 	$scope.reviews = reviews;
 	$scope.cartQuantity = 1;
 	$scope.cartMessage;
+	$scope.isUser = AuthService.isAuthenticated;
 
 	$scope.addToCart = function() {
 		CartFactory.add($scope.product, $scope.cartQuantity)

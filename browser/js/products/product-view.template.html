@@ -39,20 +39,22 @@
 			    Rating: {{ review.rating }}
 			  </div>
 			</div>
-			<div ng-show="addingReview" class="form-group">
-			  <div class="form-group">
-				  <label>Title:</label>
-				  <input type="text" class="form-control" ng-model="newReview.title">
+			<div ng-show="isUser()">
+				<div ng-show="addingReview" class="form-group">
+				  <div class="form-group">
+					  <label>Title:</label>
+					  <input type="text" class="form-control" ng-model="newReview.title">
+					</div>
+					<label>Review for {{ product.title }}:</label><br>
+				  <textarea class="form-control" rows="5" ng-model="newReview.content"></textarea>
 				</div>
-				<label>Review for {{ product.title }}:</label><br>
-			  <textarea class="form-control" rows="5" ng-model="newReview.content"></textarea>
+				<!-- need to exclude if not logged in -->
+				<button ng-hide="addingReview" class="btn btn-orange" ng-click="addReview()">
+					<span ng-hide="submittingReview">Add a Review</span>
+					<span ng-show="submittingReview" ><i class="fa fa-spinner fa-spin"></i> Submitting</span>
+				</button>
+				<button ng-show="addingReview" class="btn btn-blue pull-right" ng-click="submitReview()">Submit Review</button>
 			</div>
-			<!-- need to exclude if not logged in -->
-			<button ng-hide="addingReview" class="btn btn-orange" ng-click="addReview()">
-				<span ng-hide="submittingReview">Add a Review</span>
-				<span ng-show="submittingReview" ><i class="fa fa-spinner fa-spin"></i> Submitting</span>
-			</button>
-			<button ng-show="addingReview" class="btn btn-blue pull-right" ng-click="submitReview()">Submit Review</button>
 		</div>
 	</div>
 </div>
