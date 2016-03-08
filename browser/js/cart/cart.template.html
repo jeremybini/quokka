@@ -35,10 +35,11 @@
               </div>
             </td>
 
-            <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.product.price/100 | currency : $ }}</strong></td>
+            <td class="col-sm-1 col-md-1 text-center" ng-hide="promotion"><strong>{{ item.product.price/100 | currency : $ }} each</strong></td>
+            <td class="col-sm-1 col-md-1 text-center" ng-show="promotion"><strong>{{ ((item.product.price/100)*(promotion.discount)) | currency : $ }} DISCOUNT!</strong></td>
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.product.price/100) * (item.quantity) | currency:$}}</strong></td>
-
-            <td class="col-sm-1 col-md-1 text-center" ng-show="cart.promotion"><strong>Promotion Price!</strong>
+<!-- 
+            <td class="col-sm-1 col-md-1 text-center" ng-show="cart.promotion"><strong>Promotion Price!</strong> -->
 
             </td>
 
@@ -84,7 +85,7 @@
             </span>
           </td>
           <td>
-            <div ng-hide="promoMessage" ng-show="removeMessage" class="ng-empty" >
+            <div ng-hide="promoMessage" ng-show="removeMessage">
               <strong>{{removeMessage.message}}</strong>
             </div>
           </td>
@@ -106,7 +107,7 @@
                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
             </button></td>
             <td>
-            <button type="button" class="btn btn-success" ng-click="checkout(item._id)">
+            <button type="button" class="btn btn-success" ng-click="checkout(item._id)" ui-sref="payment">
                 Checkout <span class="glyphicon glyphicon-play"></span>
             </button></td>
           </tr>
