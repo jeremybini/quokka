@@ -3,7 +3,8 @@ app.config(function($stateProvider) {
     url: '/admin',
     templateUrl: '/js/admin/index.html',
     data: {
-      authenticate: true
+      authenticate: true,
+      admin: true
     }
   });
 });
@@ -17,7 +18,11 @@ app.config(function($stateProvider) {
         return UserFactory.fetchAll();
       }
     },
-    controller: 'AdminUsersCtrl'
+    controller: 'AdminUsersCtrl',
+    data: {
+      authenticate: true,
+      admin: true
+    }
   });
 });
 
@@ -30,7 +35,11 @@ app.config(function($stateProvider) {
         return OrderFactory.fetchAll();
       }
     },
-    controller: 'AdminOrdersCtrl'
+    controller: 'AdminOrdersCtrl',
+    data: {
+      authenticate: true,
+      admin: true
+    }
   });
 });
 
@@ -46,7 +55,11 @@ app.config(function($stateProvider) {
         return CategoryFactory.fetchAll();
       }
     },
-    controller: 'AdminProductsCtrl'
+    controller: 'AdminProductsCtrl',
+    data: {
+      authenticate: true,
+      admin: true
+    }
   });
 });
 
@@ -59,7 +72,11 @@ app.config(function($stateProvider) {
         return OrderFactory.fetchById($stateParams.orderId);
       }
     },
-    controller: 'AdminOneOrderCtrl'
+    controller: 'AdminOneOrderCtrl',
+    data: {
+      authenticate: true,
+      admin: true
+    }
   });
 });
 
@@ -76,6 +93,10 @@ app.config(function($stateProvider) {
         templateUrl: '/js/admin/admin.edit.product.html',
         params: {
           product: null
+        },
+        data: {
+          authenticate: true,
+          admin: true
         }
       });
 });
@@ -89,7 +110,11 @@ app.config(function($stateProvider) {
         return PromotionFactory.fetchAll();
       }
     },
-    controller: 'AdminPromotionsCtrl'
+    controller: 'AdminPromotionsCtrl',
+    data: {
+      authenticate: true,
+      admin: true
+    }
   });
 });
 
