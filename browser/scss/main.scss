@@ -104,14 +104,12 @@ body {
 	height: 250px;
 }
 
-.products-box:hover {
-	.products-card {
-		border: 3px solid #F38630;
-		transition: .7s;
-		&:hover {
-			cursor: pointer;
-		};
-	}
+.products-card:hover {
+	border: 3px solid #F38630;
+	transition: .7s;
+	&:hover {
+		cursor: pointer;
+	};
 	.products-tag {
 		display:block;
 		width: 100%;
