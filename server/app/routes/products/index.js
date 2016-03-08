@@ -56,6 +56,8 @@ router.get('/:id', function(req, res, next) {
 router.put('/:id', auth.ensureAdmin, function(req, res, next) {
 	_.extend(req.product, req.body);
 
+  console.log('req.product', req.product);
+
 	req.product.save()
 	.then(function(product){
 		res.json(product);

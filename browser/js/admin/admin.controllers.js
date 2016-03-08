@@ -1,26 +1,48 @@
 app.controller('AdminProductsCtrl', function($state, $scope, products, categories, AuthService, CategoryFactory) {
   $scope.products = products;
   $scope.categories = categories;
+
   $scope.goToEditState = function(product) {
     $state.go('editProduct', {_id: product._id, product: product });
   };
-  $scope.activeCategory;
 
   $scope.filterByCategory = function(product) {
     return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
   };
 });
 
-app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $filter, ProductFactory) {
-  $scope.product = $stateParams.product;
-  $scope.isEditProduct = $scope.product !== undefined;
-  $scope.categories = ['Dogs', 'Cats', 'Other Critters'];
+app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $filter, ProductFactory, CategoryFactory) {
+  $scope.product = $stateParams.product || {};
+  $scope.isEditProduct = $scope.product._id !== undefined;
+
   if ($scope.isEditProduct) {
-    $scope.categoryName = $scope.product.categories[0].name;
+    $scope.decimalPrice = ($scope.product.price / 100).toFixed(2);
+  } else {
+    $scope.product.categories = [];
   }
-  $scope.decimalPrice = ($scope.product.price/100).toFixed(2);
+
+  $scope.searchText = null;
+  $scope.allCategories = CategoryFactory.getCategories();
+
+  $scope.transformChip = function transformChip(chip) {
+    console.log(chip);
+    // If it is an object, it's already a known chip
+    if (angular.isObject(chip)) {
+      return chip;
+    }
+    // Otherwise, create a new one
+    return { name: chip }
+  };
+
+  $scope.querySearch = function querySearch(query) {
+    //return $scope.categories;
+    return $scope.allCategories.filter(function(category) {
+      return category.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    });
+  };
 
   $scope.save = function(product, decimalPrice) {
+    console.log('product', product);
     product.price = decimalPrice * 100;
     if ($scope.isEditProduct) {
       ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
@@ -32,10 +54,6 @@ app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $f
   $scope.delete = function(product) {
     ProductFactory.delete(product._id);
     $state.go('adminAllProducts');
-  };
-
-  $scope.addNewCategory = function() {
-
   };
 });
 
