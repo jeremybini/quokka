@@ -49,7 +49,7 @@ OrderSchema.statics.submitOrder = function(orderId) {
 
   //having issues populating an instance, so made this a static instead
   return this.findById(orderId)
-      .populate('products.product')
+      .populate('products.product promotion')
       .then(function(order) {
         order.products.forEach(function(item) {
           item.price = item.product.price;
@@ -197,7 +197,7 @@ OrderSchema.virtual('totalPrice').get(function() {
 OrderSchema.statics.findOrCreate = function(params) {
   var order = this;
   return order.findOne(params)
-  .populate('products.product')
+  .populate('products.product promotion')
   .then(function(result) {
     if (result) {
       return result;
