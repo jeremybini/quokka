@@ -227,7 +227,6 @@ body {
 	background-color: #E0E4CC;
 	padding: 0 !important;
 	margin: 0 !important;
-	/*padding-top: 200px !important;*/
 	-moz-box-shadow: 2px 2px 3px #888, -2px 2px 3px #888;
 	-webkit-box-shadow: 2px 2px 3px #888, -2px 2px 3px #888;
 	box-shadow: 2px 2px 3px #888, -2px 2px 3px #888;
@@ -253,6 +252,7 @@ body {
 }
 
 #all-products {
+	padding-top: 100px;
 	@media (max-width: 768px) {
 		.container {
 			width: 100% !important;

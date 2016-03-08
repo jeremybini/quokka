@@ -58,7 +58,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 	}
 });
 
-app.controller('ProductsCtrl', function(products, $state, $scope, categories, CategoryFactory) {
+app.controller('ProductsCtrl', function(products, $state, $scope, categories, CategoryFactory, $window) {
 	$scope.products = products;
 	$scope.categories = categories;
 	$scope.activeCategory;
@@ -70,4 +70,6 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories, Ca
 	$scope.filterByCategory = function(product) {
 		return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
 	};
+
+	document.getElementById('main').style['padding-top'] = 0;
 });
