@@ -12,6 +12,7 @@ app.controller('AdminProductsCtrl', function($state, $scope, products, categorie
 });
 
 app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $filter, ProductFactory, CategoryFactory) {
+  $scope.categories = CategoryFactory.fetchAll();
   $scope.product = $stateParams.product || {};
   $scope.isEditProduct = $scope.product._id !== undefined;
 
@@ -42,13 +43,44 @@ app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $f
   };
 
   $scope.save = function(product, decimalPrice) {
-    console.log('product', product);
-    product.price = decimalPrice * 100;
-    if ($scope.isEditProduct) {
-      ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
-    } else {
-      ProductFactory.create(product).then($state.go('adminAllProducts'));
-    }
+    var match = false;
+    CategoryFactory.fetchAll().then(function(categories) {
+      $scope.categories = categories;
+      $scope.categories.forEach(function(category) {
+        if (category.name === product.categories[product.categories.length - 1].name) {
+          match = true;
+        }
+      });
+      if (match === false) {
+        return CategoryFactory.add(product.categories[product.categories.length - 1].name)
+      }
+    }).then(function(category) {
+      product.categories.push(category._id);
+      product.price = decimalPrice * 100;
+      if ($scope.isEditProduct) {
+        ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
+      } else {
+        ProductFactory.create(product).then($state.go('adminAllProducts'));
+      }
+    });
+    //      .then(function() {
+    //        product.price = decimalPrice * 100;
+    //        if ($scope.isEditProduct) {
+    //          console.log('is updating ', product);
+    //          ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
+    //        } else {
+    //          ProductFactory.create(product).then($state.go('adminAllProducts'));
+    //        }
+    //      })
+    //}
+
+    //if (product.category)
+    //product.price = decimalPrice * 100;
+    //if ($scope.isEditProduct) {
+    //  ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
+    //} else {
+    //  ProductFactory.create(product).then($state.go('adminAllProducts'));
+    //}
   };
 
   $scope.delete = function(product) {
