@@ -8,7 +8,6 @@
             <th>Quantity</th>
             <th class="text-center">Price</th>
             <th class="text-center">Total</th>
-            <th ng-show="cart.promotion" class="text-center">Promotion Price!</th>
             <th>.</th>
         </tr>
         </thead>
@@ -26,7 +25,7 @@
                     <span class="glyphicon glyphicon-minus"></span>
                   </button>
                 </span>
-                <input type="text" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
+                <input type="text" style="width: 50px; text-align: center" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-success btn-number" ng-click="update(item.product, 1)" >
                     <span class="glyphicon glyphicon-plus"></span>
@@ -38,8 +37,6 @@
             <td class="col-sm-1 col-md-1 text-center" ng-hide="promotion"><strong>{{ item.product.price/100 | currency : $ }} each</strong></td>
             <td class="col-sm-1 col-md-1 text-center" ng-show="promotion"><strong>{{ ((item.product.price/100)*(promotion.discount)) | currency : $ }} DISCOUNT!</strong></td>
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.product.price/100) * (item.quantity) | currency:$}}</strong></td>
-<!-- 
-            <td class="col-sm-1 col-md-1 text-center" ng-show="cart.promotion"><strong>Promotion Price!</strong> -->
 
             </td>
 

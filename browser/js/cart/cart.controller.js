@@ -40,7 +40,7 @@ app.controller('CartController', function($scope, CartFactory, cart) {
   };
 
   $scope.applyPromo = function() {
-    console.log($scope.cart.promotion, "PROMOOOOO");
+    console.log($scope.cart, "PROMOOOOO");
     if ($scope.promotion) {
       return CartFactory.applyPromo($scope.promotion)
       .then(function(cart) {
