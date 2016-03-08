@@ -9,6 +9,8 @@
             <th class="text-center">Price</th>
             <th class="text-center">Total</th>
             <th>.</th>
+            <th ng-show="cart.promotion" class="text-center">Promotion Price!</th>
+            <th>.</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +38,11 @@
 
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.product.price/100 | currency : $ }}</strong></td>
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.product.price/100) * (item.quantity) | currency:$}}</strong></td>
+
+            <td class="col-sm-1 col-md-1 text-center" ng-show="cart.promotion"><strong>Promotion Price!</strong>
+
+            </td>
+
             <td class="col-sm-1 col-md-1" style="text-align: center">
                 <button type="button" class="btn btn-danger" ng-click="remove(item.product._id)">
                     <span class="glyphicon glyphicon-remove pull-right"></span> Remove
@@ -58,18 +65,23 @@
         </tr>
         <tr>
           <td>   </td>
-          <td>   </td>
-          <td>   </td>
           <td>
             <div class="input-group">
-              <input type="text" class="col-md-2 form-control" placeholder="Enter Promo Code" ng-model="promotion" style="text-align: left">
+              <input type="text" class="col-md-1 form-control" placeholder="Enter Promo Code" ng-model="promotion" style="text-align: left">
             </div>
           </td>
           <td>
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="applyPromo()">Apply</button>
+              <button class="btn btn-default" type="button" ng-click="applyPromo()" ng-show="promoMessage">Apply</button>
             </span>
           </td>
+          <td>
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="removePromo()">Remove Promotion</button>
+            </span>
+          </td>
+          <td>   </td>
+          <td>   </td>
         </tr>
 
 

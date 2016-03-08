@@ -62,6 +62,12 @@ router.put('/:id', auth.ensureCurrentUserOrAdmin, function(req, res, next) {
     req.currentUser.admin = false;
   }
   req.currentUser.save()
+  .then(function(user) {
+    if (req.body.password && user.resetPassword) {
+      user.resetPassword = false;
+    }
+    return user.save();
+  })
   .then(function(user){
     res.json(user.sanitize());
   })

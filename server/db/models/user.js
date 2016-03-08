@@ -16,11 +16,9 @@ var UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true
   },
   password: {
     type: String,
-    required: true
   },
   salt: {
     type: String
@@ -73,6 +71,14 @@ UserSchema.pre('save', function(next) {
   }
   next();
 
+});
+
+UserSchema.pre('validate', function(next) {
+  if (this.google.id || (this.password && this.email)) {
+    next();
+  } else {
+    next(new Error('Either Google ID or password and email must be specified.'));
+  }
 });
 
 UserSchema.statics.generateSalt = generateSalt;

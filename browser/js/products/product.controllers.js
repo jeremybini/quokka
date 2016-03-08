@@ -1,4 +1,4 @@
-app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory) {
+app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory) {
 	$scope.product = product;
 	$scope.reviews = reviews;
 	$scope.cartQuantity = 1;
@@ -10,7 +10,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 			$scope.product.stock -= $scope.cartQuantity;
 			$scope.cartMessage = {
 				type: 'success',
-				message: $scope.cartQuantity + " " + $scope.product.title + " added to you cart!"
+				message: $scope.cartQuantity + " " + $scope.product.title + " added to your cart!"
 			};
 			$scope.cartQuantity = 1;
 		})
@@ -31,7 +31,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 			//used for showing and hiding buttons/animations
 			$scope.submittingReview = true;
 			$scope.addingReview = false;
-
+			console.log($scope.newReview, $scope.product)
 			//explicitly set product id on request body
 			$scope.newReview.product = $scope.product._id;
 			ProductFactory.submitReview($scope.newReview, $scope.product._id)
