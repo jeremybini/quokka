@@ -31,7 +31,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 			//used for showing and hiding buttons/animations
 			$scope.submittingReview = true;
 			$scope.addingReview = false;
-			console.log($scope.newReview, $scope.product)
+
 			//explicitly set product id on request body
 			$scope.newReview.product = $scope.product._id;
 			ProductFactory.submitReview($scope.newReview, $scope.product._id)
@@ -58,7 +58,7 @@ app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFac
 	}
 });
 
-app.controller('ProductsCtrl', function(products, $state, $scope, categories, CategoryFactory) {
+app.controller('ProductsCtrl', function(products, $state, $scope, categories, CategoryFactory, $window) {
 	$scope.products = products;
 	$scope.categories = categories;
 	$scope.activeCategory;
@@ -70,4 +70,16 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories, Ca
 	$scope.filterByCategory = function(product) {
 		return CategoryFactory.filterProductsByCategory(product, $scope.activeCategory);
 	};
+
+	document.getElementById('main').style['padding-top'] = 0;
+
+	var $win = angular.element($window);
+  $win.on('scroll', function (e) {
+    if ($window.pageYOffset >= 180) {
+      document.getElementById('sidebar').className = 'fixed-sidebar';
+    } else {
+      document.getElementById('sidebar').className = 'absolute-sidebar';
+    }
+  });
+
 });
