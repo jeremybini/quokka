@@ -32,6 +32,13 @@ router.get('/', function(req, res, next) {
   res.json(req.cart);
 });
 
+router.delete('/apply-promo', function(req, res, next) {
+  req.cart.removePromotion()
+  .then(function(order) {
+    res.json(order);
+  })
+  .then(null, next);
+});
 
 //req.body should have a product ID
 router.delete('/:id', function(req, res, next) {
@@ -71,13 +78,14 @@ router.get('/apply-promo/:code', function(req, res, next) {
   .then(null, next);
 });
 
-router.delete('/apply-promo/:code', function(req, res, next) {
-  req.cart.removePromotion()
-  .then(function(order) {
-    res.json(order);
-  })
-  .then(null, next);
-});
+// router.delete('/apply-promo', function(req, res, next) {
+//   console.log('!!!!', req.cart)
+//   req.cart.removePromotion()
+//   .then(function(order) {
+//     res.json(order);
+//   })
+//   .then(null, next);
+// });
 
 //at this time, confirmation email should be sent and other actions probably triggered
 router.get('/submit', function(req, res, next) {

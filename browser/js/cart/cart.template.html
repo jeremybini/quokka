@@ -9,8 +9,6 @@
             <th class="text-center">Price</th>
             <th class="text-center">Total</th>
             <th>.</th>
-            <th ng-show="cart.promotion" class="text-center">Promotion Price!</th>
-            <th>.</th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +25,7 @@
                     <span class="glyphicon glyphicon-minus"></span>
                   </button>
                 </span>
-                <input type="text" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
+                <input type="text" style="width: 50px; text-align: center" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-success btn-number" ng-click="update(item.product, 1)" >
                     <span class="glyphicon glyphicon-plus"></span>
@@ -36,10 +34,9 @@
               </div>
             </td>
 
-            <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.product.price/100 | currency : $ }}</strong></td>
+            <td class="col-sm-1 col-md-1 text-center" ng-hide="promotion"><strong>{{ item.product.price/100 | currency : $ }} each</strong></td>
+            <td class="col-sm-1 col-md-1 text-center" ng-show="promotion"><strong>{{ ((item.product.price/100)*(promotion.discount)) | currency : $ }} DISCOUNT!</strong></td>
             <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.product.price/100) * (item.quantity) | currency:$}}</strong></td>
-
-            <td class="col-sm-1 col-md-1 text-center" ng-show="cart.promotion"><strong>Promotion Price!</strong>
 
             </td>
 
@@ -64,7 +61,11 @@
             <td class="text-right"><h5><strong>$5.00</strong></h5></td>
         </tr>
         <tr>
-          <td>   </td>
+          <td>
+            <div ng-show="promoMessage" ng-hide="removeMessage" class="alert alert-{{ promoMessage.type }} fade in">
+              <strong>{{promoMessage.message}}</strong>
+            </div>
+          </td>
           <td>
             <div class="input-group">
               <input type="text" class="col-md-1 form-control" placeholder="Enter Promo Code" ng-model="promotion" style="text-align: left">
@@ -72,7 +73,7 @@
           </td>
           <td>
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="applyPromo()" ng-show="promoMessage">Apply</button>
+              <button class="btn btn-default" type="button" ng-click="applyPromo()">Apply</button>
             </span>
           </td>
           <td>
@@ -80,12 +81,13 @@
               <button class="btn btn-default" type="button" ng-click="removePromo()">Remove Promotion</button>
             </span>
           </td>
-          <td>   </td>
+          <td>
+            <div ng-hide="promoMessage" ng-show="removeMessage">
+              <strong>{{removeMessage.message}}</strong>
+            </div>
+          </td>
           <td>   </td>
         </tr>
-
-
-
         <tr>
             <td>   </td>
             <td>   </td>
@@ -102,7 +104,7 @@
                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
             </button></td>
             <td>
-            <button type="button" class="btn btn-success" ng-click="checkout(item._id)">
+            <button type="button" class="btn btn-success" ng-click="checkout(item._id)" ui-sref="payment">
                 Checkout <span class="glyphicon glyphicon-play"></span>
             </button></td>
           </tr>
