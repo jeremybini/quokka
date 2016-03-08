@@ -55,6 +55,7 @@ router.get('/:id', function(req, res, next) {
 
 router.put('/:id', auth.ensureAdmin, function(req, res, next) {
 	_.merge(req.product, req.body);
+  req.product.categories = req.body.categories;
 
   console.log('req.product', req.product);
 
