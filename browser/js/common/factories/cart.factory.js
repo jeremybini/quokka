@@ -81,8 +81,8 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
     .catch($log.error);
   };
 
-  CartFactory.removePromo = function(code) {
-    return $http.delete('/api/cart/apply-promo/' + code)
+  CartFactory.removePromo = function() {
+    return $http.delete('/api/cart/apply-promo/')
     .then(function(res) {
       currentCart = res.data;
       return currentCart;
