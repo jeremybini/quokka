@@ -1,32 +1,32 @@
-<div id="product-container" class="container">
-	<div class="row">
-		<div id="sidebar" class="col-xs-2 no-float text-center">
-			<div class="">
-				<div class="category-btn" ng-class="(!activeCategory) ? 'active-btn' : ''" ng-click="setCategory()">
-					<p>All</p>
-				</div>
-				<div class="category-btn" ng-class="(activeCategory===category) ? 'active-btn' : ''" ng-repeat="category in categories" ng-click="setCategory(category)">
-					<p>{{ category.name }}</p>
-				</div>
+<div class="holygrail">
+	<div class="holygrail-nav">
+		<div id="sidebar" class="absolute-sidebar">
+			<div
+				class="category-btn"
+				ng-class="(!activeCategory) ? 'active-btn' : ''"
+				ng-click="setCategory()">
+				<p>All</p>
 			</div>
-		</div>
-		<div id="all-products" class="col-xs-10 no-float">
-			<h2 class="text-center">{{ activeCategory.name || "All" }} Products</h2>
-			<div class="container">
-				<div class="row">
-					<div ng-repeat="product in products | filter: filterByCategory" class="col-sm-6 col-md-3 products-box">
-						<a ui-sref="product({ id: product._id })">
-							<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
-								<div class="products-tag">
-									<span>{{ product.title }}</span>
-									<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
-								</div>
-							</div>
-						</a>
-					</div>	
-				</div>	
+			<div 
+				class="category-btn"
+				ng-class="(activeCategory===category) ? 'active-btn' : ''"
+				ng-repeat="category in categories"
+				ng-click="setCategory(category)">
+				<p>{{ category.name }}</p>
 			</div>
 		</div>
 	</div>
+	<div class="holygrail-content">
+		<h2 class="text-center">{{ activeCategory.name || "All" }} Products</h2>
+		<div ng-repeat="product in products | filter: filterByCategory" class="col-sm-6 col-md-3 products-box">
+			<a ui-sref="product({ id: product._id })">
+				<div class="products-card" style="background-image: url('{{ product.photoUrl }}')">
+					<div class="products-tag">
+						<span>{{ product.title }}</span>
+						<span class="pull-right">{{ product.price/100 | currency : $ }}</span>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
 </div>
-
