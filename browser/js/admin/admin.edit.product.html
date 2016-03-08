@@ -26,10 +26,23 @@
       <br>
 
       Category:
-      <select class="form-control"
-              ng-model="categoryName"
-              ng-options="category as category for category in categories">
-      </select>
+      <md-chips ng-model="product.categories"
+                md-autocomplete-snap=""
+                md-transform-chip="transformChip($chip)"
+                md-require-match="false">
+        <md-autocomplete md-selected-item="selectedCategory"
+                         md-search-text="searchText"
+                         md-items="item in querySearch(searchText)"
+                         md-item-text="item.name"
+                         placeholder="Select Category">
+          <span md-highlight-text="searchText">{{item.name}}</span>
+        </md-autocomplete>
+        <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}</strong>
+        </span>
+        </md-chip-template>
+      </md-chips>
       <br>
 
       Stock:
