@@ -175,6 +175,9 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
     } else {
       return new Error("That's not a valid promotion code");
     }
+  })
+  .then(order => {
+    return order.populate('promotion').execPopulate();
   });
 };
 

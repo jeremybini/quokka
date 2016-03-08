@@ -6,9 +6,9 @@
           <tr>
             <th>Product</th>
             <th>Quantity</th>
-            <th class="text-center">Price</th>
-            <th class="text-center">Total</th>
-            <th>.</th>
+            <th class="text-center"> <span ng-show="!cart.promotion">Price</span> <span ng-show="cart.promotion" class="text-center">Discounted Price</span></th>
+            <th class="text-center"> <span ng-show="!cart.promotion">Item Total</span> <span ng-show="cart.promotion">Discounted Item Total</span></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -34,9 +34,8 @@
               </div>
             </td>
 
-            <td class="col-sm-1 col-md-1 text-center" ng-hide="promotion"><strong>{{ item.product.price/100 | currency : $ }} each</strong></td>
-            <td class="col-sm-1 col-md-1 text-center" ng-show="promotion"><strong>{{ ((item.product.price/100)*(promotion.discount)) | currency : $ }} DISCOUNT!</strong></td>
-            <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.product.price/100) * (item.quantity) | currency:$}}</strong></td>
+            <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.price || item.product.price) /100 | currency : $ }} each</strong></td>
+            <td class="col-sm-1 col-md-1 text-center"><strong>{{ (item.price || item.product.price) /100 * (item.quantity) | currency:$}}</strong></td>
 
             </td>
 
@@ -50,7 +49,7 @@
             <td>   </td>
             <td>   </td>
             <td>   </td>
-            <td><h5>Subtotal</h5></td>
+            <td class="text-left"><h5 ng-show="!cart.promotion">Subtotal</h5> <h5 ng-show="cart.promotion">Subtotal with Discount</h5></td>
             <td class="text-right"><h5><strong>{{orderSubtotal() | currency:$}}</strong></h5></td>
         </tr>
         <tr>
@@ -68,7 +67,7 @@
           </td>
           <td>
             <div class="input-group">
-              <input type="text" class="col-md-1 form-control" placeholder="Enter Promo Code" ng-model="promotion" style="text-align: left">
+              <input type="text" class="form-control" placeholder="Promo Code" ng-model="promotion" style="text-align: left">
             </div>
           </td>
           <td>

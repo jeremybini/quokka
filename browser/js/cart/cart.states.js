@@ -6,11 +6,7 @@ app.config(function($stateProvider) {
 		templateUrl: '/js/cart/cart.template.html',
     resolve: {
       cart: function(CartFactory) {
-        // if (CartFactory.getCurrentCart().products) {
-        //   return CartFactory.getCurrentCart();
-        // } else {
-          return CartFactory.fetchCart();
-        // }
+        return CartFactory.fetchCart();
       }
     },
 		controller: 'CartController'
