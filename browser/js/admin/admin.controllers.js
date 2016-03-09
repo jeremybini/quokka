@@ -64,23 +64,6 @@ app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $f
         ProductFactory.create(product).then($state.go('adminAllProducts'));
       }
     });
-    //      .then(function() {
-    //        product.price = decimalPrice * 100;
-    //        if ($scope.isEditProduct) {
-    //          ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
-    //        } else {
-    //          ProductFactory.create(product).then($state.go('adminAllProducts'));
-    //        }
-    //      })
-    //}
-
-    //if (product.category)
-    //product.price = decimalPrice * 100;
-    //if ($scope.isEditProduct) {
-    //  ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
-    //} else {
-    //  ProductFactory.create(product).then($state.go('adminAllProducts'));
-    //}
   };
 
   $scope.delete = function(product) {
