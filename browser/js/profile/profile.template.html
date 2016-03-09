@@ -1,24 +1,31 @@
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<h1>My Info</h1>
 			<div class="panel panel-default">
-		  	<div class="panel-heading">Profile</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Email</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>{{ user.email }}</th>
-						</tr>
-					</tbody>
-				</table>
+		  	<div class="panel-heading">
+		  		<h3>Profile</h3>
+		  	</div>
+		  	<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Email</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>{{ user.email }}</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="panel-footer">
+					<button class="btn btn-blue" ui-sref="editProfile({ id: user._id })">Edit Profile</button>
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-6">
+		<div class="col-sm-8">
 			<h1>My Orders</h1>
 			<div class="panel panel-default">
 			  <div class="panel-heading">Orders</div>
@@ -38,7 +45,7 @@
 			        <td>{{ order._id }}</td>
 			        <td>{{ order.status }}</td>
 			        <td>{{ order.totalPrice }}</td>
-			        <td><button ng-click="viewOrder(order._id)">View Order</button></td>
+			        <td><button class="btn btn-orange" ng-click="viewOrder(order._id)">View Order</button></td>
 			      </tr>
 			    </tbody>
 				</table>

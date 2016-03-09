@@ -44,19 +44,27 @@ app.controller('CartController', function($scope, CartFactory, cart) {
       return CartFactory.applyPromo($scope.promotion)
       .then(function(cart) {
         $scope.cart = cart;
-        $scope.promoMessage = {
-          type: 'success',
-          message: $scope.promotion + " Woohoo! Discount was applied to your order! You saved " + $scope.cart.promotion.discount + "% on select products!"
-        };
+        if ($scope.cart.promotion) {
+          $scope.promoMessage = {
+            type: 'success',
+            message: $scope.promotion + " Woohoo! Discount was applied to your order! You saved " + $scope.cart.promotion.discount + "% on select products!"
+          };
+        } else {
+          $scope.promoMessage = {
+            type: 'danger',
+            message: "That's not a valid promo. Sorry :("
+          };
+        }
       });
     }
   };
 
   $scope.removePromo = function() {
+    $scope.promoMessage = null;
+    $scope.promotion = null;
     if ($scope.cart.promotion) {
       return CartFactory.removePromo()
       .then(function(cart) {
-        $scope.promotion = null;
         $scope.removeMessage = {
           type: 'removed',
           message: "Promo code removed successfully"

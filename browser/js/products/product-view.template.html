@@ -32,27 +32,30 @@
 			<h1>Reviews</h1>
 			<div ng-repeat="review in reviews" class="panel panel-default">
 				<div class="panel-heading">
-					{{ review.title }}
+					{{ review.title || "Review" }}
+					<uib-rating max="5" class="pull-right" readonly="isReadOnly()" ng-model="review.rating" aria-labelledby="default-rating"></uib-rating>
 				</div>		
 			  <div class="panel-body">
 			    {{ review.content }}<br>
 			    Rating: {{ review.rating }}
 			  </div>
 			</div>
-			<div ng-show="addingReview" class="form-group">
-			  <div class="form-group">
-				  <label>Title:</label>
-				  <input type="text" class="form-control" ng-model="newReview.title">
+			<div ng-show="isUser()">
+				<div ng-show="addingReview" class="form-group">
+				  <div class="form-group">
+					  <label>Title:</label>
+					  <input type="text" class="form-control" ng-model="newReview.title">
+					</div>
+					<label>Review for {{ product.title }}:</label><br>
+				  <textarea class="form-control" rows="5" ng-model="newReview.content"></textarea>
+				  Rating: <uib-rating max="5" ng-model="newReview.rating" aria-labelledby="default-rating"></uib-rating>
 				</div>
-				<label>Review for {{ product.title }}:</label><br>
-			  <textarea class="form-control" rows="5" ng-model="newReview.content"></textarea>
+				<button ng-hide="addingReview" class="btn btn-orange" ng-click="addReview()">
+					<span ng-hide="submittingReview">Add a Review</span>
+					<span ng-show="submittingReview" ><i class="fa fa-spinner fa-spin"></i> Submitting</span>
+				</button>
+				<button ng-show="addingReview" class="btn btn-blue pull-right" ng-click="submitReview()">Submit Review</button>
 			</div>
-			<!-- need to exclude if not logged in -->
-			<button ng-hide="addingReview" class="btn btn-orange" ng-click="addReview()">
-				<span ng-hide="submittingReview">Add a Review</span>
-				<span ng-show="submittingReview" ><i class="fa fa-spinner fa-spin"></i> Submitting</span>
-			</button>
-			<button ng-show="addingReview" class="btn btn-blue pull-right" ng-click="submitReview()">Submit Review</button>
 		</div>
 	</div>
 </div>

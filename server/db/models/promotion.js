@@ -47,13 +47,15 @@ PromotionSchema.virtual('readableDate')
 });
 
 PromotionSchema.pre('validate', function(next){
-  var code = "";
-  var charSet = "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz123456789";
+  if (!this.code) {
+    var code = "";
+    var charSet = "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz123456789";
 
-  for(var i=0; i < 5; i++) {
-    code+= charSet.charAt(Math.floor(Math.random()*charSet.length));
-  };
-  this.code = code;
+    for(var i=0; i < 5; i++) {
+      code+= charSet.charAt(Math.floor(Math.random()*charSet.length));
+    };
+    this.code = code;
+  }
   next();
 });
 

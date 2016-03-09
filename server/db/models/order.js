@@ -85,6 +85,8 @@ OrderSchema.methods.updateStatus = function(status) {
   return this.save();
 };
 
+//write email function to send email when the status is updated to submitted, shipped, and delivered... shipped and delivered are not status options we have though lololol
+
 OrderSchema.methods.addProduct = function(productId, quantity) {
   var order = this;
   if (productId) {
@@ -118,6 +120,7 @@ OrderSchema.methods.removeProduct = function(productId) {
 
   return order.save();
 };
+
 
 OrderSchema.methods.updateQuantity = function(productId, quantity) {
   var order = this;
@@ -176,7 +179,7 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
       });
       return order.save();
     } else {
-      return new Error("That's not a valid promotion code");
+      throw new Error("That's not a valid promotion code");
     }
   })
   .then(order => {

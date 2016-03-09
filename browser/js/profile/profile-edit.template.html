@@ -1,1 +1,25 @@
-<pre>{{user|json}}</pre>
+<div class="container">
+  <div class="row">
+    <form id="edit-form" name="editForm" ng-model="edit" ng-submit="editForm.$valid && update()">
+      <alert type="{{error.type}}" ng-show="error && !edit">
+        {{ error.message }}
+      </alert>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" name="email" ng-model="user.email" class="form-control" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" name="password" ng-model="user.password" class="form-control" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label>Password Confirmation</label>
+        <input type="password" name="passwordConfirmation" ng-model="user.passwordConfirmation" class="form-control" placeholder="Please re-enter your password">
+      </div>
+      <alert type="danger" ng-show="!validPassword() && editForm.passwordConfirmation.$touched && editForm.password.$touched">
+        Passwords do not match.
+      </alert>
+      <button type="submit" ng-disabled="!validPassword()" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div>
