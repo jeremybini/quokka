@@ -23,10 +23,10 @@
         <div class="adminProductImage" style="background-image: url('{{ product.photoUrl }}'); width: 100%; height: 300px; background-size: contain; background-repeat: no-repeat; background-position: center">
         </div>
         <div class="caption">
-          <h4>{{ product.title }}</h4>
+          <h4 class="product-title">{{ product.title }}</h4>
           <p class="product-description">{{ product.description }}</p>
           <p>{{ product.price/100 | currency : $ }}</p>
-          <p><b>{{ product.stock }} in stock</b></p>
+          <p class="product-stock"><b>{{ product.stock }} in stock</b></p>
           <button ng-click="goToEditState(product)" class="edit-product-btn btn btn-primary">Edit Product</button>
         </div>
       </div>
