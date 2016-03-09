@@ -1,8 +1,10 @@
-app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory) {
+app.controller('ProductCtrl', function(product, reviews, $state, $scope, CartFactory, ProductFactory, AuthService) {
+	$scope.isReadOnly = function() { return true; }
 	$scope.product = product;
 	$scope.reviews = reviews;
 	$scope.cartQuantity = 1;
 	$scope.cartMessage;
+	$scope.isUser = AuthService.isAuthenticated;
 
 	$scope.addToCart = function() {
 		CartFactory.add($scope.product, $scope.cartQuantity)
@@ -75,11 +77,14 @@ app.controller('ProductsCtrl', function(products, $state, $scope, categories, Ca
 
 	var $win = angular.element($window);
   $win.on('scroll', function (e) {
-    if ($window.pageYOffset >= 180) {
-      document.getElementById('sidebar').className = 'fixed-sidebar';
-    } else {
-      document.getElementById('sidebar').className = 'absolute-sidebar';
-    }
+  	var sidebar = document.getElementById('sidebar');
+  	if (sidebar) {
+	    if ($window.pageYOffset >= 180) {
+	      sidebar.className = 'fixed-sidebar';
+	    } else {
+	      sidebar.className = 'absolute-sidebar';
+	    }
+	  }
   });
 
 });
