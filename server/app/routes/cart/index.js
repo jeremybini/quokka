@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
 var _ = require('lodash');
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport('smtps://attempt101c@gmail.com:quokka123@smtp.gmail.com');
 
 //this gets run whenever user adds or updates a cart, or is a new user and needs a new cart
 router.use(function(req, res, next) {
@@ -82,6 +84,16 @@ router.put('/', function(req, res, next) {
 router.get('/submit', function(req, res, next) {
   Order.submitOrder(req.cart._id)
   .then(function(result) {
+    if (req.user) {
+      var mailOptions = {
+        from: "StackStore <stackstore@stackstore.com>",
+        to: req.user.email,
+        subject: 'Order ' + result.status,
+        text: "Your order's status is now " + result.status + ".",
+        html: "Your order's status is now " + result.status + "."
+      };
+      transporter.sendMail(mailOptions);
+    }
     res.status(200);
     res.json(result);
   })

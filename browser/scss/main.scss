@@ -246,6 +246,9 @@ body {
 		color: lighten(#F38630, 5%);
 		cursor: pointer;
 	};
+	&:active {
+		outline:0px !important;
+	};
 	@media (max-width: 1200px) {
 		font-size: 20px;
 		h3 {
@@ -276,6 +279,7 @@ body {
 	flex: 0;
 	background-color: darken(#E0E4CC, 5%);
 	color: #F38630;
+	outline: 0px !important;
 }
 
 .fixed-sidebar{

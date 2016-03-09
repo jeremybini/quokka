@@ -9,6 +9,16 @@ app.factory('ProductFactory', function($http, $log) {
 			.catch($log.error);
 		},
 
+		fetchFeatured: function(limit) {
+			return $http.get(homePath+'featured',{
+				params: {
+					limit: limit
+				}
+			})
+			.then(res => res.data)
+			.catch($log.error);
+		},
+
 		fetchById: function(reviewId) {
 			return $http.get(homePath+reviewId)
 			.then(res => res.data)
