@@ -3,6 +3,7 @@
 var router = require('express').Router();
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport('smtps://attempt101c@gmail.com:quokka123@smtp.gmail.com');
+var fs = require('fs');
 
 module.exports = router;
 
@@ -66,8 +67,8 @@ router.put('/:id', function(req, res, next) {
         from: "StackStore <stackstore@stackstore.com>",
         to: updatedOrder.user.email,
         subject: 'Order ' + req.body.status,
-        text: "Your order's status is now " + req.body.status + ".",
-        html: "Your order's status is now " + req.body.status + "."
+        text: "Your order's status is now: " + req.body.status + ".",
+        html: "Your order's status is now: " + req.body.status + "."
       };
       transporter.sendMail(mailOptions);
     }

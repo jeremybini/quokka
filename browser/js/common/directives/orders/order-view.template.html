@@ -3,7 +3,7 @@
 		<div class="col-lg-6">
 		<h3>Order #: {{ order._id }}</h3>
 		<h4>Date Submitted</h4>
-		<p>{{ order.dateSubmitted }}</p>
+		<p>{{ order.readableDate }}</p>
 		<h4>Order Total</h4>
 		<p>{{ orderTotal() | currency: $ }}</p>
 		</div>
