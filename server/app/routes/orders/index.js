@@ -29,23 +29,6 @@ router.get('/:id', function(req, res, next) {
 //ADMIN ONLY ROUTES
 router.use(auth.ensureAdmin);
 
-//send shipped email
-// router.post('/email', function(req, res, next) {
-//   // setup e-mail data with unicode symbols
-//   var mailOptions = {
-//       from: "StackStore <stackstore@stackstore.com>", // sender address
-//       to: req.email, // list of receivers
-//       subject: 'Order ' + req.status, // Subject line
-//       text: 'Your order has ' + req.status + ".", // plaintext body
-//       html: 'Your order has ' + req.status + "."// html body
-//   };
-
-//   transporter.sendMail(mailOptions)
-//   .then(function() {
-//     res.status(200).end();
-//   }).then(null, next);
-// });
-
 //get all orders of all users
 router.get('/', function(req, res, next) {
   Order.find({})
