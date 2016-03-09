@@ -1,6 +1,9 @@
 /* ADMIN ONLY - ORDERS ROUTES */
 'use strict';
 var router = require('express').Router();
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport('smtps://attempt101c@gmail.com:quokka123@smtp.gmail.com');
+
 module.exports = router;
 
 var auth = require('../authentication');
@@ -26,6 +29,23 @@ router.get('/:id', function(req, res, next) {
 //ADMIN ONLY ROUTES
 router.use(auth.ensureAdmin);
 
+//send shipped email
+// router.post('/email', function(req, res, next) {
+//   // setup e-mail data with unicode symbols
+//   var mailOptions = {
+//       from: "StackStore <stackstore@stackstore.com>", // sender address
+//       to: req.email, // list of receivers
+//       subject: 'Order ' + req.status, // Subject line
+//       text: 'Your order has ' + req.status + ".", // plaintext body
+//       html: 'Your order has ' + req.status + "."// html body
+//   };
+
+//   transporter.sendMail(mailOptions)
+//   .then(function() {
+//     res.status(200).end();
+//   }).then(null, next);
+// });
+
 //get all orders of all users
 router.get('/', function(req, res, next) {
   Order.find({})
@@ -49,15 +69,27 @@ router.delete('/:id', function(req, res, next) {
 //update order status after order has been submitted (SUBMITTED-PROGRESS, PROGRESS-COMPLETE/CANCEL), using updateStatus
 router.put('/:id', function(req, res, next) {
   Order.findById({_id: req.params.id})
+  .populate('user')
   .then(function(order) {
     if (order.status === 'Cart') {
-      order.submitOrder();
+      return order.submitOrder();
     } else {
-      order.updateStatus(req.body.status);
+      return order.updateStatus(req.body.status);
     }
   })
   .then(function(updatedOrder) {
+    if (req.body.status === 'Submitted' || req.body.status === 'Completed') {
+      var mailOptions = {
+        from: "StackStore <stackstore@stackstore.com>",
+        to: updatedOrder.user.email,
+        subject: 'Order ' + req.body.status,
+        text: "Your order's status is now " + req.body.status + ".",
+        html: "Your order's status is now " + req.body.status + "."
+      };
+      transporter.sendMail(mailOptions);
+    }
     res.send(updatedOrder);
   })
   .then(null, next);
 });
+

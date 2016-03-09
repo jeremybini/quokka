@@ -40,6 +40,9 @@ var OrderSchema = new mongoose.Schema({
   },
   dateFulfilled: {
     type: Date
+  },
+  shippingAddress: {
+    type: String
   }
 });
 
