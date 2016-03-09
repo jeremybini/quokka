@@ -9,6 +9,21 @@ var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var ReviewRouter = require('./review');
 
+router.get('/featured', function(req, res, next) {
+	var limit = +req.query.limit;
+	delete req.query.limit
+	if (!req.user || !req.user.admin) {
+		req.query.stock = { $gt: 0 }
+	}
+	Product.find(req.query)
+	.limit(limit)
+	.populate('categories reviews')
+	.then(products => {
+		res.json(products)
+	})
+	.then(null, next);
+})
+
 router.param('id', function(req, res, next, id) {
 	var params = { _id: id }
 	if (!req.user || !req.user.admin) {
@@ -56,8 +71,6 @@ router.get('/:id', function(req, res, next) {
 router.put('/:id', auth.ensureAdmin, function(req, res, next) {
 	_.merge(req.product, req.body);
   req.product.categories = req.body.categories;
-
-  console.log('req.product', req.product);
 
 	req.product.save()
 	.then(function(product){

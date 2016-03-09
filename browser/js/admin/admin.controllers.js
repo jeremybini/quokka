@@ -26,7 +26,6 @@ app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $f
   $scope.allCategories = CategoryFactory.getCategories();
 
   $scope.transformChip = function transformChip(chip) {
-    console.log(chip);
     // If it is an object, it's already a known chip
     if (angular.isObject(chip)) {
       return chip;
@@ -43,7 +42,6 @@ app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $f
   };
 
   $scope.save = function(product, decimalPrice) {
-    console.log('product categories', product.categories);
     var match = false;
     CategoryFactory.fetchAll().then(function(categories) {
       $scope.categories = categories;
@@ -69,7 +67,6 @@ app.controller('AdminEditProductCtrl', function($scope, $stateParams, $state, $f
     //      .then(function() {
     //        product.price = decimalPrice * 100;
     //        if ($scope.isEditProduct) {
-    //          console.log('is updating ', product);
     //          ProductFactory.update(product._id, product).then($state.go('adminAllProducts'));
     //        } else {
     //          ProductFactory.create(product).then($state.go('adminAllProducts'));
