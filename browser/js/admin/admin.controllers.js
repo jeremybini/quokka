@@ -148,7 +148,6 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
         return product.title === promotion.parameters.product.title;
       })[0];
     }
-    console.log(promotion);
     PromotionFactory.update(promotion._id, promotion)
     .then(function() {
         PromotionFactory.fetchAll();
@@ -197,9 +196,6 @@ app.controller('AdminPromotionsCtrl', function(promotions, PromotionFactory, Pro
         PromotionFactory.fetchAll();
       })
       .then(function() {
-        $scope.promotions.forEach(function(item) {
-          item.expirationDate = item.expirationDate.slice(0, 10);
-        });
         $scope.updated = false;
         $scope.deleted = false;
         $scope.created = false;
