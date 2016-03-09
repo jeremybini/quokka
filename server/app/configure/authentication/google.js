@@ -25,6 +25,7 @@ module.exports = function (app) {
                         google: {
                             id: profile.id
                         }
+                        
                     });
                 }
 
