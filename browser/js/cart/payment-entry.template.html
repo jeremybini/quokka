@@ -1,22 +1,13 @@
 <div class="container">
-  <form method="post" action="https://www.cryptoheaven.com/ch/web-form.jsp" ENCTYPE="multipart/form-data">
+  <form method="post">
 
   <!-- required parameters CH_uId or CH_toEmail -->
   <input type="hidden" name="CH_uId" value="3487961">
 
-  <!-- optional parameters CH_successPage and CH_errorPage -->
-  <input type="hidden" name="CH_successPage" value="http://www.yourserver.com/success">
-  <input type="hidden" name="CH_errorPage" value="http://www.yourserver.com/error">
-
-  <!-- other optional parameters CH_fromName, CH_fromEmail CH_subject -->
-  <input type="hidden" name="CH_fromName" value="CryptoHeaven Secure Form">
-  <input type="hidden" name="CH_fromEmail" value="my-forms@cryptoheaven.com">
-  <input type="hidden" name="CH_subject" value="Your Site Payment Form">
-
   <!-- your regular form follows -->
   <table width=518 border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
     <tr bgcolor="#E5E5E5"> 
-      <td height="22" colspan="3" align="left" valign="middle"><strong>&nbsp;Billing Information (required)</strong></td>
+      <td height="22" colspan="3" align="left" valign="middle"><strong>Billing Information (required)</strong></td>
     </tr>
     <tr> 
       <td height="22" width="180" align="right" valign="middle">First Name:</td>
@@ -42,34 +33,179 @@
       <td height="22" align="right" valign="middle">City:</td>
       <td colspan="2" align="left"><input name="city" type="text" value="" size="50"></td>
     </tr>
+<tr>
+      <td height="22" align="right" valign="middle">Select State:
+      <td colspan="2" align="left">
+        <select>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+      </select>
+    </td>
+    </tr>
     <tr> 
-      <td height="22" align="right" valign="middle">State/Province:</td>
-      <td colspan="2" align="left"><input name="state" type="text" value="" size="50"></td>
+    <tr> 
+      <td height="22" align="right" valign="middle">Zip/Postal Code:</td>
+      <td colspan="2" align="left"><input name="zip" type="text" value="" size="50"></td>
+    </tr>
+<table width=518 border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+    <tr bgcolor="#E5E5E5"> 
+      <td height="22" colspan="3" align="left" valign="middle"><strong>Shipping Information (required)</strong></td>
+    </tr>
+    <tr> 
+      <td height="22" width="180" align="right" valign="middle">First Name:</td>
+      <td colspan="2" align="left"><input name="firstName" type="text" size="50"></td>
+    </tr>
+    <tr> 
+      <td height="22" align="right" valign="middle">Last Name:</td>
+      <td colspan="2" align="left"><input name="lastName" type="text" size="50"></td>
+    </tr>
+    <tr> 
+      <td height="22" align="right" valign="middle">Company (optional):</td>
+      <td colspan="2" align="left"><input name="company" type="text" size="50"></td>
+    </tr> 
+    <tr> 
+      <td height="22" align="right" valign="middle">Street Address:</td>
+      <td colspan="2" align="left"><input name="address1" type="text" value="" size="50"></td>
+    </tr> 
+    <tr> 
+      <td height="22" align="right" valign="middle">Street Address (2):</td>
+      <td colspan="2" align="left"><input name="address2" type="text" value="" size="50"></td>
+    </tr>
+    <tr> 
+      <td height="22" align="right" valign="middle">City:</td>
+      <td colspan="2" align="left"><input name="city" type="text" value="" size="50"></td>
+    </tr>
+    <tr>
+      <td height="22" align="right" valign="middle">Select State:
+      <td colspan="2" align="left">
+        <select>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+      </select>
+    </td>
     </tr>
     <tr> 
       <td height="22" align="right" valign="middle">Zip/Postal Code:</td>
       <td colspan="2" align="left"><input name="zip" type="text" value="" size="50"></td>
     </tr>
     <tr> 
-      <td height="22" align="right" valign="middle">Country:</td>
-      <td colspan="2" align="left"><input name="country" type="text" value="" size="50"></td>
-    </tr>
-    <tr> 
       <td height="22" align="right" valign="middle">Phone:</td>
       <td colspan="2" align="left"><input name="phone" type="text" value="" size="50"></td>
     </tr>
     <tr> 
-      <td height="22" colspan="3" align="left" valign="middle">&nbsp;</td>
+      <td height="22" colspan="3" align="left" valign="middle"></td>
     </tr>
     <tr bgcolor="#E5E5E5"> 
-      <td height="22" colspan="3" align="left" valign="middle"><strong>&nbsp;Credit Card (required)</strong></td>
+      <td height="22" colspan="3" align="left" valign="middle"><strong>Credit Card (required)</strong></td>
     </tr>
     <tr> 
       <td height="22" align="right" valign="middle">Credit Card Number:</td>
-      <td colspan="2" align="left"><input name="CCNo" type="text" value="" size="19" maxlength="40"></td>
+      <td colspan="2" align="left"><input type="text" value="" size="19" maxlength="16"></td>
+    </tr>
+    <tr>
+      <td height="22" align="right" valign="middle">Security Code:</td>
+            <td colspan="2" align="left"><input type="text" value="" size="10" maxlength="4"></td>
     </tr>
     <tr> 
-      <td height="22" align="right" valign="middle">Expiry Date:</td>
+      <td height="22" align="right" valign="middle">Expiration Date:</td>
       <td colspan="2" align="left">
         <SELECT NAME="CCExpiresMonth" >
           <OPTION VALUE="" SELECTED>--Month--
@@ -88,39 +224,31 @@
         </SELECT> /
         <SELECT NAME="CCExpiresYear">
           <OPTION VALUE="" SELECTED>--Year--
-          <OPTION VALUE="04">2004
-          <OPTION VALUE="05">2005
-          <OPTION VALUE="06">2006
-          <OPTION VALUE="07">2007
-          <OPTION VALUE="08">2008
-          <OPTION VALUE="09">2009
-          <OPTION VALUE="10">2010
-          <OPTION VALUE="11">2011
-          <OPTION VALUE="12">2012
-          <OPTION VALUE="13">2013
-          <OPTION VALUE="14">2014
-          <OPTION VALUE="15">2015
+          <OPTION VALUE="16">2016
+          <OPTION VALUE="17">2017
+          <OPTION VALUE="18">2018
+          <OPTION VALUE="19">2019
         </SELECT>
       </td>
     </tr>
     <tr> 
-      <td height="22" colspan="3" align="left" valign="middle">&nbsp;</td>
+      <td height="22" colspan="3" align="left" valign="middle"></td>
     </tr>
     <tr bgcolor="#E5E5E5"> 
-      <td height="22" colspan="3" align="left" valign="middle"><strong>&nbsp;Additional Information</strong></td>
+      <td height="22" colspan="3" align="left" valign="middle"><strong>Additional Information</strong></td>
     </tr>
     <tr> 
       <td height="22" align="right" valign="middle">Contact Email:</td>
       <td colspan="2" align="left"><input name="contactEmail" type="text" value="" size="50"></td>
     </tr>
     <tr> 
-      <td height="22" colspan="3" align="left" valign="middle">&nbsp;</td>
+      <td height="22" colspan="3" align="left" valign="middle"></td>
     </tr>
     <tr> 
       <td height="22" align="right" valign="top">Special Notes:</td>
       <td colspan="2" align="left"><textarea name="notes" cols="45" rows="4"></textarea></td>
     </tr>
   </table>
-  <p><input name="Submit" type="submit" value="Send Secure Form &gt;&gt;"></p>
+  <p><input ng-click="checkout(item._id)" name="Submit" type="submit" value="Submit Order"></p>
   </form>
 </div>
