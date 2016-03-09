@@ -46,6 +46,16 @@ app.controller('PasswordResetCtrl', function($scope, $state, Session, UserFactor
   };
 })
 
-app.controller('EditProfileCtrl', function($scope, user, UserFactory){
+app.controller('EditProfileCtrl', function($scope, user, UserFactory, $state){
   $scope.user = user;
+  $scope.update = function() {
+    UserFactory.update(user._id, $scope.user)
+    .then(user => {
+      $state.go('profile', { id: user._id });
+    })
+  }
+
+  $scope.validPassword = function() {
+    return $scope.user.password === $scope.user.passwordConfirmation;
+  }
 })
