@@ -52,6 +52,7 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
   CartFactory.fetchCart = function() {
     return $http.get('/api/cart/')
     .then(function(res) {
+      currentCart = res.data;
       return res.data
     })
     .catch($log.error);
@@ -61,24 +62,16 @@ app.factory('CartFactory', function($http, ProductFactory, $log) {
     return $http.get('api/cart/submit');
   };
 
-  CartFactory.empty = function() {
-    return $http.get('/api/cart')
-    .then(function(res) {
-      return res.data;
-    })
-    .then(function(cart) {
-      currentCart = cart;
-    })
-    .catch($log.error);
-  };
-
   CartFactory.applyPromo = function(code) {
     return $http.get('/api/cart/apply-promo/' + code)
     .then(function(res) {
       currentCart = res.data;
       return currentCart;
     })
-    .catch($log.error);
+    .catch(function(err) {
+      $log.error(err);
+      return currentCart;
+    });
   };
 
   CartFactory.removePromo = function() {

@@ -32,7 +32,8 @@
 			<h1>Reviews</h1>
 			<div ng-repeat="review in reviews" class="panel panel-default">
 				<div class="panel-heading">
-					{{ review.title }}
+					{{ review.title || "Review" }}
+					<uib-rating max="5" class="pull-right" readonly="isReadOnly()" ng-model="review.rating" aria-labelledby="default-rating"></uib-rating>
 				</div>		
 			  <div class="panel-body">
 			    {{ review.content }}<br>
@@ -47,8 +48,8 @@
 					</div>
 					<label>Review for {{ product.title }}:</label><br>
 				  <textarea class="form-control" rows="5" ng-model="newReview.content"></textarea>
+				  Rating: <uib-rating max="5" ng-model="newReview.rating" aria-labelledby="default-rating"></uib-rating>
 				</div>
-				<!-- need to exclude if not logged in -->
 				<button ng-hide="addingReview" class="btn btn-orange" ng-click="addReview()">
 					<span ng-hide="submittingReview">Add a Review</span>
 					<span ng-show="submittingReview" ><i class="fa fa-spinner fa-spin"></i> Submitting</span>
