@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 var Product = mongoose.model('Product');
 var Promotion = mongoose.model('Promotion');
+var moment = require('moment');
 
 var OrderSchema = new mongoose.Schema({
   products: [{
@@ -43,7 +44,19 @@ var OrderSchema = new mongoose.Schema({
   },
   shippingAddress: {
     type: String
+  }, 
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
   }
+});
+
+OrderSchema.virtual('readableDate')
+.get(function() {
+  return moment(this.dateSubmitted).format("M/D/YYYY");
 });
 
 OrderSchema.statics.submitOrder = function(orderId) {
