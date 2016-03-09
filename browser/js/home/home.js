@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
         		return CategoryFactory.fetchAll();
         	},
         	products: function(ProductFactory) {
-        		return ProductFactory.fetchAll();
+        		return ProductFactory.fetchFeatured(6);
         	}
         },
         controller: function($scope, categories, products) {
