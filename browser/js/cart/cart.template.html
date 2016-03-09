@@ -25,7 +25,7 @@
                     <span class="glyphicon glyphicon-minus"></span>
                   </button>
                 </span>
-                <input type="text" style="width: 50px; text-align: center" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
+                <input type="number" style="width: 50px; text-align: center" class="form-control input-number" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}">
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-success btn-number" ng-click="update(item.product, 1)" >
                     <span class="glyphicon glyphicon-plus"></span>
@@ -103,7 +103,7 @@
                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
             </button></td>
             <td>
-            <button type="button" class="btn btn-success" ng-click="checkout(item._id)" ui-sref="payment">
+            <button type="button" class="btn btn-success" ui-sref="payment">
                 Checkout <span class="glyphicon glyphicon-play"></span>
             </button></td>
           </tr>
