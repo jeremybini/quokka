@@ -26,19 +26,23 @@ app.config(function($stateProvider) {
 					return OrderFactory.fetchById($stateParams.orderId);
 				}
 			},
-			controller: 'UserOrderController'
+			controller: 'UserOrderCtrl'
 		})
 
-		// .state('editProfile', {
-		// 	url: 'profile/:id/edit',
-		// 	templateUrl: '/js/profile/profile-edit.template.html',
-		// 	resolve: {
-		// 		user: function(UserFactory, $stateParams) {
-		// 			return UserFactory.fetchById($stateParams.id);
-		// 		}
-		// 	},
-		// 	controller: 'ProfileController'
-		// })
+		.state('editProfile', {
+			url: '/profile/:id/edit',
+			templateUrl: '/js/profile/profile-edit.template.html',
+			resolve: {
+				user: function(UserFactory, $stateParams, Session) {
+					if(Session.user._id === $stateParams.id) {
+						return Session.user;
+					} else {
+						return UserFactory.fetchById($stateParams.id);
+					}
+				}
+			},
+			controller: 'EditProfileCtrl'
+		})
 
 		.state('resetPassword', {
 			url: '/password-reset',

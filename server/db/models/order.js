@@ -173,7 +173,7 @@ OrderSchema.methods.applyPromotion = function(promotionCode) {
       });
       return order.save();
     } else {
-      return new Error("That's not a valid promotion code");
+      throw new Error("That's not a valid promotion code");
     }
   })
   .then(order => {
