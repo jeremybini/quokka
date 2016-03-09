@@ -154,10 +154,10 @@ body {
 	height: 100%;
 	width: 100%;
 	h2 {
-		color: white;
+		margin-top: 50px;
+		color: black;
 		display: inline-block;
 		vertical-align: center;
-		opacity: 0;
 	}
 }
 
@@ -178,9 +178,10 @@ body {
 		background-color: #FA6900;
 		color: white;
 		opacity: .5;
-		transition: all .4s ease;
+		transition: all .4s ease;	
 		h2 {
-			opacity: 1;
+			color: white;
+			margin-top: 100px;
 			transition: .4s ease
 		}
 	}
