@@ -4,8 +4,8 @@
 		<h3 class="text-center">Browse by Category</h3>
 		</div>
 		<div class="row">
-			<div ng-repeat="category in categories" class="col-md-3 col-sm-6 category-box" ng-click="renderProducts(category)">
-				<div class="category-card">
+			<div ng-repeat="category in categories" class="col-md-3 col-sm-6 category-box">
+				<div class="category-card" ui-sref='products'>
 					<img src=""/>
 					<div class="category-tag text-center">
 						<h2>{{ category.name }}</h1>
@@ -26,7 +26,7 @@
 			<h3 class="text-center">Featured Products</h3>
 		</div>
 		<div class="row">
-			<div ng-repeat="product in products" ng-click="renderProduct(product)">
+			<div ng-repeat="product in products">
 				<product-box product="product"></product-box>
 			</div>
 		</div>
